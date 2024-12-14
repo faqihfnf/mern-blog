@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Header from "./components/Header";
 import Book from "./pages/Book";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/book" element={<Book />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

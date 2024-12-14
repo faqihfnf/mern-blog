@@ -56,8 +56,8 @@ export default function SignUp() {
         <div className="flex-1">
           <Link to="/" className="dark:text-white">
             <div className="flex items-center">
-              <img src="/logo.png" className="mr-2 h-14" alt="Flowbite Logo" />
-              <span className="font-bold text-5xl font-poppins text-cyan-950">Marifah</span>
+              <img src="/logo.png" className="mr-2 h-12" alt="Flowbite Logo" />
+              <span className="font-bold text-4xl font-poppins text-cyan-950">marifah.or.id</span>
             </div>
           </Link>
           <p className="font-poppins font-semibold text-md mt-4">Silahkan Sign Up dengan menggunakan email dan password anda</p>
