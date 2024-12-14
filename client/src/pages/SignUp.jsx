@@ -1,8 +1,54 @@
-import { Button, Label, TextInput } from "flowbite-react";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Alert, Button, Label, Spinner, TextInput, Toast } from "flowbite-react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { HiCheckBadge } from "react-icons/hi2";
 
 export default function SignUp() {
+  const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value.trim(),
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.username || !formData.email || !formData.password) {
+      return setErrorMessage("Silahkan lengkapi semua kolom");
+    }
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        //# data yang dikirim ke backend dari formData
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+      }
+      setLoading(false);
+      if (res.ok) {
+        setShowToast(true); // Menampilkan toast
+        setTimeout(() => {
+          setShowToast(false); // Menyembunyikan toast setelah beberapa saat
+          navigate("/sign-in");
+        }, 3000); // Tunggu 3 detik sebelum navigasi
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen mt-20">
       {/*left side */}
@@ -10,8 +56,8 @@ export default function SignUp() {
         <div className="flex-1">
           <Link to="/" className="dark:text-white">
             <div className="flex items-center">
-              <img src="/logo.png" className="mr-2 h-12" alt="Flowbite Logo" />
-              <span className="font-bold text-4xl font-poppins">Marifah</span>
+              <img src="/logo.png" className="mr-2 h-14" alt="Flowbite Logo" />
+              <span className="font-bold text-5xl font-poppins text-cyan-950">Marifah</span>
             </div>
           </Link>
           <p className="font-poppins font-semibold text-md mt-4">Silahkan Sign Up dengan menggunakan email dan password anda</p>
@@ -19,21 +65,27 @@ export default function SignUp() {
 
         {/*right side */}
         <div className="flex-1">
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
               <Label value="Username" />
-              <TextInput type="text" placeholder="Username" id="username" />
+              <TextInput type="text" placeholder="Username" id="username" onChange={handleChange} />
             </div>
             <div>
               <Label value="Email" />
-              <TextInput type="email" placeholder="Masukan Email" id="username" />
+              <TextInput type="email" placeholder="Masukan Email" id="email" onChange={handleChange} />
             </div>
             <div>
               <Label value="Password" />
-              <TextInput type="text" placeholder="Masukan Password" id="username" />
+              <TextInput type="password" placeholder="Masukan Password" id="password" onChange={handleChange} />
             </div>
-            <Button outline gradientDuoTone="greenToBlue" type="submit">
-              Sign Up
+            <Button gradientDuoTone="greenToBlue" type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  <Spinner size="sm" /> <span className="pl-3">Loading ...</span>
+                </>
+              ) : (
+                "Sign Up"
+              )}
             </Button>
           </form>
           <div className="flex gap-2 text-md mt-4">
@@ -42,8 +94,24 @@ export default function SignUp() {
               Sign In
             </Link>
           </div>
+          {errorMessage && (
+            <Alert className="mt-2" color="failure">
+              {errorMessage}
+            </Alert>
+          )}
         </div>
       </div>
+
+      {/* Toast */}
+      {showToast && (
+        <div className="fixed top-16 right-0 gap-4">
+          <Toast color="success" className="bg-green-400 w-72">
+            <HiCheckBadge className="w-8 h-8 text-white" />
+            <div className="ml-3 text-lg font-semibold text-white">Sign up berhasil! </div>
+            <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
+          </Toast>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function Header() {
       <Link to="/" className="dark:text-white">
         <div className="flex items-center">
           <img src="/logo.png" className="mr-2 h-9" alt="Flowbite Logo" />
-          <span className="font-bold text-3xl font-poppins">Marifah</span>
+          <span className="font-bold text-3xl font-poppins text-cyan-950">Marifah</span>
         </div>
       </Link>
       <form>
