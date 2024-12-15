@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -87,6 +88,7 @@ export default function SignIn() {
                 "Sign In"
               )}
             </Button>
+            <OAuth />
           </form>
           <div className="flex gap-2 text-md mt-4">
             <span className="font-semibold">Belum punya akun?</span>
