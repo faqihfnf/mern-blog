@@ -32,20 +32,22 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.success === false) {
-        return setErrorMessage(data.message);
-      }
-      setLoading(false);
       if (res.ok) {
-        setShowToast(true); // Menampilkan toast
+        setShowToast(true);
         setTimeout(() => {
-          setShowToast(false); // Menyembunyikan toast setelah beberapa saat
-          navigate("/sign-in");
-        }, 3000); // Tunggu 3 detik sebelum navigasi
+          setShowToast(false);
+          navigate("/");
+        }, 3000);
+      } else {
+        setErrorMessage(data.message);
+        setLoading(false);
       }
     } catch (error) {
       setErrorMessage(error.message);
       setLoading(false);
+    } finally {
+      //# fallback untuk mengatasi error selain di try
+      if (!res.ok) setLoading(false);
     }
   };
 
@@ -107,7 +109,7 @@ export default function SignUp() {
         <div className="fixed top-16 right-0 gap-4">
           <Toast color="success" className="bg-green-400 w-72">
             <HiCheckBadge className="w-8 h-8 text-white" />
-            <div className="ml-3 text-lg font-semibold text-white">Sign up berhasil! </div>
+            <div className="ml-3 text-lg font-semibold text-white">Sign Up berhasil! </div>
             <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
           </Toast>
         </div>
