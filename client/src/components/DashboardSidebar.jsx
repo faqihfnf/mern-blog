@@ -48,7 +48,7 @@ export default function DashboardSidebar() {
             </Sidebar.Item>
           </Link>
           <Sidebar.Item
-            className="text-red-700 font-semibold cursor-pointer"
+            className="text-red-700 dark:text-red-700 font-semibold cursor-pointer"
             icon={FaSignOutAlt}
             onClick={handleSignOut}>
             Sign Out

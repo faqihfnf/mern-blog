@@ -230,6 +230,7 @@ export default function DashboardProfile() {
           placeholder="Email"
           defaultValue={currentUser.email}
           onChange={handleChange}
+          disabled
         />
         <TextInput
           type="text"
