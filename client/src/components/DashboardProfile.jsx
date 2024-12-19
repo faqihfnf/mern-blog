@@ -17,6 +17,7 @@ import {
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
+  signOutSuccess,
 } from "../redux/user/userSlice";
 import { FaExclamationCircle } from "react-icons/fa";
 
@@ -155,6 +156,22 @@ export default function DashboardProfile() {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch("api/user/signout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="text-4xl font-bold text-center my-2">Profile</h1>
@@ -230,7 +247,11 @@ export default function DashboardProfile() {
           onClick={() => setShowModal(true)}>
           Delete Account
         </span>
-        <span className="cursor-pointer hover:text-red-600">Sign Out</span>
+        <span
+          className="cursor-pointer hover:text-red-600"
+          onClick={handleSignOut}>
+          Sign Out
+        </span>
       </div>
       {updateUserSuccess && <Alert color="success">{updateUserSuccess}</Alert>}
       {updateUserError && <Alert color="failure">{updateUserError}</Alert>}

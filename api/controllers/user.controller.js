@@ -61,3 +61,15 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json({ message: "Account berhasil dihapus!" });
   } catch (error) {}
 };
+
+//# function sign out
+export const signOut = (req, res, next) => {
+  try {
+    res
+      .clearCookie("access_token")
+      .status(200)
+      .json({ message: "Logout berhasil!" });
+  } catch (error) {
+    next(error);
+  }
+};
