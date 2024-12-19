@@ -6,6 +6,7 @@ export const test = (req, res) => {
   res.json({ message: "API is working" });
 };
 
+//# function update user
 export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "Kamu hanya bisa update data dirimu!"));
@@ -25,7 +26,9 @@ export const updateUser = async (req, res, next) => {
       return next(errorHandler(400, "Username tidak boleh mengandung spasi!"));
     }
     if (!req.body.username.match(/^[a-zA-Z0-9]+$/)) {
-      return next(errorHandler(400, "Username hanya boleh mengandung huruf dan angka!"));
+      return next(
+        errorHandler(400, "Username hanya boleh mengandung huruf dan angka!")
+      );
     }
   }
   try {
@@ -46,4 +49,15 @@ export const updateUser = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+//# function delete user
+export const deleteUser = async (req, res, next) => {
+  if (req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "Hapus account gagal!"));
+  }
+  try {
+    await User.findByIdAndDelete(req.params.userId);
+    res.status(200).json({ message: "Account berhasil dihapus!" });
+  } catch (error) {}
 };
