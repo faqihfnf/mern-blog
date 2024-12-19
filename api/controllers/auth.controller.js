@@ -65,6 +65,7 @@ export const signin = async (req, res, next) => {
     const token = jwt.sign(
       {
         id: validUser._id,
+        isAdmin: validUser.isAdmin,
       },
       process.env.JWT_SECRET
     );
@@ -81,6 +82,7 @@ export const signin = async (req, res, next) => {
   }
 };
 
+//# function signin menggunakan google
 export const google = async (req, res, next) => {
   const { email, name, googlePhotoUrl } = req.body;
   try {
@@ -89,6 +91,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign(
         {
           id: user._id,
+          isAdmin: user.isAdmin,
         },
         process.env.JWT_SECRET
       );
@@ -112,6 +115,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign(
         {
           id: newUser._id,
+          isAdmin: newUser.isAdmin,
         },
         process.env.JWT_SECRET
       );
