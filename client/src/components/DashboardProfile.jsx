@@ -1,28 +1,16 @@
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import {
-  updateStart,
-  updateSuccess,
-  updateFailure,
-  deleteUserStart,
-  deleteUserSuccess,
-  deleteUserFailure,
-  signOutSuccess,
-} from "../redux/user/userSlice";
+import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutSuccess } from "../redux/user/userSlice";
 import { FaExclamationCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function DashboardProfile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -76,8 +64,7 @@ export default function DashboardProfile() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImageFileUploadProgress(progress.toFixed(0));
       },
       (error) => {
@@ -176,15 +163,8 @@ export default function DashboardProfile() {
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="text-4xl font-bold text-center my-2">Profile</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          ref={filePickerRef}
-          hidden></input>
-        <div
-          className="relative w-32 h-32 self-center cursor-pointer shadow-md rounded-full overflow-hidden my-2"
-          onClick={() => filePickerRef.current.click()}>
+        <input type="file" accept="image/*" onChange={handleImageChange} ref={filePickerRef} hidden></input>
+        <div className="relative w-32 h-32 self-center cursor-pointer shadow-md rounded-full overflow-hidden my-2" onClick={() => filePickerRef.current.click()}>
           {imageFileUploadProgress && (
             <CircularProgressbar
               value={imageFileUploadProgress || 0}
@@ -199,76 +179,48 @@ export default function DashboardProfile() {
                   left: 0,
                 },
                 path: {
-                  stroke: `rgba(62, 180, 250, ${
-                    imageFileUploadProgress / 100
-                  })`,
+                  stroke: `rgba(62, 180, 250, ${imageFileUploadProgress / 100})`,
                   strokeLinecap: "round",
                   transition: "stroke-dashoffset 850ms ease 0s",
                 },
               }}
             />
           )}
-          <img
-            src={imageFileUrl || currentUser.profilePicture}
-            alt="User"
-            className={`w-full h-full rounded-full object-cover border-8 border-gray-300 {imageFileUploadProgress < 100 && "opacity-50" : ''}`}
-          />
+          <img src={imageFileUrl || currentUser.profilePicture} alt="User" className={`w-full h-full rounded-full object-cover border-8 border-gray-300 {imageFileUploadProgress < 100 && "opacity-50" : ''}`} />
         </div>
-        {imageFileUploadError && (
-          <Alert color="failure">{imageFileUploadError}</Alert>
-        )}
-        <TextInput
-          type="text"
-          id="username"
-          placeholder="Username"
-          defaultValue={currentUser.username}
-          onChange={handleChange}
-        />
-        <TextInput
-          type="email"
-          id="email"
-          placeholder="Email"
-          defaultValue={currentUser.email}
-          onChange={handleChange}
-          disabled
-        />
-        <TextInput
-          type="text"
-          id="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-        <Button type="submit" outline gradientDuoTone="purpleToBlue">
-          Update Profile
+        {imageFileUploadError && <Alert color="failure">{imageFileUploadError}</Alert>}
+        <TextInput type="text" id="username" placeholder="Username" defaultValue={currentUser.username} onChange={handleChange} />
+        <TextInput type="email" id="email" placeholder="Email" defaultValue={currentUser.email} onChange={handleChange} disabled />
+        <TextInput type="text" id="password" placeholder="Password" onChange={handleChange} />
+        <Button type="submit" outline gradientDuoTone="purpleToBlue" disabled={loading || imageFileUploading}>
+          {loading ? "Loading..." : "Update Profile"}
         </Button>
+
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button type="button" gradientDuoTone="purpleToPink" className="w-full">
+              Create Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-500 flex justify-between mt-3 my-3 font-semibold ">
-        <span
-          className="cursor-pointer hover:text-red-600"
-          onClick={() => setShowModal(true)}>
+        <span className="cursor-pointer hover:text-red-600" onClick={() => setShowModal(true)}>
           Delete Account
         </span>
-        <span
-          className="cursor-pointer hover:text-red-600"
-          onClick={handleSignOut}>
+        <span className="cursor-pointer hover:text-red-600" onClick={handleSignOut}>
           Sign Out
         </span>
       </div>
       {updateUserSuccess && <Alert color="success">{updateUserSuccess}</Alert>}
       {updateUserError && <Alert color="failure">{updateUserError}</Alert>}
       {error && <Alert color="failure">{error}</Alert>}
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        size="md">
+      <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-            <h3 className="mb-5 text-xl font-normal text-gray-500">
-              Apakah anda yakin ingin menghapus akun ini?
-            </h3>
+            <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus akun ini?</h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleDeleteUser}>
                 Hapus
