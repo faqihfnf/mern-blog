@@ -64,6 +64,7 @@ export const getposts = async (req, res, next) => {
   }
 };
 
+//# function delete post
 export const deletepost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "Hanya admin yang dapat menghapus post!"));
@@ -71,6 +72,30 @@ export const deletepost = async (req, res, next) => {
   try {
     await Post.findByIdAndDelete(req.params.postId);
     res.status(200).json("Post berhasil dihapus!");
+  } catch (error) {
+    next(error);
+  }
+};
+
+//# function update post
+export const updatepost = async (req, res, next) => {
+  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "Hanya admin yang dapat mengupdate post!"));
+  }
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId,
+      {
+        $set: {
+          title: req.body.title,
+          content: req.body.content,
+          category: req.body.category,
+          image: req.body.image,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
   } catch (error) {
     next(error);
   }

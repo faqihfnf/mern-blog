@@ -3,13 +3,14 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
+import { useSelector } from "react-redux";
 
-export default function CreatePost() {
+export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -17,6 +18,29 @@ export default function CreatePost() {
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
+  const { postId } = useParams();
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    try {
+      const fetchPost = async () => {
+        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+        const data = await res.json();
+        if (!res.ok) {
+          console.log(data.message);
+          setPublishError(data.message);
+          return;
+        }
+        if (res.ok) {
+          setPublishError(null);
+          setFormData(data.posts[0]);
+        }
+      };
+      fetchPost();
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [postId]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -57,8 +81,8 @@ export default function CreatePost() {
     e.preventDefault();
     setShowToast(false);
     try {
-      const res = await fetch("/api/post/create", {
-        method: "POST",
+      const res = await fetch(`/api/post/updatepost/${formData._id}/${currentUser._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -82,11 +106,11 @@ export default function CreatePost() {
   };
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold">Create a Post</h1>
+      <h1 className="text-center text-3xl my-7 font-semibold">Update a Post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
-          <TextInput type="text" placeholder="Title" required id="title" className="flex-1" onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
-          <Select onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
+          <TextInput type="text" placeholder="Title" required id="title" className="flex-1" onChange={(e) => setFormData({ ...formData, title: e.target.value })} value={formData.title} />
+          <Select onChange={(e) => setFormData({ ...formData, category: e.target.value })} value={formData.category}>
             <option value="uncategorized">Select a category</option>
             <option value="aqidah">Aqidah</option>
             <option value="tafsir">Tafsir</option>
@@ -116,9 +140,10 @@ export default function CreatePost() {
           onChange={(value) => {
             setFormData({ ...formData, content: value });
           }}
+          value={formData.content}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
-          Publish
+          Update
         </Button>
         {publishError && (
           <Alert className="mt-5" color="failure">
@@ -131,7 +156,7 @@ export default function CreatePost() {
         <div className="fixed top-0 right-0 gap-4">
           <Toast color="success" className="bg-green-400 dark:bg-green-400 w-72">
             <HiCheckBadge className="w-8 h-8 text-white" />
-            <div className="ml-3 text-lg font-semibold text-white">Post berhasil dibuat </div>
+            <div className="ml-3 text-lg font-semibold text-white">Post berhasil diupdate </div>
             <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
           </Toast>
         </div>
