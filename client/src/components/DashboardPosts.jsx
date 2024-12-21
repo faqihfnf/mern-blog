@@ -8,7 +8,7 @@ export default function DashboardPosts() {
   const [userPosts, setUserPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
-  const postsPerPage = 6;
+  const postsPerPage = 5;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -41,62 +41,63 @@ export default function DashboardPosts() {
   const endIndex = Math.min(startIndex + postsPerPage - 1, totalPosts);
 
   return (
-    <div className="lg:w-3/4 table-auto overflow-x-scroll md:mx-auto py-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && userPosts.length > 0 ? (
-        <>
-          <Table hoverable={true} className="shadow-lg">
-            <Table.Head>
-              <Table.HeadCell>Date Updated</Table.HeadCell>
-              <Table.HeadCell>Post Image</Table.HeadCell>
-              <Table.HeadCell>Post Title</Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-              <Table.HeadCell>
-                <span>Edit</span>
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {userPosts.map((post) => (
-                <Table.Row key={post._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                  <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
-                  <Table.Cell>
-                    <Link to={`/post/${post.slug}`}>
-                      <img src={post.image} alt={post.title} className="w-20 h-20 object-cover bg-gray-400" />
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link className="font-medium text-slate-900 dark:text-white" to={`/post/${post.slug}`}>
-                      {post.title}
-                    </Link>
-                  </Table.Cell>
-                  <Table.Cell>{post.category}</Table.Cell>
-                  <Table.Cell>
-                    <span className="text-red-600 font-semibold hover:underline cursor-pointer">Delete</span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link to={`/update-post/${post._id}`}>
-                      <span className="text-teal-600 font-semibold hover:underline cursor-pointer">Edit</span>
-                    </Link>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-          {/* Pagination component */}
-          {totalPages > 1 && (
-            <>
-              <div className="text-sm mt-5 text-center text-slate-800 dark:text-slate-200">
+    <div className="flex w-full p-8 min-h-screen">
+      <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+        {currentUser.isAdmin && userPosts.length > 0 ? (
+          <div className="flex flex-col h-full">
+            <div className="flex-1">
+              <Table hoverable={true} className="shadow-lg">
+                <Table.Head>
+                  <Table.HeadCell>Date Updated</Table.HeadCell>
+                  <Table.HeadCell>Post Image</Table.HeadCell>
+                  <Table.HeadCell>Post Title</Table.HeadCell>
+                  <Table.HeadCell>Category</Table.HeadCell>
+                  <Table.HeadCell>Delete</Table.HeadCell>
+                  <Table.HeadCell>
+                    <span>Edit</span>
+                  </Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {userPosts.map((post) => (
+                    <Table.Row key={post._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                      <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
+                      <Table.Cell>
+                        <Link to={`/post/${post.slug}`}>
+                          <img src={post.image} alt={post.title} className="w-20 h-20 object-cover bg-gray-400" />
+                        </Link>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Link className="font-medium text-slate-900 dark:text-white" to={`/post/${post.slug}`}>
+                          {post.title}
+                        </Link>
+                      </Table.Cell>
+                      <Table.Cell>{post.category}</Table.Cell>
+                      <Table.Cell>
+                        <span className="text-red-600 font-semibold hover:underline cursor-pointer">Delete</span>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Link to={`/update-post/${post._id}`}>
+                          <span className="text-teal-600 font-semibold hover:underline cursor-pointer">Edit</span>
+                        </Link>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </div>
+            <div className="mt-auto pt-5">
+              <div className="text-sm text-center text-slate-800 dark:text-slate-200">
                 Showing {startIndex} to {endIndex} of {totalPosts} entries
               </div>
               <div className="flex overflow-x-auto sm:justify-center mt-2">
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons={true} />
+                <Pagination currentPage={currentPage} totalPages={Math.max(1, totalPages)} onPageChange={onPageChange} showIcons={true} />
               </div>
-            </>
-          )}
-        </>
-      ) : (
-        <p>Tidak ada post untuk saat ini</p>
-      )}
+            </div>
+          </div>
+        ) : (
+          <p>Tidak ada post untuk saat ini</p>
+        )}
+      </div>
     </div>
   );
 }
