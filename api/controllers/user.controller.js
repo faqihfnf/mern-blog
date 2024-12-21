@@ -26,9 +26,7 @@ export const updateUser = async (req, res, next) => {
       return next(errorHandler(400, "Username tidak boleh mengandung spasi!"));
     }
     if (!req.body.username.match(/^[a-zA-Z0-9]+$/)) {
-      return next(
-        errorHandler(400, "Username hanya boleh mengandung huruf dan angka!")
-      );
+      return next(errorHandler(400, "Username hanya boleh mengandung huruf dan angka!"));
     }
   }
   try {
@@ -63,12 +61,46 @@ export const deleteUser = async (req, res, next) => {
 };
 
 //# function sign out
-export const signOut = (req, res, next) => {
+export const signout = (req, res, next) => {
   try {
-    res
-      .clearCookie("access_token")
-      .status(200)
-      .json({ message: "Logout berhasil!" });
+    res.clearCookie("access_token").status(200).json({ message: "Logout berhasil!" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//# function get users
+export const getUsers = async (req, res, next) => {
+  if (!req.user.isAdmin) {
+    return next(errorHandler(403, "Hanya admin yang dapat mengakses data user!"));
+  }
+  try {
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 6;
+    const sortDirection = req.query.sort === "asc" ? 1 : -1;
+
+    const users = await User.find().sort({ createdAt: sortDirection }).skip(startIndex).limit(limit);
+
+    const userWithoutPassword = users.map((user) => {
+      const { password, ...rest } = user._doc;
+      return rest;
+    });
+
+    const totalUsers = await User.countDocuments();
+
+    const now = new Date();
+
+    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+
+    const lastMonthUsers = await User.countDocuments({
+      createdAt: { $gte: oneMonthAgo },
+    });
+
+    res.status(200).json({
+      users: userWithoutPassword,
+      totalUsers,
+      lastMonthUsers,
+    });
   } catch (error) {
     next(error);
   }
