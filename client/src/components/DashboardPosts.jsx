@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Table, Pagination } from "flowbite-react";
+import { Table, Pagination, Modal, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { FaExclamationCircle } from "react-icons/fa";
 
 export default function DashboardPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setUserPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [postIdToDelete, setPostIdToDelete] = useState(null);
   const postsPerPage = 5;
 
   useEffect(() => {
@@ -40,6 +43,23 @@ export default function DashboardPosts() {
   const startIndex = (currentPage - 1) * postsPerPage + 1;
   const endIndex = Math.min(startIndex + postsPerPage - 1, totalPosts);
 
+  const handleDeletePost = async () => {
+    setShowModal(false);
+    try {
+      const res = await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
+        setTotalPosts((prev) => prev - 1);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div className="flex w-full p-8 min-h-screen">
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -73,7 +93,15 @@ export default function DashboardPosts() {
                       </Table.Cell>
                       <Table.Cell>{post.category}</Table.Cell>
                       <Table.Cell>
-                        <span className="text-red-600 font-semibold hover:underline cursor-pointer">Delete</span>
+                        <span
+                          className="text-red-600 font-semibold hover:underline cursor-pointer"
+                          onClick={() => {
+                            setShowModal(true);
+                            setPostIdToDelete(post._id);
+                          }}
+                        >
+                          Delete
+                        </span>
                       </Table.Cell>
                       <Table.Cell>
                         <Link to={`/update-post/${post._id}`}>
@@ -97,6 +125,23 @@ export default function DashboardPosts() {
         ) : (
           <p>Tidak ada post untuk saat ini</p>
         )}
+        <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
+              <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus post ini?</h3>
+              <div className="flex justify-center gap-4">
+                <Button color="failure" onClick={handleDeletePost}>
+                  Hapus
+                </Button>
+                <Button color="gray" onClick={() => setShowModal(false)}>
+                  Batal
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
   );
