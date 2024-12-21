@@ -1,4 +1,4 @@
-import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
+import { Alert, Button, FileInput, Select, TextInput, Toast } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
@@ -7,6 +7,7 @@ import { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { HiCheckBadge } from "react-icons/hi2";
 
 export default function CreatePost() {
   const [file, setFile] = useState(null);
@@ -14,7 +15,7 @@ export default function CreatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-
+  const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
   const handleUpdloadImage = async () => {
@@ -54,6 +55,7 @@ export default function CreatePost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowToast(false);
     try {
       const res = await fetch("/api/post/create", {
         method: "POST",
@@ -67,10 +69,12 @@ export default function CreatePost() {
         setPublishError(data.message);
         return;
       }
-
       if (res.ok) {
         setPublishError(null);
-        navigate(`/post/${data.slug}`);
+        setShowToast(true);
+        setTimeout(() => {
+          navigate(`/post/${data.slug}`);
+        }, 3000);
       }
     } catch (error) {
       setPublishError("Something went wrong");
@@ -122,6 +126,16 @@ export default function CreatePost() {
           </Alert>
         )}
       </form>
+      {/* Toast */}
+      {showToast && (
+        <div className="fixed top-0 right-0 gap-4">
+          <Toast color="success" className="bg-green-400 dark:bg-green-400 w-72">
+            <HiCheckBadge className="w-8 h-8 text-white" />
+            <div className="ml-3 text-lg font-semibold text-white">Post berhasil dibuat </div>
+            <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
+          </Toast>
+        </div>
+      )}
     </div>
   );
 }

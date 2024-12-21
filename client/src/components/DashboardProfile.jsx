@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput, Toast } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
@@ -7,7 +7,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutSuccess } from "../redux/user/userSlice";
 import { FaExclamationCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { HiCheckBadge } from "react-icons/hi2";
 
 export default function DashboardProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -19,6 +20,7 @@ export default function DashboardProfile() {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -127,6 +129,7 @@ export default function DashboardProfile() {
 
   const handleDeleteUser = async () => {
     setShowModal(false);
+    setShowToast(false);
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
@@ -136,7 +139,10 @@ export default function DashboardProfile() {
       if (!res.ok) {
         dispatch(deleteUserFailure(data.message));
       } else {
-        dispatch(deleteUserSuccess(data));
+        setShowToast(true);
+        setTimeout(() => {
+          dispatch(deleteUserSuccess(data));
+        }, 3000);
       }
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
@@ -215,6 +221,17 @@ export default function DashboardProfile() {
       {updateUserSuccess && <Alert color="success">{updateUserSuccess}</Alert>}
       {updateUserError && <Alert color="failure">{updateUserError}</Alert>}
       {error && <Alert color="failure">{error}</Alert>}
+      {/* Toast */}
+      {showToast && (
+        <div className="fixed top-0 right-0 gap-4">
+          <Toast color="success" className="bg-red-600 dark:bg-red-600 w-80">
+            <HiCheckBadge className="w-8 h-8 text-white" />
+            <div className="ml-3 text-lg font-semibold text-white">Account berhasil dihapus </div>
+            <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
+          </Toast>
+        </div>
+      )}
+
       <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
         <Modal.Header />
         <Modal.Body>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Table, Pagination, Modal, Button } from "flowbite-react";
+import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaExclamationCircle } from "react-icons/fa";
+import { HiCheckBadge } from "react-icons/hi2";
 
 export default function DashboardPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -10,10 +11,12 @@ export default function DashboardPosts() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState(null);
   const postsPerPage = 5;
 
   useEffect(() => {
+    setShowToast(false);
     const fetchPosts = async () => {
       try {
         const startIndex = (currentPage - 1) * postsPerPage;
@@ -45,6 +48,7 @@ export default function DashboardPosts() {
 
   const handleDeletePost = async () => {
     setShowModal(false);
+    setShowToast(false);
     try {
       const res = await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`, {
         method: "DELETE",
@@ -55,6 +59,10 @@ export default function DashboardPosts() {
       } else {
         setUserPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
         setTotalPosts((prev) => prev - 1);
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
       }
     } catch (error) {
       console.log(error.message);
@@ -142,6 +150,16 @@ export default function DashboardPosts() {
             </div>
           </Modal.Body>
         </Modal>
+        {/* Toast */}
+        {showToast && (
+          <div className="fixed top-0 right-0 gap-4">
+            <Toast color="success" className="bg-red-600 dark:bg-red-600 w-72">
+              <HiCheckBadge className="w-8 h-8 text-white" />
+              <div className="ml-3 text-lg font-semibold text-white">Post berhasil dihapus </div>
+              <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
+            </Toast>
+          </div>
+        )}
       </div>
     </div>
   );
