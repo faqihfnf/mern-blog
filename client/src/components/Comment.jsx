@@ -4,8 +4,11 @@ import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Button, Textarea, Toast } from "flowbite-react";
 import { HiCheckBadge } from "react-icons/hi2";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin2Fill } from "react-icons/ri";
+import { BiSolidMessageSquareEdit } from "react-icons/bi";
 
-export default function Comment({ comment, onLike, onEdit }) {
+export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
@@ -81,15 +84,26 @@ export default function Comment({ comment, onLike, onEdit }) {
         ) : (
           <>
             <p className="text-gray-600 pb-2">{comment.content}</p>
-            <div className="flex items-center pt-2 text-sm border-t dark:border-gray-700 max-w-fit gap-3 ">
+            <div className="flex justify-center items-center pt-2 text-sm border-t dark:border-gray-700 max-w-fit gap-3 ">
               <button onClick={() => onLike(comment._id)} type="button" className={`text-gray-500 hover:text-indigo-500 ${currentUser && comment.likes.includes(currentUser._id) && "text-indigo-500"}`}>
-                <FaThumbsUp className="text-md" />
+                <FaThumbsUp className="w-4 h-4 mt-1" />
               </button>
-              <p className="text-gray-500 items-center mt-0.5">{comment.numberOfLikes > 0 && comment.numberOfLikes + "" + (comment.numberOfLikes > 1 ? " Likes" : " Like")}</p>
+              <p className="text-gray-500 items-center mt-1.5">{comment.numberOfLikes > 0 && comment.numberOfLikes + "" + (comment.numberOfLikes > 1 ? " Likes" : " Like")}</p>
               {currentUser && (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                <button type="button" className="text-gray-500 hover:text-indigo-500 hover:underline hover:font-bold mt-0.5" onClick={handleEdit}>
-                  Edit
-                </button>
+                <>
+                  <a onClick={handleEdit} className="flex gap-0.5 mt-1 items-center text-green-500 font-semibold hover:text-green-600 hover:underline hover:font-bold cursor-pointer">
+                    <BiSolidMessageSquareEdit className="w-4 h-4 mt-1" />
+                    <button type="button" className="mt-1">
+                      Edit
+                    </button>
+                  </a>
+                  <a onClick={() => onDelete(comment._id)} className="flex gap-0.5 mt-1 items-center text-red-500 font-semibold hover:text-red-600 hover:underline hover:font-bold cursor-pointer">
+                    <RiDeleteBin2Fill className="w-4 h-4 mt-1" />
+                    <button type="button" className="mt-1">
+                      Delete
+                    </button>
+                  </a>
+                </>
               )}
             </div>
           </>
