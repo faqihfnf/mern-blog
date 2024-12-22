@@ -1,12 +1,45 @@
-import { Button, Textarea } from "flowbite-react";
+import { Alert, Button, Textarea, Toast } from "flowbite-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { HiCheckBadge } from "react-icons/hi2";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
-  const handleSubmit = async (e) => {};
+  const [commentError, setCommentError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const handleSubmit = async (e) => {
+    setShowToast(false);
+    e.preventDefault();
+    if (comment > 250) {
+      return;
+    }
+    try {
+      const res = await fetch("/api/comment/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: comment,
+          postId,
+          userId: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+          setComment("");
+          setCommentError(error.message);
+        }, 2000);
+      }
+    } catch (error) {
+      setCommentError(error.message);
+    }
+  };
   return (
     <div className=" mx-auto w-full p-3">
       {currentUser ? (
@@ -32,7 +65,22 @@ export default function CommentSection({ postId }) {
               Submit
             </Button>
           </div>
+          {commentError && (
+            <Alert color="failure" className="mt-3">
+              {commentError}
+            </Alert>
+          )}
         </form>
+      )}
+      {/* Toast */}
+      {showToast && (
+        <div className="fixed top-0 right-0 gap-4">
+          <Toast color="success" className="bg-green-500 gap-1 dark:bg-green-500 w-full p-5">
+            <HiCheckBadge className="w-8 h-8 text-white" />
+            <div className="ml-1 text-sm font-semibold text-white">Komentar berhasil ditambahkan </div>
+            <Toast.Toggle className="ml-1 bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
+          </Toast>
+        </div>
       )}
     </div>
   );

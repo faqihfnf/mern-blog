@@ -109,7 +109,7 @@ export default function SignUp() {
       {/* Toast */}
       {showToast && (
         <div className="fixed top-0 right-0 gap-4">
-          <Toast color="success" className="bg-green-400 dark:bg-green-400 w-72">
+          <Toast color="success" className="bg-green-500 dark:bg-green-500 w-72">
             <HiCheckBadge className="w-8 h-8 text-white" />
             <div className="ml-3 text-lg font-semibold text-white">Sign Up berhasil! </div>
             <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
