@@ -1,6 +1,8 @@
 import { Badge, Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import CallToAction from "../components/CallToAction";
+import CommentSection from "../components/CommentSection";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -46,7 +48,7 @@ export default function PostPage() {
           {post && post.category}
         </Badge>
       </Link>
-      <img src={post && post.image} alt={post && post.title} className="object-cover w-full max-h-[500px] mt-4 rounded-sm" />
+      <img src={post && post.image} alt={post && post.title} className="object-cover w-full max-h-[500px] mt-4 rounded-md" />
       <div className="flex justify-between mt-2 border-b border-slate-600 mx-auto w-full p-3">
         <span>
           {post &&
@@ -59,6 +61,12 @@ export default function PostPage() {
         <span>{post && post.category}</span>
       </div>
       <div className="p-3 max-auto post-content" dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
+      <div className="mt-4 p-3 mx-auto">
+        <CallToAction />
+      </div>
+      <div>
+        <CommentSection postId={post._id} />
+      </div>
     </main>
   );
 }
