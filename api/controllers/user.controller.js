@@ -69,7 +69,7 @@ export const signout = (req, res, next) => {
   }
 };
 
-//# function get users
+//# function get users to admin
 export const getUsers = async (req, res, next) => {
   if (!req.user.isAdmin) {
     return next(errorHandler(403, "Hanya admin yang dapat mengakses data user!"));
@@ -101,6 +101,20 @@ export const getUsers = async (req, res, next) => {
       totalUsers,
       lastMonthUsers,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//# function get  user to comment
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return next(errorHandler(404, "User tidak ditemukan!"));
+    }
+    const { password, ...rest } = user._doc;
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }

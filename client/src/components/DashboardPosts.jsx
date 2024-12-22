@@ -156,7 +156,7 @@ export default function DashboardPosts() {
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-72">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-lg font-semibold text-white">Post berhasil dihapus </div>
+              <div className="ml-3 text-sm font-semibold text-white">Post berhasil dihapus </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>
