@@ -11,7 +11,7 @@ export default function DashboardComments() {
   const [totalComments, setTotalComments] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [userCommentsToDelete, setCommentsIdToDelete] = useState("");
+  const [commentIdToDelete, setCommentIdToDelete] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const commentsPerPage = 5;
@@ -23,7 +23,9 @@ export default function DashboardComments() {
         setIsLoading(true);
         setError(null);
         const startIndex = (currentPage - 1) * commentsPerPage;
-        const res = await fetch(`/api/comment/getcomments?startIndex=${startIndex}&limit=${commentsPerPage}`);
+        const res = await fetch(
+          `/api/comment/getcomments?startIndex=${startIndex}&limit=${commentsPerPage}`
+        );
         const data = await res.json();
 
         if (res.ok) {
@@ -56,14 +58,19 @@ export default function DashboardComments() {
 
   const handleDeleteComments = async () => {
     try {
-      const res = await fetch(`/api/comment/delete/${userCommentsToDelete}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `/api/comment/deletecomment/${commentIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setError(data.message);
       } else {
-        setComments((prev) => prev.filter((comment) => comment._id !== userCommentsToDelete));
+        setComments((prev) =>
+          prev.filter((comment) => comment._id !== commentIdToDelete)
+        );
         setTotalComments((prev) => prev - 1);
         setShowToast(true);
         setTimeout(() => {
@@ -99,7 +106,7 @@ export default function DashboardComments() {
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
         <div className="flex flex-col h-full">
           <div className="flex-1">
-            <Table hoverable={true} className="shadow-lg">
+            <Table hoverable={true} className="shadow-lg text-center">
               <Table.Head>
                 <Table.HeadCell>Date Updated</Table.HeadCell>
                 <Table.HeadCell>Comment Content</Table.HeadCell>
@@ -110,8 +117,12 @@ export default function DashboardComments() {
               </Table.Head>
               <Table.Body className="divide-y">
                 {comments.map((comment) => (
-                  <Table.Row key={comment._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                    <Table.Cell>{new Date(comment.updatedAt).toLocaleDateString()}</Table.Cell>
+                  <Table.Row
+                    key={comment._id}
+                    className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                    <Table.Cell>
+                      {new Date(comment.updatedAt).toLocaleDateString()}
+                    </Table.Cell>
                     <Table.Cell>{comment.content}</Table.Cell>
                     <Table.Cell>{comment.numberOfLikes || 0}</Table.Cell>
                     <Table.Cell>{comment.postId}</Table.Cell>
@@ -121,9 +132,8 @@ export default function DashboardComments() {
                         className="text-red-600 font-semibold hover:underline cursor-pointer"
                         onClick={() => {
                           setShowModal(true);
-                          setCommentsIdToDelete(comment._id);
-                        }}
-                      >
+                          setCommentIdToDelete(comment._id);
+                        }}>
                         Delete
                       </span>
                     </Table.Cell>
@@ -135,21 +145,37 @@ export default function DashboardComments() {
           {comments.length > commentsPerPage && (
             <div className="mt-auto pt-5">
               <div className="text-sm text-center text-slate-800 dark:text-slate-200">
-                Showing {startIndex} to {Math.min(startIndex + commentsPerPage - 1, totalComments)} of {totalComments} entries
+                Showing {startIndex} to{" "}
+                {Math.min(startIndex + commentsPerPage - 1, totalComments)} of{" "}
+                {totalComments} entries
               </div>
               <div className="flex overflow-x-auto sm:justify-center mt-2">
-                <Pagination currentPage={currentPage} totalPages={Math.max(1, Math.ceil(totalComments / commentsPerPage))} onPageChange={onPageChange} showIcons={true} />
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.max(
+                    1,
+                    Math.ceil(totalComments / commentsPerPage)
+                  )}
+                  onPageChange={onPageChange}
+                  showIcons={true}
+                />
               </div>
             </div>
           )}
         </div>
 
-        <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
+        <Modal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          popup
+          size="md">
           <Modal.Header />
           <Modal.Body>
             <div className="text-center">
               <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-              <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus komentar ini?</h3>
+              <h3 className="mb-5 text-xl font-normal text-gray-500">
+                Apakah anda yakin ingin menghapus komentar ini?
+              </h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDeleteComments}>
                   Hapus
@@ -166,7 +192,9 @@ export default function DashboardComments() {
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-72">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-sm font-semibold text-white">Komentar berhasil dihapus</div>
+              <div className="ml-3 text-sm font-semibold text-white">
+                Komentar berhasil dihapus
+              </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>
