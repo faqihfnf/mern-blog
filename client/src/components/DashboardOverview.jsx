@@ -65,68 +65,71 @@ export default function DashboardOverview() {
   }, [currentUser]);
 
   return (
-    <div className="p-3 md:mx-auto ">
-      <div className="flex flex-wrap gap-5 justify-center">
-        {/* Total User */}
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-2 md:w-72 w-full rounded-md shadow-lg">
-          <div className="flex justify-between">
+    <div className="max-w-7xl mx-auto py-7">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        {/* Total Users Card */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
+          <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-md uppercase">Total Users</h3>
-              <p className="text-2xl flex justify-center mt-2">{totalUsers}</p>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Users</h3>
+              <p className="text-3xl font-bold mt-2">{totalUsers}</p>
             </div>
-            <HiOutlineUserGroup className="bg-teal-600 rounded-full p-3 text-5xl text-white shadow-lg" />
+            <div className="bg-teal-600 rounded-full p-3">
+              <HiOutlineUserGroup className="text-white w-8 h-8" />
+            </div>
           </div>
-          <div className="flex gap-2 text-sm">
-            <span className="text-green-600 flex items-center">
-              <HiArrowNarrowUp />
-              {lastMonthUsers}
-            </span>
-            <div className="text-gray-500">Last Month</div>
+          <div className="flex items-center text-sm">
+            <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
+            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthUsers}</span>
+            <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
 
-        {/* Total Comments */}
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-2 md:w-72 w-full rounded-md shadow-lg">
-          <div className="flex justify-between">
+        {/* Total Comments Card */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
+          <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-md uppercase">Total Comments</h3>
-              <p className="text-2xl flex justify-center mt-2">{totalComments}</p>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Comments</h3>
+              <p className="text-3xl font-bold mt-2">{totalComments}</p>
             </div>
-            <HiAnnotation className="bg-indigo-600 rounded-full p-3 text-5xl text-white shadow-lg" />
+            <div className="bg-indigo-600 rounded-full p-3">
+              <HiAnnotation className="text-white w-8 h-8" />
+            </div>
           </div>
-          <div className="flex gap-2 text-sm">
-            <span className="text-green-600 flex items-center">
-              <HiArrowNarrowUp />
-              {lastMonthComments}
-            </span>
-            <div className="text-gray-500">Last Month</div>
+          <div className="flex items-center text-sm">
+            <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
+            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthComments}</span>
+            <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
 
-        {/* Total Posts */}
-        <div className="flex flex-col p-3 dark:bg-slate-800 gap-2 md:w-72 w-full rounded-md shadow-lg">
-          <div className="flex justify-between">
+        {/* Total Posts Card */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
+          <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-md uppercase">Total Posts</h3>
-              <p className="text-2xl flex justify-center mt-2">{totalPosts}</p>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Posts</h3>
+              <p className="text-3xl font-bold mt-2">{totalPosts}</p>
             </div>
-            <HiDocumentText className="bg-pink-600 rounded-full p-3 text-5xl text-white shadow-lg" />
+            <div className="bg-pink-600 rounded-full p-3">
+              <HiDocumentText className="text-white w-8 h-8" />
+            </div>
           </div>
-          <div className="flex gap-2 text-sm">
-            <span className="text-green-600 flex items-center">
-              <HiArrowNarrowUp />
-              {lastMonthPosts}
-            </span>
-            <div className="text-gray-500">Last Month</div>
+          <div className="flex items-center text-sm">
+            <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
+            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthPosts}</span>
+            <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 py-3 mx-auto justify-center">
-        {/* Recent Users */}
-        <div className="flex flex-col p-2 w-full md:w-auto shadow-md rounded-md dark:bg-slate-800">
-          <div className="flex justify-between p-3 text-sm font-semibold">
-            <h1 className=" p-2 text-center">Recent Users</h1>
-            <Button outline gradientDuoTone="tealToLime">
+
+      {/* Tables Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Users Table */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
+          <div className="flex justify-between items-center p-6">
+            <h2 className="text-lg font-semibold">Recent Users</h2>
+            <Button outline gradientDuoTone="tealToLime" size="sm">
               <Link to={"/dashboard?tab=users"}>View All</Link>
             </Button>
           </div>
@@ -135,71 +138,70 @@ export default function DashboardOverview() {
               <Table.HeadCell>User Image</Table.HeadCell>
               <Table.HeadCell>Username</Table.HeadCell>
             </Table.Head>
-            {users &&
-              users.map((user) => (
-                <Table.Body key={user._id} className="divide-y">
-                  <Table.Row className="bg-white dark:bg-slate-800">
-                    <Table.Cell>
-                      <img className="w-10 h-10 rounded-full bg-gray-500" src={user.profilePicture} alt={user.username} />
-                    </Table.Cell>
-                    <Table.Cell>{user.username}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
+            <Table.Body className="">
+              {users.map((user) => (
+                <Table.Row key={user._id} className="bg-white dark:bg-slate-800">
+                  <Table.Cell>
+                    <img className="w-10 h-10 rounded-full object-cover" src={user.profilePicture} alt={user.username} />
+                  </Table.Cell>
+                  <Table.Cell className="font-medium">{user.username}</Table.Cell>
+                </Table.Row>
               ))}
+            </Table.Body>
           </Table>
         </div>
-        {/* Recent Comments */}
-        <div className="flex flex-col p-2 w-full md:w-auto shadow-md rounded-md dark:bg-slate-800">
-          <div className="flex justify-between p-3 text-sm font-semibold">
-            <h1 className=" p-2 text-center">Recent Comments</h1>
-            <Button outline gradientDuoTone="tealToLime">
+
+        {/* Recent Comments Table */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
+          <div className="flex justify-between items-center p-6">
+            <h2 className="text-lg font-semibold">Recent Comments</h2>
+            <Button outline gradientDuoTone="purpleToBlue" size="sm">
               <Link to={"/dashboard?tab=comments"}>View All</Link>
             </Button>
           </div>
           <Table hoverable>
             <Table.Head>
-              <Table.HeadCell>Comments</Table.HeadCell>
+              <Table.HeadCell>Comment</Table.HeadCell>
               <Table.HeadCell>Likes</Table.HeadCell>
             </Table.Head>
-            {comments &&
-              comments.map((comment) => (
-                <Table.Body key={comment._id} className="divide-y">
-                  <Table.Row className="bg-white dark:bg-slate-800">
-                    <Table.Cell className="w-96">
-                      <p className="line-clamp-2">{comment.content}</p>
-                    </Table.Cell>
-                    <Table.Cell>{comment.numberOfLikes}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
+            <Table.Body className="">
+              {comments.map((comment) => (
+                <Table.Row key={comment._id} className="bg-white dark:bg-slate-800">
+                  <Table.Cell>
+                    <p className="line-clamp-3">{comment.content}</p>
+                  </Table.Cell>
+                  <Table.Cell>{comment.numberOfLikes}</Table.Cell>
+                </Table.Row>
               ))}
+            </Table.Body>
           </Table>
         </div>
-        {/* Recent Posts */}
-        <div className="flex flex-col p-2 w-full md:w-auto shadow-md rounded-md dark:bg-slate-800">
-          <div className="flex justify-between p-3 text-sm font-semibold">
-            <h1 className=" p-2 text-center">Recent Posts</h1>
-            <Button outline gradientDuoTone="tealToLime">
+
+        {/* Recent Posts Table */}
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden">
+          <div className="flex justify-between items-center p-6">
+            <h2 className="text-lg font-semibold">Recent Posts</h2>
+            <Button outline gradientDuoTone="pinkToOrange" size="sm">
               <Link to={"/dashboard?tab=posts"}>View All</Link>
             </Button>
           </div>
           <Table hoverable>
             <Table.Head>
-              <Table.HeadCell>Post Image</Table.HeadCell>
-              <Table.HeadCell>Post Title</Table.HeadCell>
+              <Table.HeadCell>Image</Table.HeadCell>
+              <Table.HeadCell>Title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
             </Table.Head>
-            {posts &&
-              posts.map((post) => (
-                <Table.Body key={post._id} className="divide-y">
-                  <Table.Row className="bg-white dark:bg-slate-800">
-                    <Table.Cell>
-                      <img className="w-10 h-10 rounded-md bg-gray-500" src={post.image} alt="user" />
-                    </Table.Cell>
-                    <Table.Cell className="w-96">{post.title}</Table.Cell>
-                    <Table.Cell className="w-5">{post.category}</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
+            <Table.Body className="">
+              {posts.map((post) => (
+                <Table.Row key={post._id} className="bg-white dark:bg-slate-800">
+                  <Table.Cell>
+                    <img className="w-10 h-10 rounded-lg object-cover" src={post.image} alt={post.title} />
+                  </Table.Cell>
+                  <Table.Cell className="font-medium line-clamp-3">{post.title}</Table.Cell>
+                  <Table.Cell>{post.category}</Table.Cell>
+                </Table.Row>
               ))}
+            </Table.Body>
           </Table>
         </div>
       </div>
