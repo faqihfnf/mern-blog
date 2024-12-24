@@ -7,6 +7,7 @@ import { HiDocumentText, HiUserGroup } from "react-icons/hi2";
 import { useDispatch } from "react-redux";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
+import { IoMdChatbubbles } from "react-icons/io";
 
 export default function DashboardSidebar() {
   const location = useLocation();
@@ -42,14 +43,24 @@ export default function DashboardSidebar() {
         <Sidebar.ItemGroup className="flex flex-col gap-1">
           {/* profile */}
           <Link to="/dashboard?tab=profile">
-            <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "profile"} icon={FaUser} label={currentUser.isAdmin ? "Admin" : "User"} labelColor={currentUser.isAdmin ? "green" : "blue"} as="div">
+            <Sidebar.Item
+              className="text-cyan-950 font-semibold"
+              active={tab === "profile"}
+              icon={FaUser}
+              label={currentUser.isAdmin ? "Admin" : "User"}
+              labelColor={currentUser.isAdmin ? "green" : "blue"}
+              as="div">
               Profile
             </Sidebar.Item>
           </Link>
           {/* posts */}
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
-              <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "posts"} icon={HiDocumentText} as="div">
+              <Sidebar.Item
+                className="text-cyan-950 font-semibold"
+                active={tab === "posts"}
+                icon={HiDocumentText}
+                as="div">
                 Posts
               </Sidebar.Item>
             </Link>
@@ -57,14 +68,34 @@ export default function DashboardSidebar() {
           {/* users */}
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=users">
-              <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "users"} icon={HiUserGroup} as="div">
+              <Sidebar.Item
+                className="text-cyan-950 font-semibold"
+                active={tab === "users"}
+                icon={HiUserGroup}
+                as="div">
                 Users
               </Sidebar.Item>
             </Link>
           )}
 
+          {/* comments */}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=comments">
+              <Sidebar.Item
+                className="text-cyan-950 font-semibold"
+                active={tab === "users"}
+                icon={IoMdChatbubbles}
+                as="div">
+                Comments
+              </Sidebar.Item>
+            </Link>
+          )}
+
           {/* sign out */}
-          <Sidebar.Item className="text-red-700 dark:text-red-700 font-semibold cursor-pointer" icon={FaSignOutAlt} onClick={handleSignOut}>
+          <Sidebar.Item
+            className="text-red-700 dark:text-red-700 font-semibold cursor-pointer"
+            icon={FaSignOutAlt}
+            onClick={handleSignOut}>
             Sign Out
           </Sidebar.Item>
         </Sidebar.ItemGroup>
