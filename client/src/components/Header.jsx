@@ -79,8 +79,8 @@ export default function Header() {
           </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/book"} as={"div"} className="text-lg font-semibold">
-          <Link to="/book" className="font-poppins dark:text-slate-200">
-            Book
+          <Link to="/product" className="font-poppins dark:text-slate-200">
+            Product
           </Link>
         </Navbar.Link>
       </Navbar.Collapse>
