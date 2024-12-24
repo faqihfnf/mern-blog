@@ -82,8 +82,8 @@ export default function DashboardPosts() {
         {currentUser.isAdmin && userPosts.length > 0 ? (
           <div className="flex flex-col h-full">
             <div className="flex-1">
-              <Table hoverable={true} className="shadow-lg text-center">
-                <Table.Head>
+              <Table hoverable={true} className="shadow-lg">
+                <Table.Head className="text-center">
                   <Table.HeadCell>Date Updated</Table.HeadCell>
                   <Table.HeadCell>Post Image</Table.HeadCell>
                   <Table.HeadCell>Post Title</Table.HeadCell>

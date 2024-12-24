@@ -29,9 +29,8 @@ export default function DashboardComments() {
         const data = await res.json();
 
         if (res.ok) {
-          // Handle array response directly
-          setComments(Array.isArray(data) ? data : []);
-          setTotalComments(Array.isArray(data) ? data.length : 0);
+          setComments(data.comments);
+          setTotalComments(data.totalComments);
           setIsLoading(false);
         } else {
           setError("Failed to fetch comments");
@@ -43,7 +42,6 @@ export default function DashboardComments() {
         setIsLoading(false);
       }
     };
-
     if (currentUser?.isAdmin) {
       fetchComments();
     } else {
@@ -106,8 +104,8 @@ export default function DashboardComments() {
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
         <div className="flex flex-col h-full">
           <div className="flex-1">
-            <Table hoverable={true} className="shadow-lg text-center">
-              <Table.Head>
+            <Table hoverable={true} className="shadow-lg">
+              <Table.Head className="text-center">
                 <Table.HeadCell>Date Updated</Table.HeadCell>
                 <Table.HeadCell>Comment Content</Table.HeadCell>
                 <Table.HeadCell>Number of Likes</Table.HeadCell>

@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useSelector } from "react-redux";
 import { IoMdChatbubbles } from "react-icons/io";
+import { IoStorefront } from "react-icons/io5";
+import { FaChartSimple } from "react-icons/fa6";
 
 export default function DashboardSidebar() {
   const location = useLocation();
@@ -41,6 +43,17 @@ export default function DashboardSidebar() {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {/* overview */}
+          <Link to="/dashboard?tab=overview">
+            <Sidebar.Item
+              className="text-cyan-950 font-semibold"
+              active={tab === "overview"}
+              icon={FaChartSimple}
+              labelColor={currentUser.isAdmin ? "green" : "blue"}
+              as="div">
+              Dashboard
+            </Sidebar.Item>
+          </Link>
           {/* profile */}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
@@ -87,6 +100,19 @@ export default function DashboardSidebar() {
                 icon={IoMdChatbubbles}
                 as="div">
                 Comments
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {/* products */}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=products">
+              <Sidebar.Item
+                className="text-cyan-950 font-semibold"
+                active={tab === "users"}
+                icon={IoStorefront}
+                as="div">
+                Products
               </Sidebar.Item>
             </Link>
           )}
