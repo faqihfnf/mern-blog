@@ -10,14 +10,12 @@ export default function Search() {
     sort: "desc",
     category: "aqidah",
   });
-
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
-
   const location = useLocation();
-
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -100,6 +98,21 @@ export default function Search() {
     }
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category/getcategory");
+        const data = await res.json();
+        if (res.ok) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-4 border-b md:border-r md:min-h-screen border-gray-500">
@@ -119,10 +132,11 @@ export default function Search() {
             <label className="font-semibold">Category:</label>
             <Select onChange={handleChange} value={sidebarData.category} id="category">
               <option value="uncategorized">Select a category</option>
-              <option value="aqidah">Aqidah</option>
-              <option value="tafsir">Tafsir</option>
-              <option value="hadits">Hadits</option>
-              <option value="adab">Adab</option>
+              {categories.map((category) => (
+                <option key={category._id} value={category.slug}>
+                  {category.name}
+                </option>
+              ))}
             </Select>
           </div>
           <Button type="submit" outline gradientDuoTone="tealToLime">

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { IoMdChatbubbles } from "react-icons/io";
 import { IoStorefront } from "react-icons/io5";
 import { FaChartSimple } from "react-icons/fa6";
+import { BiSolidCategoryAlt } from "react-icons/bi";
 
 export default function DashboardSidebar() {
   const location = useLocation();
@@ -44,11 +45,13 @@ export default function DashboardSidebar() {
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
           {/* overview */}
-          <Link to="/dashboard?tab=overview">
-            <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "overview"} icon={FaChartSimple} labelColor={currentUser.isAdmin ? "green" : "blue"} as="div">
-              Dashboard
-            </Sidebar.Item>
-          </Link>
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=overview">
+              <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "overview"} icon={FaChartSimple} labelColor={currentUser.isAdmin ? "green" : "blue"} as="div">
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
           {/* profile */}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "profile"} icon={FaUser} label={currentUser.isAdmin ? "Admin" : "User"} labelColor={currentUser.isAdmin ? "green" : "blue"} as="div">
@@ -63,6 +66,16 @@ export default function DashboardSidebar() {
               </Sidebar.Item>
             </Link>
           )}
+
+          {/* category */}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=category">
+              <Sidebar.Item className="text-cyan-950 font-semibold" active={tab === "category"} icon={BiSolidCategoryAlt} as="div">
+                Categories
+              </Sidebar.Item>
+            </Link>
+          )}
+
           {/* users */}
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=users">

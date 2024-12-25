@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ export default function CreatePost() {
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -53,6 +54,7 @@ export default function CreatePost() {
       console.log(error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowToast(false);
@@ -80,6 +82,21 @@ export default function CreatePost() {
       setPublishError("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category/getcategory");
+        const data = await res.json();
+        if (res.ok) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a Post</h1>
@@ -88,10 +105,11 @@ export default function CreatePost() {
           <TextInput type="text" placeholder="Title" required id="title" className="flex-1" onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
           <Select onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
             <option value="uncategorized">Select a category</option>
-            <option value="aqidah">Aqidah</option>
-            <option value="tafsir">Tafsir</option>
-            <option value="hadits">Hadits</option>
-            <option value="adab">Adab</option>
+            {categories.map((category) => (
+              <option key={category._id} value={category.slug}>
+                {category.name}
+              </option>
+            ))}
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
