@@ -36,7 +36,7 @@ export default function Home() {
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
-            <Link to={"/search"} className="text-lg text-teal-500 hover:underline text-center">
+            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-110 text-teal-500 hover:underline text-center">
               Lihat Semua Artikel
             </Link>
           </div>
