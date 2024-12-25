@@ -7,8 +7,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: "",
-    sort: "desc",
-    category: "aqidah",
+    sort: "",
+    category: "",
   });
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);

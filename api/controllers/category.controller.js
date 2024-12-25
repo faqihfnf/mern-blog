@@ -34,6 +34,8 @@ export const getcategory = async (req, res) => {
       _id: category._id,
       name: category.name,
       postCount: category.postCount || 0,
+      createdAt: category.createdAt,
+      updatedAt: category.updatedAt,
     }));
 
     res.status(200).json(formattedCategories);
