@@ -15,24 +15,30 @@ export default function DashboardCategories() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [showToast, setShowToast] = useState(false);
+  const [showToastSuccess, setShowToastSuccess] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCategory, setTotalCategory] = useState(0);
-  const categoryPerPage = 5;
+  const categoryPerPage = 10;
 
   useEffect(() => {
-    fetchCategories();
-  }, [currentUser]);
+    if (currentUser?.isAdmin) {
+      fetchCategories();
+    }
+  }, []);
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("/api/category/getcategory");
-      const data = await res.json();
-      if (res.ok) {
-        setCategories(data);
+      const startIndex = (currentPage - 1) * categoryPerPage;
+      const res = await fetch(`/api/category/getcategory?startIndex=${startIndex}&limit=${categoryPerPage}`);
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
       }
+      const data = await res.json();
+      setCategories(data);
+      setTotalCategory(data.length);
     } catch (error) {
-      setError("Failed to fetch categories");
+      setError(error.message || "Failed to fetch categories");
     }
   };
 
@@ -58,12 +64,16 @@ export default function DashboardCategories() {
       if (!res.ok) {
         setError(data.message);
       } else {
+        setShowToastSuccess(true);
         setSuccess(editMode ? "Kategori berhasil diupdate" : "Kategori berhasil dibuat");
         setFormData({ name: "" });
         setEditMode(false);
         setSelectedCategory(null);
         setShowCreateModal(false);
         fetchCategories();
+        setTimeout(() => {
+          setShowToastSuccess(false);
+        }, 3000);
       }
     } catch (error) {
       setError(error.message);
@@ -113,11 +123,12 @@ export default function DashboardCategories() {
   // Menghitung showing page info
   const startIndex = (currentPage - 1) * categoryPerPage + 1;
   const endIndex = Math.min(startIndex + categoryPerPage - 1, totalCategory);
+  const paginatedCategories = categories.slice(startIndex - 1, endIndex);
 
   return (
     <div className="flex w-full p-8 min-h-screen">
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <div className="mb-4 w-48">
+        <div className="mb-4 w-56">
           <Button
             gradientDuoTone="purpleToPink"
             onClick={() => {
@@ -127,9 +138,14 @@ export default function DashboardCategories() {
             }}
             className="w-full"
           >
-            <FaPlus size={20} className="mr-2" />
-            <span className="font-poppins text-md">Create Category</span>
+            <FaPlus size={20} className="mr-2 mt-1" />
+            <span className="font-poppins text-lg">Create Category</span>
           </Button>
+          {error && (
+            <Alert color="failure" className="mt-5">
+              {error}
+            </Alert>
+          )}
         </div>
         {currentUser.isAdmin && categories.length > 0 ? (
           <div className="flex flex-col h-full">
@@ -145,7 +161,7 @@ export default function DashboardCategories() {
                   </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {categories.map((category) => (
+                  {paginatedCategories.map((category) => (
                     <Table.Row key={category._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
                       <Table.Cell>{new Date(category.updatedAt).toLocaleDateString()}</Table.Cell>
                       <Table.Cell>{category.name}</Table.Cell>
@@ -222,12 +238,23 @@ export default function DashboardCategories() {
           </Modal.Body>
         </Modal>
 
-        {/* Success Toast */}
+        {/* Delete Toast */}
         {showToast && (
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-80">
               <HiCheckBadge className="w-8 h-8 text-white" />
               <div className="ml-3 text-sm font-semibold text-white">Kategori berhasil dihapus</div>
+              <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
+            </Toast>
+          </div>
+        )}
+
+        {/* Success Toast */}
+        {showToastSuccess && (
+          <div className="fixed top-0 right-0 gap-4">
+            <Toast color="success" className="bg-green-600 dark:bg-green-600 w-80">
+              <HiCheckBadge className="w-8 h-8 text-white" />
+              <div className="ml-3 text-sm font-semibold text-white">Kategori berhasil dibuat</div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>

@@ -88,6 +88,14 @@ export default function Header() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
+        {currentUser?.isAdmin && (
+          <Navbar.Link active={path === "/dashboard?/tab=profile"} as={"div"} className="text-lg font-semibold">
+            <Link to="/dashboard?/tab=profile" className="font-poppins dark:text-slate-200">
+              Dashboard
+            </Link>
+          </Navbar.Link>
+        )}
+
         <Navbar.Link active={path === "/"} as={"div"} className="text-lg font-semibold">
           <Link to="/" className="font-poppins dark:text-slate-200">
             Home
