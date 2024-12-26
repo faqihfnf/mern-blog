@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
 import { AiOutlineSearch } from "react-icons/ai";
+import ButtonScrollToTop from "../components/ButtonScrollToTop";
 
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
@@ -116,10 +117,21 @@ export default function Search() {
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-4 border-b md:border-r md:min-h-screen border-gray-500">
-        <form className="flex flex-col gap-4 m-4 w-full lg:w-72" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col gap-4 m-4 w-full lg:w-72"
+          onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
-            <label className="whitespace-nowrap font-semibold">Search Term:</label>
-            <TextInput placeholder="Search..." id="searchTerm" type="text" value={sidebarData.searchTerm} onChange={handleChange} rightIcon={AiOutlineSearch} />
+            <label className="whitespace-nowrap font-semibold">
+              Search Term:
+            </label>
+            <TextInput
+              placeholder="Search..."
+              id="searchTerm"
+              type="text"
+              value={sidebarData.searchTerm}
+              onChange={handleChange}
+              rightIcon={AiOutlineSearch}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <label className="font-semibold">Sort:</label>
@@ -130,7 +142,10 @@ export default function Search() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="font-semibold">Category:</label>
-            <Select onChange={handleChange} value={sidebarData.category} id="category">
+            <Select
+              onChange={handleChange}
+              value={sidebarData.category}
+              id="category">
               <option value="uncategorized">Select a category</option>
               {categories.map((category) => (
                 <option key={category._id} value={category.slug}>
@@ -145,20 +160,29 @@ export default function Search() {
         </form>
       </div>
       <div className="flex-1">
-        <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3 ">Semua Artikel</h1>
+        <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3 ">
+          Semua Artikel
+        </h1>
         <div className="w-full items-center justify-center flex">
           <div className="p-7 flex flex-wrap items-center justify-center gap-4">
-            {!loading && posts.length === 0 && <p className="text-xl text-gray-500">No posts found.</p>}
+            {!loading && posts.length === 0 && (
+              <p className="text-xl text-gray-500">No posts found.</p>
+            )}
             {loading && <p className="text-xl text-gray-500">Loading...</p>}
-            {!loading && posts && posts.map((post) => <PostCard key={post._id} post={post} />)}
+            {!loading &&
+              posts &&
+              posts.map((post) => <PostCard key={post._id} post={post} />)}
             {showMore && (
-              <button onClick={handleShowMore} className="text-teal-500 text-lg hover:underline p-7 w-full">
+              <button
+                onClick={handleShowMore}
+                className="text-teal-500 text-lg hover:underline p-7 w-full">
                 Show More
               </button>
             )}
           </div>
         </div>
       </div>
+      <ButtonScrollToTop />
     </div>
   );
 }

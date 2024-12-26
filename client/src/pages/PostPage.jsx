@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
+import ButtonScrollToTop from "../components/ButtonScrollToTop";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -126,6 +127,7 @@ export default function PostPage() {
           {recentPosts &&
             recentPosts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
+        <ButtonScrollToTop />
       </div>
     </main>
   );
