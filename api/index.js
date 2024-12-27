@@ -6,7 +6,9 @@ import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
 import categoryRoute from "./routes/category.route.js";
 import commentRoute from "./routes/comment.route.js";
+import productRoute from "./routes/product.route.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ const app = express();
 //# digunakan agar backend bisa menerima data/inputan dalam bentuk json
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.listen(3000, () => console.log("Server is running on port 3000"));
 
@@ -32,6 +35,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/comment", commentRoute);
+app.use("/api/product", productRoute);
 
 //# middleware untuk menangani error
 app.use((err, req, res, next) => {

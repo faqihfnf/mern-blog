@@ -1,13 +1,4 @@
-import {
-  Alert,
-  Button,
-  FileInput,
-  Select,
-  TextInput,
-  Toast,
-} from "flowbite-react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { Alert, Button, FileInput, TextInput, Toast } from "flowbite-react";
 import {
   getDownloadURL,
   getStorage,
@@ -20,9 +11,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
-import { useSelector } from "react-redux";
 
-export default function UpdatePost() {
+export default function UpdateProduct() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -30,14 +20,13 @@ export default function UpdatePost() {
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
-  const { postId } = useParams();
-  const { currentUser } = useSelector((state) => state.user);
-  console.log("Product ID from URL:", postId);
+  const { productId } = useParams();
+  console.log("Product ID from URL:", productId);
 
   useEffect(() => {
     try {
-      const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+      const fetchProduct = async () => {
+        const res = await fetch(`/api/product/getproduct/${productId}`);
         const data = await res.json();
         if (!res.ok) {
           console.log(data.message);
@@ -46,15 +35,15 @@ export default function UpdatePost() {
         }
         if (res.ok) {
           setPublishError(null);
-          setFormData(data.posts[0]);
-          console.log(data.posts[0]);
+          setFormData(data);
+          console.log(data);
         }
       };
-      fetchPost();
+      fetchProduct();
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
-  }, [postId]);
+  }, [productId]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -82,7 +71,7 @@ export default function UpdatePost() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImageUploadProgress(null);
             setImageUploadError(null);
-            setFormData({ ...formData, image: downloadURL });
+            setFormData({ ...formData, image: downloadURL }); // Changed from image to image
           });
         }
       );
@@ -92,20 +81,18 @@ export default function UpdatePost() {
       console.log(error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowToast(false);
     try {
-      const res = await fetch(
-        `/api/post/updatepost/${formData._id}/${currentUser._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`/api/product/updateproduct/${formData._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);
@@ -115,41 +102,50 @@ export default function UpdatePost() {
         setPublishError(null);
         setShowToast(true);
         setTimeout(() => {
-          navigate(`/post/${data.slug}`);
+          navigate("/dashboard?tab=products");
         }, 3000);
       }
     } catch (error) {
       setPublishError("Something went wrong");
     }
   };
+
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold">Update a Post</h1>
+      <h1 className="text-center text-3xl my-7 font-semibold">
+        Update a Product
+      </h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-4 sm:flex-row justify-between">
-          <TextInput
-            type="text"
-            placeholder="Title"
-            required
-            id="title"
-            className="flex-1"
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            value={formData.title}
-          />
-          <Select
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-            value={formData.category}>
-            <option value="uncategorized">Select a category</option>
-            <option value="aqidah">Aqidah</option>
-            <option value="tafsir">Tafsir</option>
-            <option value="hadits">Hadits</option>
-            <option value="adab">Adab</option>
-          </Select>
-        </div>
+        <TextInput
+          type="text"
+          placeholder="Product Name"
+          required
+          id="name"
+          className="flex-1"
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          value={formData.name}
+        />
+        <TextInput
+          type="number"
+          placeholder="Price"
+          required
+          id="price"
+          className="flex-1"
+          onChange={(e) =>
+            setFormData({ ...formData, price: Number(e.target.value) })
+          }
+          value={formData.price}
+        />
+        <TextInput
+          type="text"
+          placeholder="Product Link"
+          required
+          id="link"
+          className="flex-1"
+          onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+          value={formData.link}
+        />
+
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
           <FileInput
             type="file"
@@ -181,19 +177,14 @@ export default function UpdatePost() {
             src={formData.image}
             alt="upload"
             className="w-full h-72 object-cover"
+            loading="lazy"
           />
         )}
-        <ReactQuill
-          theme="snow"
-          placeholder="Write something..."
-          className="h-72 mb-12"
-          required
-          onChange={(value) => {
-            setFormData({ ...formData, content: value });
-          }}
-          value={formData.content}
-        />
-        <Button type="submit" gradientDuoTone="purpleToPink">
+
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToPink"
+          disabled={!formData.name || !formData.price || !formData.link}>
           Update
         </Button>
         {publishError && (
@@ -202,15 +193,14 @@ export default function UpdatePost() {
           </Alert>
         )}
       </form>
-      {/* Toast */}
       {showToast && (
         <div className="fixed top-0 right-0 gap-4">
           <Toast
             color="success"
             className="bg-green-500 dark:bg-green-500 w-72">
             <HiCheckBadge className="w-8 h-8 text-white" />
-            <div className="ml-3 text-lg font-semibold text-white">
-              Post berhasil diupdate{" "}
+            <div className="ml-3 text-sm font-semibold text-white">
+              Product berhasil diperbarui
             </div>
             <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
           </Toast>
