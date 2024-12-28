@@ -59,11 +59,8 @@ export default function Header() {
       <form onSubmit={handleSearch}>
         <TextInput className="w-72 hidden lg:inline" type="text" placeholder="Search..." rightIcon={AiOutlineSearch} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-        <AiOutlineSearch />
-      </Button>
       <div className="flex items-center gap-4 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
+        <Button className="w-12 h-10 inline" color="gray" pill onClick={() => dispatch(toggleTheme())}>
           {theme === "light" ? <FaSun className="text-yellow-300" /> : <FaMoon className="text-blue-800" />}
         </Button>
         {currentUser ? (
@@ -89,25 +86,25 @@ export default function Header() {
       </div>
       <Navbar.Collapse>
         {currentUser?.isAdmin && (
-          <Navbar.Link active={path === "/dashboard?/tab=profile"} as={"div"} className="text-lg font-semibold">
-            <Link to="/dashboard?/tab=profile" className="font-poppins dark:text-slate-200">
+          <Navbar.Link active={path === "/dashboard"} as={"div"} className="text-lg font-semibold">
+            <Link to="/dashboard?/tab=profile" className={`font-poppins hover:text-amber-500 ${path === "/dashboard" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
               Dashboard
             </Link>
           </Navbar.Link>
         )}
 
         <Navbar.Link active={path === "/"} as={"div"} className="text-lg font-semibold">
-          <Link to="/" className="font-poppins dark:text-slate-200">
+          <Link to="/" className={`font-poppins hover:text-amber-500 ${path === "/" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
             Home
           </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"} className="text-lg font-semibold">
-          <Link to="/about" className="font-poppins dark:text-slate-200">
+          <Link to="/about" className={`font-poppins hover:text-amber-500 ${path === "/about" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
             About
           </Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/book"} as={"div"} className="text-lg font-semibold">
-          <Link to="/product" className="font-poppins dark:text-slate-200">
+        <Navbar.Link active={path === "/product"} as={"div"} className="text-lg font-semibold ">
+          <Link to="/product" className={`font-poppins hover:text-amber-500 ${path === "/product" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
             Product
           </Link>
         </Navbar.Link>

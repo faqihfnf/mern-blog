@@ -86,10 +86,6 @@ export const deleteProduct = async (req, res, next) => {
       return next(errorHandler(404, "Product not found"));
     }
 
-    // if (product.userId !== req.user.id) {
-    //   return next(errorHandler(403, "You can only delete your own products"));
-    // }
-
     await Product.findByIdAndDelete(req.params.productId);
     res.status(200).json("Product has been deleted");
   } catch (error) {

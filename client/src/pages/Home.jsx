@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import GradientColor from "../components/GradientColor";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -16,10 +17,13 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto ">
-        <h1 className="text-3xl font-bold lg:text-6xl">Ahlan wa Sahlan 👋</h1>
-        <p className="text-gray-500 text-xs sm:text-sm">Selamat datang di marifah.or.id</p>
-        <Link to="/search" className="text-xs sm:text-sm text-teal-500 font-bold hover:underline">
+      <div className="flex flex-col gap-6 p-16 px-3 max-w-6xl mx-auto ">
+        <GradientColor />
+        <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text py-10 text-3xl font-extrabold text-transparent sm:text-8xl text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300">
+          Selamat Datang Para Penuntut Ilmu
+        </h1>
+        <p className="text-gray-500 text-sm sm:text-sm">Selamat datang di marifah.or.id</p>
+        <Link to="/search" className="text-md sm:text-sm text-teal-500 font-bold hover:underline">
           Lihat Semua Artikel
         </Link>
       </div>
