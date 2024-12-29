@@ -9,9 +9,10 @@ import GradientColor from "../components/GradientColor";
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: "",
-    sort: "",
+    sort: "asc",
     category: "",
   });
+  console.log(sidebarData);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -22,7 +23,7 @@ export default function Search() {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
-    const sortFromUrl = urlParams.get("sort");
+    const sortFromUrl = urlParams.get("order");
     const categoryFromUrl = urlParams.get("category");
     if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
       setSidebarData({
@@ -60,7 +61,7 @@ export default function Search() {
       setSidebarData({ ...sidebarData, searchTerm: e.target.value });
     }
     if (e.target.id === "sort") {
-      const order = e.target.value || "desc";
+      const order = e.target.value || "asc";
       setSidebarData({ ...sidebarData, sort: order });
     }
     if (e.target.id === "category") {
@@ -151,7 +152,7 @@ export default function Search() {
         <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3 ">Semua Artikel</h1>
         <div className="w-full items-center justify-center flex">
           <div className="p-7 flex flex-wrap items-center justify-center gap-4">
-            {!loading && posts.length === 0 && <p className="text-xl text-gray-500">No posts found.</p>}
+            {!loading && posts.length === 0 && <p className="text-xl text-gray-500">Artikel tidak ditemukan</p>}
             {loading && <p className="text-xl text-gray-500">Loading...</p>}
             {!loading && posts && posts.map((post) => <PostCard key={post._id} post={post} />)}
             {showMore && (
