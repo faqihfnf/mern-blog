@@ -86,7 +86,7 @@ export default function Header() {
       <Navbar.Collapse>
         {currentUser?.isAdmin && (
           <Navbar.Link active={path === "/dashboard"} as={"div"} className="text-lg font-semibold">
-            <Link to="/dashboard?/tab=profile" className={`font-poppins hover:text-amber-500 ${path === "/dashboard" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
+            <Link to="/dashboard?tab=overview" className={`font-poppins hover:text-amber-500 ${path === "/dashboard" ? "text-amber-600" : "dark:text-slate-200 dark:hover:text-amber-400"}`}>
               Dashboard
             </Link>
           </Navbar.Link>

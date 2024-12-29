@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import { useEffect, useState } from "react";
-import PostCard from "../components/PostCard";
+import PostList from "../components/PostList";
 import GradientColor from "../components/GradientColor";
 
 export default function Home() {
@@ -9,12 +9,13 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch("/api/post/getposts");
+      const res = await fetch("/api/post/getposts?limit=6");
       const data = await res.json();
       setPosts(data.posts);
     };
     fetchPosts();
   }, []);
+
   return (
     <div>
       <div className="flex flex-col gap-6 p-16 px-3 max-w-6xl mx-auto ">
@@ -32,14 +33,14 @@ export default function Home() {
       </div>
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-2 py-7">
         {posts && posts.length > 0 && (
-          <div className="flex flex-col gap-8 justify-center items-center">
+          <div className="flex flex-col gap-8">
             <h2 className="text-2xl font-semibold text-center">Artikel Terbaru</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center ">
+            <div className="flex flex-col gap-4 items-center">
               {posts.map((post) => (
-                <PostCard key={post._id} post={post} />
+                <PostList key={post._id} post={post} />
               ))}
             </div>
-            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-110 text-teal-500 hover:underline text-center">
+            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-110 text-teal-500 hover:underline text-center self-center">
               Lihat Semua Artikel
             </Link>
           </div>
