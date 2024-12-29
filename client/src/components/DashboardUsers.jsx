@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
-import {
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaCheckCircle, FaExclamationCircle, FaTimesCircle } from "react-icons/fa";
 import { HiCheckBadge } from "react-icons/hi2";
 
 export default function DashboardUsers() {
@@ -23,9 +19,7 @@ export default function DashboardUsers() {
     const fetchUsers = async () => {
       try {
         const startIndex = (currentPage - 1) * usersPerPage;
-        const res = await fetch(
-          `/api/user/getusers?startIndex=${startIndex}&limit=${usersPerPage}`
-        );
+        const res = await fetch(`/api/user/getusers?startIndex=${startIndex}&limit=${usersPerPage}`);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -82,7 +76,7 @@ export default function DashboardUsers() {
           <div className="flex flex-col h-full">
             <div className="flex-1">
               <Table hoverable={true} className="shadow-lg ">
-                <Table.Head className="text-center">
+                <Table.Head className="w-full">
                   <Table.HeadCell>Date Created</Table.HeadCell>
                   <Table.HeadCell>User Image</Table.HeadCell>
                   <Table.HeadCell>Username</Table.HeadCell>
@@ -92,35 +86,22 @@ export default function DashboardUsers() {
                 </Table.Head>
                 <Table.Body className="divide-y">
                   {users.map((user) => (
-                    <Table.Row
-                      key={user._id}
-                      className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                    <Table.Row key={user._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                      <Table.Cell>{new Date(user.createdAt).toLocaleDateString()}</Table.Cell>
                       <Table.Cell>
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <img
-                          src={user.profilePicture}
-                          alt={user.username}
-                          className="w-10 h-10 lg:w-14 lg:h-14 rounded-full object-cover bg-gray-400"
-                        />
+                        <img src={user.profilePicture} alt={user.username} className="w-10 h-10 lg:w-14 lg:h-14 rounded-full object-cover bg-gray-400" />
                       </Table.Cell>
                       <Table.Cell>{user.username}</Table.Cell>
                       <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>
-                        {user.isAdmin ? (
-                          <FaCheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                        ) : (
-                          <FaTimesCircle className="w-5 h-5 text-red-600" />
-                        )}
-                      </Table.Cell>
+                      <Table.Cell>{user.isAdmin ? <FaCheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" /> : <FaTimesCircle className="w-5 h-5 text-red-600" />}</Table.Cell>
                       <Table.Cell>
                         <span
                           className="text-red-600 font-semibold hover:underline cursor-pointer"
                           onClick={() => {
                             setShowModal(true);
                             setUserIdToDelete(user._id);
-                          }}>
+                          }}
+                        >
                           Delete
                         </span>
                       </Table.Cell>
@@ -134,30 +115,19 @@ export default function DashboardUsers() {
                 Showing {startIndex} to {endIndex} of {totalUsers} entries
               </div>
               <div className="flex overflow-x-auto sm:justify-center mt-2">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={Math.max(1, totalPages)}
-                  onPageChange={onPageChange}
-                  showIcons={true}
-                />
+                <Pagination currentPage={currentPage} totalPages={Math.max(1, totalPages)} onPageChange={onPageChange} showIcons={true} />
               </div>
             </div>
           </div>
         ) : (
           <p>Tidak ada user untuk saat ini</p>
         )}
-        <Modal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          popup
-          size="md">
+        <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
           <Modal.Header />
           <Modal.Body>
             <div className="text-center">
               <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-              <h3 className="mb-5 text-xl font-normal text-gray-500">
-                Apakah anda yakin ingin menghapus user ini?
-              </h3>
+              <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus user ini?</h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDeleteUser}>
                   Hapus
@@ -174,9 +144,7 @@ export default function DashboardUsers() {
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-72">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-sm font-semibold text-white">
-                User berhasil dihapus{" "}
-              </div>
+              <div className="ml-3 text-sm font-semibold text-white">User berhasil dihapus </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>

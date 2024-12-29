@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
 import { FaExclamationCircle } from "react-icons/fa";
 import { HiCheckBadge } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 export default function DashboardComments() {
   const { currentUser } = useSelector((state) => state.user);
@@ -102,11 +103,11 @@ export default function DashboardComments() {
         <div className="flex flex-col h-full">
           <div className="flex-1">
             <Table hoverable={true} className="shadow-lg">
-              <Table.Head className="text-center">
+              <Table.Head className="w-full">
                 <Table.HeadCell>Date Updated</Table.HeadCell>
                 <Table.HeadCell>Comment Content</Table.HeadCell>
                 <Table.HeadCell>Number of Likes</Table.HeadCell>
-                <Table.HeadCell>PostId</Table.HeadCell>
+                <Table.HeadCell>Post Title</Table.HeadCell>
                 <Table.HeadCell>UserId</Table.HeadCell>
                 <Table.HeadCell>Delete</Table.HeadCell>
               </Table.Head>
@@ -116,7 +117,11 @@ export default function DashboardComments() {
                     <Table.Cell>{new Date(comment.updatedAt).toLocaleDateString()}</Table.Cell>
                     <Table.Cell className="line-clamp-1">{comment.content}</Table.Cell>
                     <Table.Cell>{comment.numberOfLikes || 0}</Table.Cell>
-                    <Table.Cell>{comment.postId}</Table.Cell>
+                    <Table.Cell>
+                      <Link to={`/post/${comment.postId.slug}`} className="text-blue-500 hover:underline">
+                        {comment.postId.title}
+                      </Link>
+                    </Table.Cell>
                     <Table.Cell>{comment.userId}</Table.Cell>
                     <Table.Cell>
                       <span

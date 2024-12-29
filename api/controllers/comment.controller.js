@@ -7,9 +7,7 @@ export const createComment = async (req, res, next) => {
     const { content, postId, userId } = req.body;
 
     if (userId !== req.user.id) {
-      return next(
-        errorHandler(403, "Kamu tidak memiliki akses untuk membuat komentar!")
-      );
+      return next(errorHandler(403, "Kamu tidak memiliki akses untuk membuat komentar!"));
     }
 
     const newComment = new Comment({
@@ -67,9 +65,7 @@ export const editComment = async (req, res, next) => {
       return next(errorHandler(404, "Komentar tidak ditemukan!"));
     }
     if (comment.userId !== req.user.id && !req.user.isAdmin) {
-      return next(
-        errorHandler(403, "Kamu tidak memiliki akses untuk mengedit komentar!")
-      );
+      return next(errorHandler(403, "Kamu tidak memiliki akses untuk mengedit komentar!"));
     }
     const editedComment = await Comment.findByIdAndUpdate(
       req.params.commentId,
@@ -92,9 +88,7 @@ export const deleteComment = async (req, res, next) => {
       return next(errorHandler(404, "Komentar tidak ditemukan!"));
     }
     if (comment.userId !== req.user.id && !req.user.isAdmin) {
-      return next(
-        errorHandler(403, "Kamu tidak memiliki akses untuk menghapus komentar!")
-      );
+      return next(errorHandler(403, "Kamu tidak memiliki akses untuk menghapus komentar!"));
     }
     await Comment.findByIdAndDelete(req.params.commentId);
     res.status(200).json("Komentar berhasil dihapus!");
@@ -107,29 +101,22 @@ export const deleteComment = async (req, res, next) => {
 export const getComment = async (req, res, next) => {
   try {
     if (!req.user.isAdmin) {
-      return next(
-        errorHandler(
-          403,
-          "Kamu tidak memiliki akses untuk mengakses data komentar!"
-        )
-      );
+      return next(errorHandler(403, "Kamu tidak memiliki akses untuk mengakses data komentar!"));
     }
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 6;
     const sortDirection = req.query.sort === "asc" ? 1 : -1;
+    const totalComments = await Comment.countDocuments();
+    // Populate postId untuk mendapatkan slug
     const comments = await Comment.find()
+      .populate("postId", "slug title") // tambahkan ini untuk mendapatkan slug dan title post
       .sort({ createdAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
-    const totalComments = await Comment.countDocuments();
 
     const now = new Date();
 
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDate()
-    );
+    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
 
     const lastMonthComments = await Comment.countDocuments({
       createdAt: { $gte: oneMonthAgo },
