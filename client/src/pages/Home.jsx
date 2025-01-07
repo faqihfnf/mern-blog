@@ -3,13 +3,15 @@ import CallToAction from "../components/CallToAction";
 import { useEffect, useState } from "react";
 import PostList from "../components/PostList";
 import GradientColor from "../components/GradientColor";
+import SEO from "../components/SEO";
+import { Button } from "flowbite-react";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch("/api/post/getposts?limit=6");
+      const res = await fetch("/api/post/getposts?limit=5");
       const data = await res.json();
       setPosts(data.posts);
     };
@@ -18,15 +20,31 @@ export default function Home() {
 
   return (
     <div>
+      <SEO
+        title="Marifah.id | Al-Quran dan As-Sunnah"
+        description="Selamat datang di marifah.or.id, portal ilmu pengetahuan Islam yang menyajikan artikel-artikel berkualitas tentang ajaran Islam, fiqih, hadits, dan berbagai kajian islami lainnya."
+        keywords="islam, ilmu islam, artikel islam, kajian islam, fiqih, hadits, quran"
+        image="/logo.png" // Ganti dengan URL gambar default Anda
+      />
       <div className="flex flex-col gap-6 p-16 px-3 max-w-6xl mx-auto ">
         <GradientColor />
-        <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text py-10 text-3xl font-extrabold text-transparent sm:text-8xl text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300">
+        <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text text-5xl font-extrabold text-transparent sm:text-8xl text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300">
           Selamat Datang Para Penuntut Ilmu
         </h1>
-        <p className="text-gray-500 text-sm sm:text-sm">Selamat datang di marifah.or.id</p>
-        <Link to="/search" className="text-md sm:text-sm text-teal-500 font-bold hover:underline">
-          Lihat Semua Artikel
-        </Link>
+        <p className="flex justify-center text-xl font-semibold">Bersama Tinta dan Pena sampai Berpisah dengan Dunia yang Fana</p>
+        <div className="flex flex-col sm:flex-row gap-2 items-center justify-center">
+          <Button className="items-center w-44" size="xl" gradientDuoTone="greenToBlue">
+            <Link className="text-md" to={"/search"}>
+              Lihat Artikel
+            </Link>
+          </Button>
+
+          <Button className="items-center w-44" size="xl" outline gradientDuoTone="redToYellow">
+            <Link className="text-md" to={"/product"}>
+              Lihat Product
+            </Link>
+          </Button>
+        </div>
       </div>
       <div className="p-3 bg-amber-100 dark:bg-slate-700">
         <CallToAction />

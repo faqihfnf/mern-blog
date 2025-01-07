@@ -5,9 +5,9 @@ export default function About() {
   return (
     <div className="min-h-screen flex flex-col items-center">
       <GradientColor />
-      <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text py-10 text-3xl font-extrabold text-transparent sm:text-5xl items-center justify-center flex">Tentang Kami</h1>
+      <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text py-10 text-5xl font-extrabold text-transparent items-center justify-center flex">Tentang Kami</h1>
       <img src="logo.png" alt="logo" className="w-36 h-36 mb-10" />
-      <div className=" text-xl px-72 dark:text-white ">
+      <div className="text-xl px-8 md:px-24 lg:px-48  dark:text-white ">
         <p>
           Marifah.id adalah sebuah blog yang menyajikan artikel Islami yang bersumber dari Al-Quran dan As-Sunnah dengan pemahaman salafus shalih. Kami berkomitmen untuk menyajikan konten Islami yang berkualitas dan bermanfaat bagi para
           pembaca.

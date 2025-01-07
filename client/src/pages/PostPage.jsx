@@ -5,6 +5,7 @@ import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
+import SEO from "../components/SEO";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -87,8 +88,23 @@ export default function PostPage() {
       </div>
     );
   }
+
+  // Fungsi untuk membersihkan HTML tags untuk description
+  const stripHtml = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+
+  // Fungsi untuk mengambil excerpt dari content
+  const getExcerpt = (content, maxLength = 160) => {
+    const strippedContent = stripHtml(content);
+    if (strippedContent.length <= maxLength) return strippedContent;
+    return strippedContent.substring(0, maxLength).trim() + "...";
+  };
+
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
+      {post && <SEO title={` Marifah.or.id | ${post.title}`} description={getExcerpt(post.content)} keywords={`${post.category}, islam, artikel islami, ${post.title}`} image={post.image} />}
       <h1 className="text-4xl mt-10 p-3 text-center max-w-2xl mx-auto font-poppins lg:text-5xl">{post && post.title}</h1>
       <Link className="flex justify-center mt-4" to={`/search?category=${post && post.category}`}>
         <Badge color="purple" className="h-5 w-fit text-center items-center  flex font-poppins">
