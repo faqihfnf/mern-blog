@@ -17,8 +17,7 @@ const postSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default:
-        "https://cdn.pixabay.com/photo/2022/06/30/17/50/blog-post-7294160_1280.png",
+      default: "https://cdn.pixabay.com/photo/2022/06/30/17/50/blog-post-7294160_1280.png",
     },
     category: {
       type: String,
@@ -28,6 +27,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    views: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

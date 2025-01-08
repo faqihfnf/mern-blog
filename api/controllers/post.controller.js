@@ -101,3 +101,16 @@ export const updatepost = async (req, res, next) => {
     next(error);
   }
 };
+
+export const incrementViews = async (req, res, next) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.postId,
+      { $inc: { views: 1 } }, // Menambah views dengan 1 setiap kali dipanggil
+      { new: true }
+    );
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -69,6 +69,7 @@ export default function DashboardPosts() {
       console.log(error.message);
     }
   };
+
   return (
     <div className="flex w-full p-8 min-h-screen">
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -89,6 +90,7 @@ export default function DashboardPosts() {
                   <Table.HeadCell>Post Image</Table.HeadCell>
                   <Table.HeadCell>Post Title</Table.HeadCell>
                   <Table.HeadCell>Category</Table.HeadCell>
+                  <Table.HeadCell>Views</Table.HeadCell>
                   <Table.HeadCell>Delete</Table.HeadCell>
                   <Table.HeadCell>
                     <span>Edit</span>
@@ -109,6 +111,7 @@ export default function DashboardPosts() {
                         </Link>
                       </Table.Cell>
                       <Table.Cell>{post.category}</Table.Cell>
+                      <Table.Cell>{post.views}</Table.Cell>
                       <Table.Cell>
                         <span
                           className="text-red-600 font-semibold hover:underline cursor-pointer"

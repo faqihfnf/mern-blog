@@ -1,6 +1,7 @@
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { BsEyeFill } from "react-icons/bs";
 
 export default function PostList({ post }) {
   return (
@@ -17,7 +18,13 @@ export default function PostList({ post }) {
         <div className="flex flex-col justify-between gap-4 w-full">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-2">
-              <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post.category}</span>
+              <div className="flex gap-2 items-center">
+                <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post.category}</span>
+                <span className="flex gap-1 items-center text-md">
+                  <BsEyeFill />
+                  {post.views}
+                </span>
+              </div>
               <span className="text-sm text-gray-500">
                 {new Intl.DateTimeFormat("id-ID", {
                   day: "numeric",

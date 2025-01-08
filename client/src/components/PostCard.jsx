@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BsEyeFill } from "react-icons/bs";
 
 export default function PostCard({ post }) {
   return (
@@ -16,7 +17,13 @@ export default function PostCard({ post }) {
                 year: "numeric",
               }).format(new Date(post.createdAt))}
           </span>
-          <span className="whitespace-nowrap rounded-md bg-indigo-100 px-2.5 py-0.5 text-xs text-indigo-600">{post.category}</span>
+          <div className="flex gap-2 items-center">
+            <span className="whitespace-nowrap rounded-md bg-indigo-100 px-2.5 py-0.5 text-xs text-indigo-600">{post.category}</span>
+            <span className="flex gap-1 items-center text-md">
+              <BsEyeFill />
+              {post.views}
+            </span>
+          </div>
         </div>
         <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
         <Link

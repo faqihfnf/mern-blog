@@ -39,6 +39,21 @@ export default function PostPage() {
   }, [postSlug]);
 
   useEffect(() => {
+    const incrementPostViews = async () => {
+      if (!post?._id) return;
+      try {
+        await fetch(`/api/post/incrementViews/${post._id}`, {
+          method: "POST",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    incrementPostViews();
+  }, [post?._id]);
+
+  useEffect(() => {
     const fetchRelatedPosts = async () => {
       if (!post || !post.category) return;
       try {
@@ -121,7 +136,7 @@ export default function PostPage() {
               year: "numeric",
             })}
         </span>
-        <span>{post && post.category}</span>
+        <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post && post.category}</span>
       </div>
       <div className="p-3 max-auto post-content" dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
       <div className="mt-4 p-3 mx-auto">
