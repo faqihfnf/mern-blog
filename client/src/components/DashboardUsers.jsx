@@ -77,7 +77,7 @@ export default function DashboardUsers() {
             <div className="flex-1">
               <Table hoverable={true} className="shadow-lg ">
                 <Table.Head className="w-full">
-                  <Table.HeadCell>Date Created</Table.HeadCell>
+                  <Table.HeadCell>Date</Table.HeadCell>
                   <Table.HeadCell>User Image</Table.HeadCell>
                   <Table.HeadCell>Username</Table.HeadCell>
                   <Table.HeadCell>Email</Table.HeadCell>

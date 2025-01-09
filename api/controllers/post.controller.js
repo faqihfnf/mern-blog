@@ -1,4 +1,5 @@
 import Post from "../models/post.model.js";
+import Comment from "../models/comment.model.js";
 import { errorHandler } from "../utils/error.js";
 
 //# function create post
@@ -41,9 +42,20 @@ export const getposts = async (req, res, next) => {
         $or: [{ title: { $regex: req.query.searchTerm, $options: "i" } }, { content: { $regex: req.query.searchTerm, $options: "i" } }],
       }),
     })
-      .sort({ updatedAt: sortDirection })
+      .sort({ createdAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
+
+    // Ambil jumlah comment untuk setiap post
+    const postsWithCommentCount = await Promise.all(
+      posts.map(async (post) => {
+        const commentCount = await Comment.countDocuments({ postId: post._id });
+        return {
+          ...post._doc,
+          commentCount,
+        };
+      })
+    );
 
     const totalPosts = await Post.countDocuments();
 
@@ -56,7 +68,7 @@ export const getposts = async (req, res, next) => {
     });
 
     res.status(200).json({
-      posts,
+      posts: postsWithCommentCount,
       totalPosts,
       lastMonthPosts,
     });

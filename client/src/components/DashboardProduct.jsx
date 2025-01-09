@@ -96,8 +96,8 @@ export default function DashboardProducts() {
             <div className="flex-1">
               <Table hoverable={true} className="shadow-lg">
                 <Table.Head className="">
-                  <Table.HeadCell>Date Updated</Table.HeadCell>
-                  <Table.HeadCell>Product Photo</Table.HeadCell>
+                  <Table.HeadCell>Date</Table.HeadCell>
+                  <Table.HeadCell>Images</Table.HeadCell>
                   <Table.HeadCell>Product Name</Table.HeadCell>
                   <Table.HeadCell>Price</Table.HeadCell>
                   <Table.HeadCell>Link</Table.HeadCell>

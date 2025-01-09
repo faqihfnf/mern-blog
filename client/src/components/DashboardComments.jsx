@@ -81,75 +81,62 @@ export default function DashboardComments() {
     }
   };
 
-  if (!currentUser?.isAdmin) {
-    return <p className="p-4">Anda tidak memiliki akses ke halaman ini</p>;
-  }
-
-  if (isLoading) {
-    return <p className="p-4">Loading...</p>;
-  }
-
-  if (error) {
-    return <p className="p-4 text-red-500">Error: {error}</p>;
-  }
-
-  if (!comments || comments.length === 0) {
-    return <p className="p-4">Tidak ada komentar untuk saat ini</p>;
-  }
-
   return (
     <div className="flex w-full p-8 min-h-screen">
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <div className="flex flex-col h-full">
-          <div className="flex-1">
-            <Table hoverable={true} className="shadow-lg">
-              <Table.Head className="w-full">
-                <Table.HeadCell>Date Updated</Table.HeadCell>
-                <Table.HeadCell>Comment Content</Table.HeadCell>
-                <Table.HeadCell>Number of Likes</Table.HeadCell>
-                <Table.HeadCell>Post Title</Table.HeadCell>
-                <Table.HeadCell>UserId</Table.HeadCell>
-                <Table.HeadCell>Delete</Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {comments.map((comment) => (
-                  <Table.Row key={comment._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                    <Table.Cell>{new Date(comment.updatedAt).toLocaleDateString()}</Table.Cell>
-                    <Table.Cell className="line-clamp-1">{comment.content}</Table.Cell>
-                    <Table.Cell>{comment.numberOfLikes || 0}</Table.Cell>
-                    <Table.Cell>
-                      <Link to={`/post/${comment.postId.slug}`} className="text-blue-500 hover:underline">
-                        {comment.postId.title}
-                      </Link>
-                    </Table.Cell>
-                    <Table.Cell>{comment.userId}</Table.Cell>
-                    <Table.Cell>
-                      <span
-                        className="text-red-600 font-semibold hover:underline cursor-pointer"
-                        onClick={() => {
-                          setShowModal(true);
-                          setCommentIdToDelete(comment._id);
-                        }}
-                      >
-                        Delete
-                      </span>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </div>
-
-          <div className="mt-auto pt-5">
-            <div className="text-sm text-center text-slate-800 dark:text-slate-200">
-              Showing {startIndex} to {endIndex} of {totalComments} entries
+        {currentUser?.isAdmin && comments?.length > 0 ? (
+          <div className="flex flex-col h-full">
+            <div className="flex-1">
+              <Table hoverable={true} className="shadow-lg">
+                <Table.Head className="w-full">
+                  <Table.HeadCell>Date</Table.HeadCell>
+                  <Table.HeadCell>Comment Content</Table.HeadCell>
+                  <Table.HeadCell>Likes</Table.HeadCell>
+                  <Table.HeadCell>Post Title</Table.HeadCell>
+                  <Table.HeadCell>UserId</Table.HeadCell>
+                  <Table.HeadCell>Delete</Table.HeadCell>
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {comments.map((comment) => (
+                    <Table.Row key={comment._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                      <Table.Cell>{new Date(comment.updatedAt).toLocaleDateString()}</Table.Cell>
+                      <Table.Cell className="line-clamp-1">{comment.content}</Table.Cell>
+                      <Table.Cell>{comment.numberOfLikes || 0}</Table.Cell>
+                      <Table.Cell>
+                        <Link to={`/post/${comment.postId.slug}`} className="text-blue-500 hover:underline">
+                          {comment.postId.title}
+                        </Link>
+                      </Table.Cell>
+                      <Table.Cell>{comment.userId}</Table.Cell>
+                      <Table.Cell>
+                        <span
+                          className="text-red-600 font-semibold hover:underline cursor-pointer"
+                          onClick={() => {
+                            setShowModal(true);
+                            setCommentIdToDelete(comment._id);
+                          }}
+                        >
+                          Delete
+                        </span>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
             </div>
-            <div className="flex overflow-x-auto sm:justify-center mt-2">
-              <Pagination currentPage={currentPage} totalPages={Math.max(1, Math.ceil(totalComments / commentsPerPage))} onPageChange={onPageChange} showIcons={true} />
+
+            <div className="mt-auto pt-5">
+              <div className="text-sm text-center text-slate-800 dark:text-slate-200">
+                Showing {startIndex} to {endIndex} of {totalComments} entries
+              </div>
+              <div className="flex overflow-x-auto sm:justify-center mt-2">
+                <Pagination currentPage={currentPage} totalPages={Math.max(1, Math.ceil(totalComments / commentsPerPage))} onPageChange={onPageChange} showIcons={true} />
+              </div>
             </div>
           </div>
-        </div>
-
+        ) : (
+          <p className="p-4">Tidak ada komentar untuk saat ini</p>
+        )}
         <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
           <Modal.Header />
           <Modal.Body>

@@ -2,6 +2,7 @@ import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { BsEyeFill } from "react-icons/bs";
+import { FaComments } from "react-icons/fa";
 
 export default function PostList({ post }) {
   return (
@@ -23,6 +24,10 @@ export default function PostList({ post }) {
                 <span className="flex gap-1 items-center text-md">
                   <BsEyeFill />
                   {post.views}
+                </span>
+                <span className="flex gap-1 items-center text-md">
+                  <FaComments />
+                  {post.commentCount}
                 </span>
               </div>
               <span className="text-sm text-gray-500">

@@ -152,7 +152,7 @@ export default function DashboardCategories() {
             <div className="flex-1">
               <Table hoverable={true} className="shadow-lg">
                 <Table.Head className="w-full">
-                  <Table.HeadCell>Date Created</Table.HeadCell>
+                  <Table.HeadCell>Date</Table.HeadCell>
                   <Table.HeadCell>Category Name</Table.HeadCell>
                   <Table.HeadCell>Total Post</Table.HeadCell>
                   <Table.HeadCell>Delete</Table.HeadCell>

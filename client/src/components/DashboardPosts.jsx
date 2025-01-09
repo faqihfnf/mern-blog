@@ -86,11 +86,12 @@ export default function DashboardPosts() {
             <div className="flex-1">
               <Table hoverable={true} className="shadow-lg">
                 <Table.Head className="">
-                  <Table.HeadCell>Date Updated</Table.HeadCell>
-                  <Table.HeadCell>Post Image</Table.HeadCell>
+                  <Table.HeadCell>Date</Table.HeadCell>
+                  <Table.HeadCell>Images</Table.HeadCell>
                   <Table.HeadCell>Post Title</Table.HeadCell>
                   <Table.HeadCell>Category</Table.HeadCell>
                   <Table.HeadCell>Views</Table.HeadCell>
+                  <Table.HeadCell>Comments</Table.HeadCell>
                   <Table.HeadCell>Delete</Table.HeadCell>
                   <Table.HeadCell>
                     <span>Edit</span>
@@ -99,7 +100,7 @@ export default function DashboardPosts() {
                 <Table.Body className="divide-y">
                   {userPosts.map((post) => (
                     <Table.Row key={post._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                      <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
+                      <Table.Cell>{new Date(post.createdAt).toLocaleDateString()}</Table.Cell>
                       <Table.Cell>
                         <Link to={`/post/${post.slug}`}>
                           <img src={post.image} alt={post.title} className="w-20 h-20 object-cover bg-gray-400" />
@@ -112,6 +113,7 @@ export default function DashboardPosts() {
                       </Table.Cell>
                       <Table.Cell>{post.category}</Table.Cell>
                       <Table.Cell>{post.views}</Table.Cell>
+                      <Table.Cell>{post.commentCount}</Table.Cell>
                       <Table.Cell>
                         <span
                           className="text-red-600 font-semibold hover:underline cursor-pointer"
