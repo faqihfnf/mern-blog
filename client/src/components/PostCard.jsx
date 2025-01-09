@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BsEyeFill } from "react-icons/bs";
+import { FaComments } from "react-icons/fa";
 
 export default function PostCard({ post }) {
   return (
@@ -9,7 +10,7 @@ export default function PostCard({ post }) {
       </Link>
       <div className="p-3 flex flex-col gap-4">
         <div className="flex justify-between">
-          <span className="text-md text-gray-500 border-b border-gray-500">
+          <span className="text-md text-gray-500 ">
             {post.createdAt &&
               new Intl.DateTimeFormat("id-ID", {
                 day: "2-digit",
@@ -22,6 +23,10 @@ export default function PostCard({ post }) {
             <span className="flex gap-1 items-center text-md">
               <BsEyeFill />
               {post.views}
+            </span>
+            <span className="flex gap-1 items-center text-md">
+              <FaComments />
+              {post.commentCount}
             </span>
           </div>
         </div>
