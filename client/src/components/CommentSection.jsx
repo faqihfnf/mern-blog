@@ -122,9 +122,9 @@ export default function CommentSection({ postId }) {
         </div>
       ) : (
         <div className=" flex items-center gap-1 font-semibold">
-          Anda harus login untuk berkomentar.
-          <Link to="/sign-in" className="ml-2 text-indigo-600 hover:underline">
-            Silahkan Masuk
+          Anda harus login untuk berkomentar!
+          <Link to="/sign-in" className="ml-1 text-indigo-600 hover:underline">
+            Login
           </Link>
         </div>
       )}

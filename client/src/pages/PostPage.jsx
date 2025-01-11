@@ -121,11 +121,7 @@ export default function PostPage() {
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
       {post && <SEO title={` Marifah.or.id | ${post.title}`} description={getExcerpt(post.content)} keywords={`${post.category}, islam, artikel islami, ${post.title}`} image={post.image} />}
       <h1 className="text-4xl mt-10 p-3 text-center max-w-2xl mx-auto font-poppins lg:text-5xl">{post && post.title}</h1>
-      <Link className="flex justify-center mt-4" to={`/search?category=${post && post.category}`}>
-        <Badge color="purple" className="h-5 w-fit text-center items-center  flex font-poppins">
-          {post && post.category}
-        </Badge>
-      </Link>
+      <Link className="flex justify-center mt-4" to={`/search?category=${post && post.category}`}></Link>
       <img src={post && post.image} alt={post && post.title} className="object-cover w-full max-h-[500px] mt-4 rounded-md" />
       <div className="flex justify-between mt-2 border-b border-slate-600 mx-auto w-full p-3">
         <span>
