@@ -103,7 +103,7 @@ export default function CreateProduct() {
         {imageUploadError && <Alert color="failure">{imageUploadError}</Alert>}
         {formData.image && <img src={formData.image} alt="upload" className="w-full h-72 object-cover" />}
 
-        <Button type="submit" gradientDuoTone="purpleToPink" disabled={!formData.name || !formData.price || !formData.link}>
+        <Button type="submit" gradientDuoTone="purpleToPink" disabled={!formData.name || typeof formData.price !== "number" || !formData.link || !formData.image}>
           Publish
         </Button>
         {publishError && (

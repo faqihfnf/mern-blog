@@ -6,7 +6,7 @@ export const createProduct = async (req, res, next) => {
   try {
     const { image, name, price, link } = req.body;
 
-    if (!name || !price || !link) {
+    if (!name || typeof price !== "number" || !link) {
       return next(errorHandler(400, "All fields are required"));
     }
 
