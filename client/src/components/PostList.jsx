@@ -6,7 +6,7 @@ import { FaComments } from "react-icons/fa";
 
 export default function PostList({ post }) {
   return (
-    <div className="rounded-md shadow-indigo-500/10 border shadow-xl  transition hover:border-teal-500 hover:shadow-teal-500/30 flex justify-between p-3 w-5/6">
+    <div className="rounded-md shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30 flex justify-between p-3 w-5/6">
       <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
         <div className="relative w-full sm:w-[300px] h-[200px] flex-shrink-0">
           <Link to={`/post/${post.slug}`}>

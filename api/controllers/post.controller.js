@@ -126,3 +126,31 @@ export const incrementViews = async (req, res, next) => {
     next(error);
   }
 };
+
+//# function get popular posts
+export const getPopularPosts = async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+
+    const posts = await Post.find()
+      .sort({ views: -1 }) // Urutkan berdasarkan views terbanyak
+      .limit(limit);
+
+    // Ambil jumlah comment untuk setiap post
+    const postsWithCommentCount = await Promise.all(
+      posts.map(async (post) => {
+        const commentCount = await Comment.countDocuments({ postId: post._id });
+        return {
+          ...post._doc,
+          commentCount,
+        };
+      })
+    );
+
+    res.status(200).json({
+      posts: postsWithCommentCount,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

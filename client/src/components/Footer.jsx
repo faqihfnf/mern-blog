@@ -15,7 +15,7 @@ export default function Footer() {
             <Link to="/" className="dark:text-white">
               <div className="flex items-center">
                 <img src="/logo.png" className="mr-2 h-8" alt="Flowbite Logo" />
-                <span className="font-bold text-2xl font-poppins text-white">marifah.or.id</span>
+                <span className="font-bold text-2xl font-poppins text-white">marifah.id</span>
               </div>
             </Link>
             <p className="mt-6 max-w-md text-center leading-relaxed text-white sm:max-w-xs sm:text-left">Menebar ilmu dibumi meraih ridho Ilahi meraih kebahagiaan yang hakiki</p>

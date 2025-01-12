@@ -52,7 +52,7 @@ export default function Header() {
       <Link to="/" className="dark:text-white">
         <div className="flex items-center">
           <img src="/logo.png" className="mr-2 h-9" alt="Flowbite Logo" />
-          <span className="font-bold text-3xl font-poppins text-cyan-950 dark:text-slate-200">marifah.or.id</span>
+          <span className="font-bold text-3xl font-poppins text-cyan-950 dark:text-slate-200">marifah.id</span>
         </div>
       </Link>
       <form onSubmit={handleSearch}>
