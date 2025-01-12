@@ -8,15 +8,18 @@ export default function PostPopularCard({ post }) {
   return (
     <div className="w-full bg-slate-900 rounded-lg overflow-hidden shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30">
       {/* Container Gambar dengan tinggi tetap */}
-      <div className="h-56">
+      <div className="relative h-56">
         <Link to={`/post/${post.slug}`}>
           <img src={post.image} alt={post.title} className="w-full h-full object-cover transition duration-300 hover:scale-105" />
         </Link>
+        <div className="absolute top-2 left-2">
+          <span className="text-xs font-bold uppercase tracking-wider bg-white/90 text-slate-800 px-2 py-1 rounded">{new Date(post.createdAt).getFullYear()}</span>
+        </div>
       </div>
 
       {/* Bagian Metadata (Tanggal dan Kategori) */}
       <div className="flex justify-between p-3">
-        <span className="text-md text-gray-500">
+        <span className="text-md text-gray-400">
           {post.createdAt &&
             new Intl.DateTimeFormat("id-ID", {
               day: "2-digit",
@@ -25,12 +28,12 @@ export default function PostPopularCard({ post }) {
             }).format(new Date(post.createdAt))}
         </span>
         <div className="flex gap-2 items-center">
-          <span className="whitespace-nowrap rounded-md bg-indigo-100 px-2.5 py-0.5 text-xs text-indigo-600">{post.category}</span>
-          <span className="flex gap-1 items-center text-md text-gray-400">
+          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 text-xs text-indigo-600">{post.category}</span>
+          <span className="flex gap-1 items-center text-md text-gray-200">
             <BsEyeFill />
             {post.views}
           </span>
-          <span className="flex gap-1 items-center text-md text-gray-400">
+          <span className="flex gap-1 items-center text-md text-gray-200">
             <FaComments />
             {post.commentCount}
           </span>

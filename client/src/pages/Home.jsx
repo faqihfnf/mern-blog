@@ -8,6 +8,7 @@ import { Button } from "flowbite-react";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import { Carousel } from "flowbite-react";
 import PostPopularCard from "../components/PostPopularCard";
+import { FaArrowRight } from "react-icons/fa6";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -124,8 +125,9 @@ export default function Home() {
                 <PostList key={post._id} post={post} />
               ))}
             </div>
-            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-110 text-teal-500 hover:underline text-center self-center">
-              Lihat Semua Artikel
+            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-105 text-indigo-600 hover:text-indigo-700 hover:underline text-center self-center flex gap-2 items-center justify-center">
+              Lihat Semua
+              <FaArrowRight className="mt-1" />
             </Link>
           </div>
         )}

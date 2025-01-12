@@ -20,12 +20,12 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="mt-2 flex h-20 flex-col">
           <div className="flex">
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white mt-3 line-clamp-2">{product.name}</h5>
+            <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white mt-3 line-clamp-2">{product.name}</h5>
           </div>
         </div>
         <div className="flex">
           <div className="flex">
-            <span className="text-lg text-gray-900 dark:text-white">{product.price === 0 ? "Gratis" : formatPrice(product.price)}</span>
+            <span className="text-lg text-gray-900 font-semibold dark:text-white">{product.price === 0 ? "Gratis" : formatPrice(product.price)}</span>
           </div>
         </div>
       </a>
