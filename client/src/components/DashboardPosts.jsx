@@ -13,14 +13,14 @@ export default function DashboardPosts() {
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState(null);
-  const postsPerPage = 5;
+  const postsPerPage = 6;
 
   useEffect(() => {
     setShowToast(false);
     const fetchPosts = async () => {
       try {
-        const startIndex = (currentPage - 1) * postsPerPage;
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}&limit=${postsPerPage}`);
+        // const startIndex = (currentPage - 1) * postsPerPage;
+        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&page=${currentPage}&limit=${postsPerPage}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);

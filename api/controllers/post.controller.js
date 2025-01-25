@@ -29,11 +29,12 @@ export const create = async (req, res, next) => {
 //# function show post on dashboard
 export const getposts = async (req, res, next) => {
   try {
-    const startIndex = parseInt(req.query.startIndex) || 0;
+    const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 6;
+    const startIndex = (page - 1) * limit;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
 
-    const posts = await Post.find({
+    const query = {
       ...(req.query.userId && { userId: req.query.userId }),
       ...(req.query.category && { category: req.query.category }),
       ...(req.query.slug && { slug: req.query.slug }),
@@ -41,10 +42,9 @@ export const getposts = async (req, res, next) => {
       ...(req.query.searchTerm && {
         $or: [{ title: { $regex: req.query.searchTerm, $options: "i" } }, { content: { $regex: req.query.searchTerm, $options: "i" } }],
       }),
-    })
-      .sort({ createdAt: sortDirection })
-      .skip(startIndex)
-      .limit(limit);
+    };
+
+    const posts = await Post.find(query).sort({ createdAt: sortDirection, _id: 1 }).skip(startIndex).limit(limit);
 
     // Ambil jumlah comment untuk setiap post
     const postsWithCommentCount = await Promise.all(
@@ -57,20 +57,23 @@ export const getposts = async (req, res, next) => {
       })
     );
 
-    const totalPosts = await Post.countDocuments();
+    const totalPosts = await Post.countDocuments(query);
+    const totalPages = Math.ceil(totalPosts / limit);
 
     const now = new Date();
-
     const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
 
     const lastMonthPosts = await Post.countDocuments({
       createdAt: { $gte: oneMonthAgo },
+      ...query,
     });
 
     res.status(200).json({
       posts: postsWithCommentCount,
       totalPosts,
       lastMonthPosts,
+      totalPages,
+      currentPage: page,
     });
   } catch (error) {
     next(error);
