@@ -5,6 +5,7 @@ import PostCard from "../components/PostCard";
 import { AiOutlineSearch } from "react-icons/ai";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import GradientColor from "../components/GradientColor";
+import PostPopularCard from "../components/PostPopularCard";
 
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
@@ -153,11 +154,11 @@ export default function Search() {
       </div>
       <div className="flex-1">
         <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3">Semua Artikel</h1>
-        <div className="w-full items-center justify-center flex">
-          <div className="p-7 flex flex-wrap items-center justify-center gap-4">
+        <div className="w-full items-center justify-center">
+          <div className="p-7 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 items-center justify-center gap-4">
             {!loading && posts.length === 0 && <p className="text-xl text-gray-500">Artikel tidak ditemukan</p>}
             {loading && <p className="text-xl text-gray-500">Loading...</p>}
-            {!loading && posts && posts.map((post) => <PostCard key={post._id} post={post} />)}
+            {!loading && posts && posts.map((post) => <PostPopularCard key={post._id} post={post} />)}
           </div>
         </div>
 
