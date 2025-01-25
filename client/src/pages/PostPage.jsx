@@ -1,4 +1,4 @@
-import { Badge, Spinner } from "flowbite-react";
+import { Badge, Dropdown, Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
@@ -6,6 +6,9 @@ import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import SEO from "../components/SEO";
+import { FaLinkedin, FaShareNodes, FaSquareFacebook, FaSquareWhatsapp, FaSquareXTwitter } from "react-icons/fa6";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { HiLink } from "react-icons/hi2";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -13,6 +16,7 @@ export default function PostPage() {
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -132,7 +136,55 @@ export default function PostPage() {
               year: "numeric",
             })}
         </span>
-        <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post && post.category}</span>
+        <div className="flex items-center gap-4">
+          <Dropdown
+            label=""
+            placement="top"
+            dismissOnClick={false}
+            renderTrigger={() => (
+              <span className="text-xl cursor-pointer">
+                <FaShareNodes />
+              </span>
+            )}
+          >
+            <Dropdown.Item>
+              <CopyToClipboard text={`${window.location.origin}/post/${post?.slug}`} onCopy={() => setIsCopied(true)}>
+                <button className="flex items-center gap-2 hover:text-gray-600">
+                  <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 text-lg">
+                    <HiLink size={20} />
+                    Copy Link
+                  </span>
+                  {isCopied && <Badge color="success">Copied</Badge>}
+                </button>
+              </CopyToClipboard>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 text-lg">
+                <FaSquareFacebook size={20} />
+                Share on Facebook
+              </span>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 text-lg">
+                <FaSquareXTwitter size={20} />
+                Share on X
+              </span>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 text-lg">
+                <FaLinkedin size={20} />
+                Share on Linkedin
+              </span>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 text-lg">
+                <FaSquareWhatsapp size={20} />
+                Share on Whatsapp
+              </span>
+            </Dropdown.Item>
+          </Dropdown>
+          <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post && post.category}</span>
+        </div>
       </div>
       <div className="p-3 max-auto post-content" dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
       <div className="mt-4 p-3 mx-auto">
