@@ -59,8 +59,8 @@ export default function Header() {
       {currentUser?.isAdmin && (
         <Link to={"/create-post"}>
           <Button gradientDuoTone="purpleToPink" className="w-12 h-10 rounded-full">
-            <span className="text-xl ">
-              <FaPlus />
+            <span className="text-xl">
+              <FaPlus className="font-bold" />
             </span>
           </Button>
         </Link>

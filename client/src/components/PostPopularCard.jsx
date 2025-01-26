@@ -28,7 +28,7 @@ export default function PostPopularCard({ post }) {
             }).format(new Date(post.createdAt))}
         </span>
         <div className="flex gap-2 items-center">
-          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 text-xs text-indigo-600">{post.category}</span>
+          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 mb-1 text-xs text-indigo-600">{post.category}</span>
           <span className="flex gap-1 items-center text-md text-gray-200">
             <BsEyeFill />
             {post.views}

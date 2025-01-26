@@ -125,9 +125,11 @@ export default function Home() {
                 <PostList key={post._id} post={post} />
               ))}
             </div>
-            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform hover:scale-105 text-indigo-600 hover:text-indigo-700 hover:underline text-center self-center flex gap-2 items-center justify-center">
-              Lihat Semua
-              <FaArrowRight className="mt-1" />
+            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform  text-indigo-600 hover:text-indigo-700 text-center self-center flex gap-2 items-center justify-center">
+              <Button outline gradientDuoTone="redToYellow">
+                <span className="text-lg">Lihat Semua Artikel</span>
+                <FaArrowRight className="mt-1.5 ml-2 text-lg" />
+              </Button>
             </Link>
           </div>
         )}
