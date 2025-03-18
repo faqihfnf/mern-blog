@@ -49,7 +49,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=overview">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "overview" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "overview"}
                 icon={FaChartSimple}
                 labelColor={currentUser.isAdmin ? "green" : "blue"}
@@ -61,7 +63,9 @@ export default function DashboardSidebar() {
           {/* profile */}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
-              className="text-cyan-950 font-semibold"
+              className={`text-cyan-950 font-semibold ${
+                tab === "profile" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+              }`}
               active={tab === "profile"}
               icon={FaUser}
               label={currentUser.isAdmin ? "Admin" : "User"}
@@ -74,7 +78,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "posts" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "posts"}
                 icon={HiDocumentText}
                 as="div">
@@ -87,7 +93,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=category">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "category" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "category"}
                 icon={BiSolidCategoryAlt}
                 as="div">
@@ -100,7 +108,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=users">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "users" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "users"}
                 icon={HiUserGroup}
                 as="div">
@@ -113,7 +123,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=comments">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "comments" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "comments"}
                 icon={IoMdChatbubbles}
                 as="div">
@@ -126,7 +138,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=products">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "products" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "products"}
                 icon={IoStorefront}
                 as="div">
@@ -139,7 +153,9 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=banners">
               <Sidebar.Item
-                className="text-cyan-950 font-semibold"
+                className={`text-cyan-950 font-semibold ${
+                  tab === "banners" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
                 active={tab === "banners"}
                 icon={MdCallToAction}
                 as="div">
