@@ -78,14 +78,23 @@ export default function Home() {
         <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text font-extrabold text-transparent  text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 mt-16 text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
           Selamat Datang Para Penuntut Ilmu
         </h1>
-        <p className="flex justify-center text-center items-center text-2xl font-semibold mt-10 ">Bersama Tinta dan Pena hingga Berpisah dengan Dunia yang Fana</p>
+        <p className="flex justify-center text-center items-center text-2xl font-semibold mt-10 ">
+          Bersama Tinta dan Pena hingga Berpisah dengan Dunia yang Fana
+        </p>
         <div className="flex flex-row sm:flex-row gap-2 items-center justify-center mb-20 mt-10">
-          <Button className="items-center w-44" size="xl" gradientDuoTone="greenToBlue">
+          <Button
+            className="items-center w-44"
+            size="xl"
+            gradientDuoTone="purpleToPink">
             <Link className="text-md" to={"/search"}>
               Lihat Artikel
             </Link>
           </Button>
-          <Button className="items-center w-44" size="xl" outline gradientDuoTone="redToYellow">
+          <Button
+            className="items-center w-44"
+            size="xl"
+            outline
+            gradientDuoTone="redToYellow">
             <Link className="text-md" to={"/product"}>
               Lihat Product
             </Link>
@@ -96,11 +105,15 @@ export default function Home() {
       {popularPosts && popularPosts.length > 0 && (
         <div className="max-w-full p-3 flex flex-col gap-2 py-7">
           <div className="flex flex-col gap-8">
-            <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">Artikel Populer</h2>
+            <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
+              Artikel Populer
+            </h2>
             <div className="h-[500px] sm:h-[550px]">
               <Carousel slide={true} slideInterval={5000} className="h-full">
                 {createSlides().map((slide, slideIndex) => (
-                  <div key={slideIndex} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 h-full p-4">
+                  <div
+                    key={slideIndex}
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 h-full p-4">
                     {slide.map((post) => (
                       <div key={post._id} className="w-full">
                         <PostPopularCard post={post} />
@@ -119,13 +132,17 @@ export default function Home() {
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-2 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-8">
-            <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">Artikel Terbaru</h2>
+            <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
+              Artikel Terbaru
+            </h2>
             <div className="flex flex-col gap-4 items-center">
               {posts.map((post) => (
                 <PostList key={post._id} post={post} />
               ))}
             </div>
-            <Link to={"/search"} className="text-xl font-semibold hover:transition-transform  text-indigo-600 hover:text-indigo-700 text-center self-center flex gap-2 items-center justify-center">
+            <Link
+              to={"/search"}
+              className="text-xl font-semibold hover:transition-transform  text-indigo-600 hover:text-indigo-700 text-center self-center flex gap-2 items-center justify-center">
               <Button outline gradientDuoTone="redToYellow">
                 <span className="text-lg">Lihat Semua Artikel</span>
                 <FaArrowRight className="mt-1.5 ml-2 text-lg" />
