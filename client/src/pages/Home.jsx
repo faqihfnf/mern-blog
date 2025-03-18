@@ -81,23 +81,21 @@ export default function Home() {
         <p className="flex justify-center text-center items-center text-2xl font-semibold mt-10 ">
           Bersama Tinta dan Pena hingga Berpisah dengan Dunia yang Fana
         </p>
-        <div className="flex flex-row sm:flex-row gap-2 items-center justify-center mb-20 mt-10">
+        <div className="flex flex-row sm:flex-row gap-4 items-center justify-center mb-20 mt-10">
           <Button
-            className="items-center w-44"
+            className="items-center w-44 min-h-[44px]"
             size="xl"
-            gradientDuoTone="purpleToPink">
-            <Link className="text-md" to={"/search"}>
-              Lihat Artikel
-            </Link>
+            gradientDuoTone="purpleToPink"
+            onClick={() => (window.location.href = "/search")}>
+            Lihat Artikel
           </Button>
           <Button
-            className="items-center w-44"
+            className="items-center w-44 min-h-[44px]"
             size="xl"
             outline
-            gradientDuoTone="redToYellow">
-            <Link className="text-md" to={"/product"}>
-              Lihat Product
-            </Link>
+            gradientDuoTone="redToYellow"
+            onClick={() => (window.location.href = "/product")}>
+            Lihat Product
           </Button>
         </div>
       </div>

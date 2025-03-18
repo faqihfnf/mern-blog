@@ -84,6 +84,7 @@ export default function Header() {
         <Button
           className="w-12 h-10 items-center"
           color="gray"
+          title="Themes"
           pill
           onClick={() => dispatch(toggleTheme())}>
           {theme === "light" ? (
@@ -129,10 +130,10 @@ export default function Header() {
               className="text-lg font-semibold">
               <Link
                 to="/dashboard?tab=overview"
-                className={`font-poppins hover:text-amber-500 ${
+                className={`font-poppins hover:text-indigo-500 ${
                   path === "/dashboard"
-                    ? "text-amber-600"
-                    : "dark:text-slate-200 dark:hover:text-amber-400"
+                    ? "text-indigo-600"
+                    : "dark:text-slate-200 dark:hover:text-indigo-400"
                 }`}>
                 Dashboard
               </Link>
@@ -145,10 +146,10 @@ export default function Header() {
             className="text-lg font-semibold">
             <Link
               to="/"
-              className={`font-poppins hover:text-amber-500 ${
+              className={`font-poppins hover:text-indigo-500 ${
                 path === "/"
-                  ? "text-amber-600"
-                  : "dark:text-slate-200 dark:hover:text-amber-400"
+                  ? "text-indigo-600"
+                  : "dark:text-slate-200 dark:hover:text-indigo-400"
               }`}>
               Home
             </Link>
@@ -159,10 +160,10 @@ export default function Header() {
             className="text-lg font-semibold">
             <Link
               to="/about"
-              className={`font-poppins hover:text-amber-500 ${
+              className={`font-poppins hover:text-indigo-500 ${
                 path === "/about"
-                  ? "text-amber-600"
-                  : "dark:text-slate-200 dark:hover:text-amber-400"
+                  ? "text-indigo-600"
+                  : "dark:text-slate-200 dark:hover:text-indigo-400"
               }`}>
               About
             </Link>
@@ -173,10 +174,10 @@ export default function Header() {
             className="text-lg font-semibold ">
             <Link
               to="/product"
-              className={`font-poppins hover:text-amber-500 ${
+              className={`font-poppins hover:text-indigo-500 ${
                 path === "/product"
-                  ? "text-amber-600"
-                  : "dark:text-slate-200 dark:hover:text-amber-400"
+                  ? "text-indigo-600"
+                  : "dark:text-slate-200 dark:hover:text-indigo-400"
               }`}>
               Product
             </Link>

@@ -10,10 +10,16 @@ export default function PostPopularCard({ post }) {
       {/* Container Gambar dengan tinggi tetap */}
       <div className="relative h-56">
         <Link to={`/post/${post.slug}`}>
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover transition duration-300 hover:scale-105" />
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover transition duration-300 hover:scale-105"
+          />
         </Link>
         <div className="absolute top-2 left-2">
-          <span className="text-xs font-bold uppercase tracking-wider bg-white/90 text-slate-800 px-2 py-1 rounded">{new Date(post.createdAt).getFullYear()}</span>
+          <span className="text-xs font-bold uppercase tracking-wider bg-white/90 text-slate-800 px-2 py-1 rounded">
+            {new Date(post.createdAt).getFullYear()}
+          </span>
         </div>
       </div>
 
@@ -28,7 +34,9 @@ export default function PostPopularCard({ post }) {
             }).format(new Date(post.createdAt))}
         </span>
         <div className="flex gap-2 items-center">
-          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 mb-1 text-xs text-indigo-600">{post.category}</span>
+          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 mb-1 text-xs ">
+            {post.category}
+          </span>
           <span className="flex gap-1 items-center text-md text-gray-200">
             <BsEyeFill />
             {post.views}
@@ -45,15 +53,21 @@ export default function PostPopularCard({ post }) {
         {/* Judul dan Konten */}
         <div>
           <div className="h-[60px] mb-1">
-            <h2 className="text-white text-xl font-medium mb-3 line-clamp-2">{post.title}</h2>
+            <h2 className="text-white text-xl font-medium mb-3 line-clamp-2">
+              {post.title}
+            </h2>
           </div>
-          <p className="text-gray-400 line-clamp-2 mb-4">{post.content.replace(/<[^>]*>/g, "")}</p>
+          <p className="text-gray-400 line-clamp-2 mb-4">
+            {post.content.replace(/<[^>]*>/g, "")}
+          </p>
         </div>
 
         {/* Tombol di bagian bawah */}
         <div>
           <Link to={`/post/${post.slug}`}>
-            <Button gradientDuoTone="redToYellow" className="font-semibold w-full">
+            <Button
+              gradientDuoTone="redToYellow"
+              className="font-semibold w-full">
               <div className="flex items-center justify-center gap-2">
                 Baca Selengkapnya <FaArrowUpRightFromSquare />
               </div>

@@ -26,7 +26,7 @@ export default function PostList({ post }) {
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-2 items-center">
-                <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">
+                <span className="bg-indigo-700 dark:bg-indigo-800 text-white dark:text-indigo-100 text-xs font-medium p-1 rounded">
                   {post.category}
                 </span>
                 <span className="flex gap-1 items-center text-md">

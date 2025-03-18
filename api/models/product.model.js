@@ -4,8 +4,7 @@ const ProductSchema = new mongoose.Schema(
   {
     image: {
       type: String,
-      default:
-        "https://cdn.pixabay.com/photo/2022/06/30/17/50/blog-post-7294160_1280.png",
+      default: "/product.png",
     },
     name: {
       type: String,
