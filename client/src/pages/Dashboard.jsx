@@ -8,6 +8,7 @@ import DashboardComments from "../components/DashboardComments";
 import DashboardOverview from "../components/DashboardOverview";
 import DashboardCategory from "../components/DashboardCategory";
 import DashboardProduct from "../components/DashboardProduct";
+import DashboardBanner from "../components/DashboardBanner";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -33,12 +34,14 @@ export default function Dashboard() {
       {tab === "posts" && <DashboardPosts />}
       {/* Categories */}
       {tab === "category" && <DashboardCategory />}
-      {/* users */}
+      {/* Users */}
       {tab === "users" && <DashboardUsers />}
       {/* Comments */}
       {tab === "comments" && <DashboardComments />}
-      {/* Product */}
+      {/* Products */}
       {tab === "products" && <DashboardProduct />}
+      {/* Banners */}
+      {tab === "banners" && <DashboardBanner />}
     </div>
   );
 }
