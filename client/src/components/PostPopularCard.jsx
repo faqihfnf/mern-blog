@@ -14,6 +14,7 @@ export default function PostPopularCard({ post }) {
             src={post.image}
             alt={post.title}
             className="w-full h-full object-cover transition duration-300 hover:scale-105"
+            loading="lazy"
           />
         </Link>
         <div className="absolute top-2 left-2">

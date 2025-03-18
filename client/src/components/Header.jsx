@@ -52,7 +52,13 @@ export default function Header() {
     <Navbar className="border-b-2">
       <Link to="/" className="dark:text-white">
         <div className="flex items-center">
-          <img src="/logo.png" className="mr-2 h-9" alt="Flowbite Logo" />
+          <img
+            src="/logo.png"
+            className="m-2"
+            height={40}
+            width={40}
+            alt="marifah Logo"
+          />
           <span className="font-bold text-3xl font-poppins text-cyan-950 dark:text-slate-200">
             marifah.id
           </span>
@@ -98,7 +104,12 @@ export default function Header() {
             arrowIcon={false}
             inline
             label={
-              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+              <Avatar
+                alt="user"
+                img={currentUser.profilePicture}
+                rounded
+                size="md"
+              />
             }>
             <Dropdown.Header>
               <span className="block text-sm">@{currentUser.username}</span>

@@ -9,6 +9,7 @@ import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import { Carousel } from "flowbite-react";
 import PostPopularCard from "../components/PostPopularCard";
 import { FaArrowRight } from "react-icons/fa6";
+import Hero from "../components/Hero";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -73,32 +74,8 @@ export default function Home() {
         keywords="islam, ilmu islam, artikel islam, kajian islam, fiqih, hadits, quran"
         image="/logo.png" // Ganti dengan URL gambar default Anda
       />
-      <div className="flex flex-col gap-6 p-16 px-3 max-w-6xl mx-auto ">
-        <GradientColor />
-        <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text font-extrabold text-transparent  text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 mt-16 text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-          Selamat Datang Para Penuntut Ilmu
-        </h1>
-        <p className="flex justify-center text-center items-center text-2xl font-semibold mt-10 ">
-          Bersama Tinta dan Pena hingga Berpisah dengan Dunia yang Fana
-        </p>
-        <div className="flex flex-row sm:flex-row gap-4 items-center justify-center mb-20 mt-10">
-          <Button
-            className="items-center w-44 min-h-[44px]"
-            size="xl"
-            gradientDuoTone="purpleToPink"
-            onClick={() => (window.location.href = "/search")}>
-            Lihat Artikel
-          </Button>
-          <Button
-            className="items-center w-44 min-h-[44px]"
-            size="xl"
-            outline
-            gradientDuoTone="redToYellow"
-            onClick={() => (window.location.href = "/product")}>
-            Lihat Product
-          </Button>
-        </div>
-      </div>
+      <Hero />
+
       {/* Popular Posts Section */}
       {popularPosts && popularPosts.length > 0 && (
         <div className="max-w-full p-3 flex flex-col gap-2 py-7">

@@ -5,7 +5,14 @@ import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import SEO from "../components/SEO";
-import { FaComments, FaLinkedin, FaShareNodes, FaSquareFacebook, FaSquareWhatsapp, FaSquareXTwitter } from "react-icons/fa6";
+import {
+  FaComments,
+  FaLinkedin,
+  FaShareNodes,
+  FaSquareFacebook,
+  FaSquareWhatsapp,
+  FaSquareXTwitter,
+} from "react-icons/fa6";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { HiLink } from "react-icons/hi2";
 import PostPopularCard from "./../components/PostPopularCard";
@@ -79,7 +86,9 @@ export default function PostPage() {
             // Jika artikel dengan kategori yang sama kurang dari 3,
             // ambil artikel tambahan dari kategori lain
             const remainingCount = 3 - sameCategoyPosts.length;
-            const additionalRes = await fetch(`/api/post/getposts?limit=${remainingCount}`);
+            const additionalRes = await fetch(
+              `/api/post/getposts?limit=${remainingCount}`
+            );
             const additionalData = await additionalRes.json();
 
             if (additionalRes.ok) {
@@ -91,7 +100,10 @@ export default function PostPage() {
               );
 
               // Gabungkan artikel dengan kategori yang sama dan artikel tambahan
-              setRecentPosts([...sameCategoyPosts, ...additionalPosts.slice(0, remainingCount)]);
+              setRecentPosts([
+                ...sameCategoyPosts,
+                ...additionalPosts.slice(0, remainingCount),
+              ]);
             }
           }
         }
@@ -125,10 +137,29 @@ export default function PostPage() {
 
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
-      {post && <SEO title={` marifah.id | ${post.title}`} description={getExcerpt(post.content)} keywords={`${post.category}, islam, artikel islami, ${post.title}`} image={post.image} />}
-      <h1 className="text-4xl mt-10 mb-3 text-center mx-auto font-poppins lg:text-5xl">{post && post.title}</h1>
-      <Link className="flex justify-center mt-4" to={`/search?category=${post && post.category}`}></Link>
-      <img src={post && post.image} alt={post && post.title} className="object-cover w-full max-h-[500px] mt-4 rounded-md" />
+      {post && (
+        <SEO
+          title={` marifah.id | ${post.title}`}
+          description={getExcerpt(post.content)}
+          keywords={`${post.category}, islam, artikel islami, ${post.title}`}
+          image={post.image}
+        />
+      )}
+      <h1 className="text-4xl mt-10 mb-3 text-center mx-auto font-poppins lg:text-5xl">
+        {post && post.title}
+      </h1>
+      <Link
+        className="flex justify-center mt-4"
+        to={`/search?category=${post && post.category}`}>
+        <span className="text-gray-400 hover:text-gray-600">
+          {post && post.category}
+        </span>
+      </Link>
+      <img
+        src={post && post.image}
+        alt={post && post.title}
+        className="object-cover w-full max-h-[500px] mt-4 rounded-md"
+      />
       <div className="flex justify-between mt-2 border-b border-slate-600 mx-auto w-full p-3">
         <span>
           {post &&
@@ -140,17 +171,17 @@ export default function PostPage() {
         </span>
         <div className="flex items-center gap-4">
           <Dropdown
-            label=""
             placement="top"
             dismissOnClick={false}
             renderTrigger={() => (
               <span className="text-2xl cursor-pointer">
                 <FcShare />
               </span>
-            )}
-          >
+            )}>
             <Dropdown.Item>
-              <CopyToClipboard text={`${window.location.origin}/post/${post?.slug}`} onCopy={() => setIsCopied(true)}>
+              <CopyToClipboard
+                text={`${window.location.origin}/post/${post?.slug}`}
+                onCopy={() => setIsCopied(true)}>
                 <button className="flex items-center gap-2 hover:text-gray-600">
                   <span className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg">
                     <HiLink size={20} />
@@ -162,44 +193,48 @@ export default function PostPage() {
             </Dropdown.Item>
             <Dropdown.Item>
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${window.location.origin}/post/${post?.slug}`)}`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  `${window.location.origin}/post/${post?.slug}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg"
-              >
+                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg">
                 <FaSquareFacebook size={20} />
                 Bagikan di Facebook
               </a>
             </Dropdown.Item>
             <Dropdown.Item>
               <a
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(`${window.location.origin}/post/${post?.slug}`)}&text=${encodeURIComponent(post?.title)}`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                  `${window.location.origin}/post/${post?.slug}`
+                )}&text=${encodeURIComponent(post?.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg"
-              >
+                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg">
                 <FaSquareXTwitter size={20} />
                 Bagikan di X
               </a>
             </Dropdown.Item>
             <Dropdown.Item>
               <a
-                href={`https://www.linkedin.com/shareArticle?url=${encodeURIComponent(`${window.location.origin}/post/${post?.slug}`)}&title=${encodeURIComponent(post?.title)}`}
+                href={`https://www.linkedin.com/shareArticle?url=${encodeURIComponent(
+                  `${window.location.origin}/post/${post?.slug}`
+                )}&title=${encodeURIComponent(post?.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg"
-              >
+                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg">
                 <FaLinkedin size={20} />
                 Bagikan di LinkedIn
               </a>
             </Dropdown.Item>
             <Dropdown.Item>
               <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${window.location.origin}/post/${post?.slug}`)}`}
+                href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
+                  `${window.location.origin}/post/${post?.slug}`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg"
-              >
+                className="flex items-center font-semibold gap-2 hover:text-indigo-600 dark:hover:text-pink-600 text-lg">
                 <FaSquareWhatsapp size={20} />
                 Bagikan di WhatsApp
               </a>
@@ -213,10 +248,14 @@ export default function PostPage() {
             <FaComments />
             {post.commentCount}
           </span>
-          <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">{post && post.category}</span>
+          <span className="bg-indigo-200 dark:bg-indigo-600 text-indigo-600 dark:text-indigo-200 text-xs font-medium p-1 rounded">
+            {post && post.category}
+          </span>
         </div>
       </div>
-      <div className="p-3 max-auto post-content text-justify" dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
+      <div
+        className="p-3 max-auto post-content text-justify"
+        dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
       <div className="mt-4 p-3 mx-auto">
         <CallToAction />
       </div>
@@ -224,8 +263,15 @@ export default function PostPage() {
         <CommentSection postId={post._id} />
       </div>
       <div className=" justify-center items-center mb-10">
-        <h1 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">Artikel Terkait</h1>
-        <div className="grid  md:grid-cols-3 sm:grid-cols-1 items-center justify-center gap-5 mt-5">{recentPosts && recentPosts.map((post) => <PostPopularCard key={post._id} post={post} />)}</div>
+        <h1 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
+          Artikel Terkait
+        </h1>
+        <div className="grid  md:grid-cols-3 sm:grid-cols-1 items-center justify-center gap-5 mt-5">
+          {recentPosts &&
+            recentPosts.map((post) => (
+              <PostPopularCard key={post._id} post={post} />
+            ))}
+        </div>
         <ButtonScrollToTop />
       </div>
     </main>
