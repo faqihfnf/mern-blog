@@ -23,6 +23,7 @@ import Search from "./pages/Search";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import CreateBanner from "./pages/CreateBanner";
+import UpdateBanner from "./pages/UpdateBanner";
 
 export default function App() {
   return (
@@ -53,10 +54,7 @@ export default function App() {
             element={<UpdateProduct />}
           />
           <Route path="/create-banner" element={<CreateBanner />} />
-          <Route
-            path="/update-banner/:bannerId"
-            element={<div>Update Banner</div>}
-          />
+          <Route path="/update-banner/:bannerId" element={<UpdateBanner />} />
         </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
