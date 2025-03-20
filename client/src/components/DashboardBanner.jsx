@@ -1,3 +1,5 @@
+// Tambahkan import untuk Firebase Storage
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
@@ -17,8 +19,11 @@ export default function DashboardBanner() {
   const [bannerIdToDelete, setBannerIdToDelete] = useState(null);
   const bannersPerPage = 5;
 
+  // Inisialisasi Firebase Storage
+  const storage = getStorage();
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchBanners = async () => {
       setIsLoading(true);
       try {
         const res = await fetch(
@@ -40,7 +45,7 @@ export default function DashboardBanner() {
     };
 
     if (currentUser?.isAdmin) {
-      fetchProducts();
+      fetchBanners();
     }
   }, [currentUser?._id, currentPage]);
 
@@ -57,14 +62,52 @@ export default function DashboardBanner() {
     setShowModal(false);
     setShowToast(false);
     try {
+      // Dapatkan data banner yang akan dihapus
+      const bannerToDelete = banners.find(
+        (banner) => banner._id === bannerIdToDelete
+      );
+
+      if (bannerToDelete) {
+        // Hapus gambar dari Firebase Storage
+        try {
+          // Dapatkan URL gambar
+          const imageUrl = bannerToDelete.image;
+
+          // Ekstrak nama file dari URL
+          // Format URL: https://firebasestorage.googleapis.com/v0/b/next-app-6af7e.appspot.com/o/1742444698204-quran.jpg?alt=media&token=...
+          const fileNameWithParams = imageUrl.split("/o/")[1];
+          // Ambil hanya nama file (sebelum '?')
+          const fileName = fileNameWithParams.split("?")[0];
+          // Decode URI untuk menangani karakter khusus
+          const decodedFileName = decodeURIComponent(fileName);
+
+          // Buat referensi ke file
+          const fileRef = ref(storage, decodedFileName);
+
+          // Hapus file
+          await deleteObject(fileRef);
+          console.log(
+            "File gambar berhasil dihapus dari storage:",
+            decodedFileName
+          );
+        } catch (storageError) {
+          console.error(
+            "Kesalahan menghapus gambar dari storage:",
+            storageError
+          );
+        }
+      }
+
+      // Lanjutkan dengan menghapus data dari database
       const res = await fetch(`/api/banner/deletebanner/${bannerIdToDelete}`, {
         method: "DELETE",
       });
       const data = await res.json();
+
       if (res.ok) {
         // Refresh data setelah menghapus
         const refreshRes = await fetch(
-          `/api/banner/getbanner?page=${currentPage}&limit=${bannersPerPage}`
+          `/api/banner/getbanner?startIndex=${currentPage}&limit=${bannersPerPage}`
         );
         const refreshData = await refreshRes.json();
         setBanners(refreshData.banners);
@@ -150,7 +193,7 @@ export default function DashboardBanner() {
                           className="text-red-600 font-semibold hover:underline cursor-pointer"
                           onClick={() => {
                             setShowModal(true);
-                            setBannerIdToDelete(product._id);
+                            setBannerIdToDelete(banner._id);
                           }}>
                           Delete
                         </span>

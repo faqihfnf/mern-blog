@@ -6,7 +6,7 @@ export const createBanner = async (req, res, next) => {
   try {
     const { image, title, description, link } = req.body;
 
-    if (!title || !link) {
+    if (!description || !title || !link) {
       return next(errorHandler(400, "All fields are required"));
     }
 

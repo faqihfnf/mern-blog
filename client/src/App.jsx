@@ -22,6 +22,7 @@ import Product from "./pages/Product";
 import Search from "./pages/Search";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
+import CreateBanner from "./pages/CreateBanner";
 
 export default function App() {
   return (
@@ -51,7 +52,7 @@ export default function App() {
             path="/update-product/:productId"
             element={<UpdateProduct />}
           />
-          <Route path="/create-banner" element={<div>Create Banner</div>} />
+          <Route path="/create-banner" element={<CreateBanner />} />
           <Route
             path="/update-banner/:bannerId"
             element={<div>Update Banner</div>}

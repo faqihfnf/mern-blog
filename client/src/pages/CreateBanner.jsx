@@ -12,7 +12,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
 
-export default function CreateProduct() {
+export default function CreateBanner() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -47,7 +47,7 @@ export default function CreateProduct() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImageUploadProgress(null);
             setImageUploadError(null);
-            setFormData({ ...formData, image: downloadURL }); // Changed from image to image
+            setFormData({ ...formData, image: downloadURL });
           });
         }
       );
@@ -62,7 +62,7 @@ export default function CreateProduct() {
     e.preventDefault();
     setShowToast(false);
     try {
-      const res = await fetch("/api/product/createproduct", {
+      const res = await fetch("/api/banner/createbanner", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default function CreateProduct() {
         setPublishError(null);
         setShowToast(true);
         setTimeout(() => {
-          navigate("/dashboard?tab=products");
+          navigate("/dashboard?tab=banners");
         }, 3000);
       }
     } catch (error) {
@@ -89,31 +89,30 @@ export default function CreateProduct() {
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">
-        Create a Product
+        Create a Banner
       </h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <TextInput
           type="text"
-          placeholder="Product Name"
+          placeholder="Banner Title"
           required
-          id="name"
+          id="title"
           className="flex-1"
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <TextInput
-          type="number"
-          placeholder="Price"
-          min={0}
+          type="text"
+          placeholder="Description"
           required
-          id="price"
+          id="description"
           className="flex-1"
           onChange={(e) =>
-            setFormData({ ...formData, price: Number(e.target.value) })
+            setFormData({ ...formData, description: e.target.value })
           }
         />
         <TextInput
           type="text"
-          placeholder="Product Link"
+          placeholder="Banner Link"
           required
           id="link"
           className="flex-1"
@@ -158,8 +157,8 @@ export default function CreateProduct() {
           type="submit"
           gradientDuoTone="purpleToPink"
           disabled={
-            !formData.name ||
-            typeof formData.price !== "number" ||
+            !formData.title ||
+            !formData.description ||
             !formData.link ||
             !formData.image
           }>
@@ -178,7 +177,7 @@ export default function CreateProduct() {
             className="bg-green-500 dark:bg-green-500 w-72">
             <HiCheckBadge className="w-8 h-8 text-white" />
             <div className="ml-3 text-sm font-semibold text-white">
-              Product berhasil dibuat
+              Banner berhasil dibuat
             </div>
             <Toast.Toggle className="bg-opacity-15 hover:bg-opacity-30 text-white" />
           </Toast>
