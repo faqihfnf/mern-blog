@@ -1,7 +1,6 @@
-import { Badge, Dropdown, Spinner } from "flowbite-react";
+import { Badge, Carousel, Dropdown, Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import SEO from "../components/SEO";
@@ -18,6 +17,7 @@ import { HiLink } from "react-icons/hi2";
 import PostPopularCard from "./../components/PostPopularCard";
 import { FcShare } from "react-icons/fc";
 import { BsEyeFill } from "react-icons/bs";
+import Banner from "../components/Banner";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -26,6 +26,20 @@ export default function PostPage() {
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
   const [isCopied, setIsCopied] = useState(false);
+  const [banners, setBanners] = useState([]);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const res = await fetch("/api/banner/getbanner");
+        const data = await res.json();
+        if (res.ok) {
+          setBanners(data.banners);
+        }
+      } catch (error) {}
+    };
+    fetchBanners();
+  }, []);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -145,16 +159,18 @@ export default function PostPage() {
           image={post.image}
         />
       )}
-      <h1 className="text-4xl mt-10 mb-3 text-center mx-auto font-poppins lg:text-5xl">
-        {post && post.title}
-      </h1>
-      <Link
-        className="flex justify-center mt-4"
-        to={`/search?category=${post && post.category}`}>
-        <span className="text-gray-400 hover:text-gray-600">
-          {post && post.category}
-        </span>
-      </Link>
+      <div className="flex justify-center items-center flex-col">
+        <h1 className="text-4xl mt-10 mb-3 text-center mx-auto font-poppins lg:text-5xl">
+          {post && post.title}
+        </h1>
+        <Link
+          className="flex bg-indigo-600 hover:bg-indigo-700 rounded-md p-5 w-56 h-10 justify-center mt-4"
+          to={`/search?category=${post && post.category}`}>
+          <span className="text-white font-semibold items-center flex justify-center ">
+            {post && post.category}
+          </span>
+        </Link>
+      </div>
       <img
         src={post && post.image}
         alt={post && post.title}
@@ -256,8 +272,12 @@ export default function PostPage() {
       <div
         className="p-3 max-auto post-content text-justify"
         dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
-      <div className="mt-4 p-3 mx-auto">
-        <CallToAction />
+      <div className="p-5 bg-amber-100 dark:bg-slate-700">
+        <Carousel slide={true} slideInterval={5000} className="h-full">
+          {banners.map((banner) => (
+            <Banner key={banner._id} banner={banner} />
+          ))}
+        </Carousel>
       </div>
       <div>
         <CommentSection postId={post._id} />

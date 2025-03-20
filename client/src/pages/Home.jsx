@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import CallToAction from "../components/CallToAction";
 import { useEffect, useState } from "react";
 import PostList from "../components/PostList";
-import GradientColor from "../components/GradientColor";
 import SEO from "../components/SEO";
 import { Button } from "flowbite-react";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
@@ -10,9 +8,11 @@ import { Carousel } from "flowbite-react";
 import PostPopularCard from "../components/PostPopularCard";
 import { FaArrowRight } from "react-icons/fa6";
 import Hero from "../components/Hero";
+import Banner from "../components/Banner";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [banners, setBanners] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -23,6 +23,19 @@ export default function Home() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const res = await fetch("/api/banner/getbanner");
+        const data = await res.json();
+        if (res.ok) {
+          setBanners(data.banners);
+        }
+      } catch (error) {}
+    };
+    fetchBanners();
   }, []);
 
   useEffect(() => {
@@ -76,6 +89,8 @@ export default function Home() {
       />
       <Hero />
 
+      {/* Banner Section  */}
+      {}
       {/* Popular Posts Section */}
       {popularPosts && popularPosts.length > 0 && (
         <div className="max-w-full p-3 flex flex-col gap-2 py-7">
@@ -101,8 +116,12 @@ export default function Home() {
           </div>
         </div>
       )}
-      <div className="p-3 bg-amber-100 dark:bg-slate-700">
-        <CallToAction />
+      <div className="p-5 bg-amber-100 dark:bg-slate-700">
+        <Carousel slide={true} slideInterval={5000} className="h-full">
+          {banners.map((banner) => (
+            <Banner key={banner._id} banner={banner} />
+          ))}
+        </Carousel>
       </div>
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-2 py-7">
         {posts && posts.length > 0 && (
