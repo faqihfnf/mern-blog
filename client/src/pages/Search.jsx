@@ -124,10 +124,19 @@ export default function Search() {
     <div className="flex flex-col md:flex-row">
       <GradientColor />
       <div className="p-4 border-b md:border-r md:min-h-screen border-gray-500">
-        <form className="flex flex-col gap-4 w-full lg:w-72" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col gap-4 w-full lg:w-72"
+          onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
             <label className="whitespace-nowrap font-semibold">Search:</label>
-            <TextInput placeholder="Search..." id="searchTerm" type="text" value={sidebarData.searchTerm} onChange={handleChange} rightIcon={AiOutlineSearch} />
+            <TextInput
+              placeholder="Search..."
+              id="searchTerm"
+              type="text"
+              value={sidebarData.searchTerm}
+              onChange={handleChange}
+              rightIcon={AiOutlineSearch}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <label className="font-semibold">Sort:</label>
@@ -138,7 +147,10 @@ export default function Search() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="font-semibold">Category:</label>
-            <Select onChange={handleChange} value={sidebarData.category} id="category">
+            <Select
+              onChange={handleChange}
+              value={sidebarData.category}
+              id="category">
               <option value="uncategorized">Select a category</option>
               {categories.map((category) => (
                 <option key={category._id} value={category.slug}>
@@ -153,12 +165,20 @@ export default function Search() {
         </form>
       </div>
       <div className="flex-1">
-        <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3">Semua Artikel</h1>
+        <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3">
+          Semua Artikel
+        </h1>
         <div className="w-full items-center justify-center">
           <div className="p-7 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 items-center justify-center gap-4">
-            {!loading && posts.length === 0 && <p className="text-xl text-gray-500">Artikel tidak ditemukan</p>}
+            {!loading && posts.length === 0 && (
+              <p className="text-xl text-gray-500">Artikel tidak ditemukan</p>
+            )}
             {loading && <p className="text-xl text-gray-500">Loading...</p>}
-            {!loading && posts && posts.map((post) => <PostPopularCard key={post._id} post={post} />)}
+            {!loading &&
+              posts &&
+              posts.map((post) => (
+                <PostPopularCard key={post._id} post={post} />
+              ))}
           </div>
         </div>
 
@@ -167,8 +187,12 @@ export default function Search() {
             <div className="text-sm text-center text-slate-800 dark:text-slate-200">
               Showing {startIndex} to {endIndex} of {totalPosts} entries
             </div>
-            <div className="flex overflow-x-auto sm:justify-center mt-2">
-              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+            <div className="flex overflow-x-auto justify-center mt-2">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+              />
             </div>
           </div>
         )}

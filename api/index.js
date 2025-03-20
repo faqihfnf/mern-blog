@@ -7,6 +7,7 @@ import postRoute from "./routes/post.route.js";
 import categoryRoute from "./routes/category.route.js";
 import commentRoute from "./routes/comment.route.js";
 import productRoute from "./routes/product.route.js";
+import bannerRoute from "./routes/banner.route.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import compression from "compression";
@@ -38,6 +39,7 @@ app.use("/api/post", postRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/comment", commentRoute);
 app.use("/api/product", productRoute);
+app.use("/api/banner", bannerRoute);
 
 //# middleware untuk menangani error
 app.use((err, req, res, next) => {

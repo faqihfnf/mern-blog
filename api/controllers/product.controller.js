@@ -51,7 +51,7 @@ export const getProduct = async (req, res, next) => {
   }
 };
 
-// Update product
+//#Update product
 export const updateProduct = async (req, res, next) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(

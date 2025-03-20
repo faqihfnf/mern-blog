@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, ScrollRestoration } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  ScrollRestoration,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -37,7 +42,20 @@ export default function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
           <Route path="/create-product" element={<CreateProduct />} />
-          <Route path="/update-product/:productId" element={<UpdateProduct />} />
+          <Route
+            path="/update-product/:productId"
+            element={<UpdateProduct />}
+          />
+          <Route path="/create-product" element={<CreateProduct />} />
+          <Route
+            path="/update-product/:productId"
+            element={<UpdateProduct />}
+          />
+          <Route path="/create-banner" element={<div>Create Banner</div>} />
+          <Route
+            path="/update-banner/:bannerId"
+            element={<div>Update Banner</div>}
+          />
         </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
