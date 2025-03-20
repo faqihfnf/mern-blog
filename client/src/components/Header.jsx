@@ -59,7 +59,7 @@ export default function Header() {
             width={40}
             alt="marifah Logo"
           />
-          <span className="font-bold text-3xl font-poppins text-cyan-950 dark:text-slate-200">
+          <span className="font-bold text-3xl text-cyan-950 dark:text-slate-200">
             marifah.id
           </span>
         </div>
@@ -138,7 +138,7 @@ export default function Header() {
             <Navbar.Link
               active={path === "/dashboard"}
               as={"div"}
-              className="text-lg font-semibold">
+              className="text-lg font-semibold bg-transparent">
               <Link
                 to="/dashboard?tab=overview"
                 className={`font-poppins hover:text-indigo-500 ${
@@ -154,7 +154,7 @@ export default function Header() {
           <Navbar.Link
             active={path === "/"}
             as={"div"}
-            className="text-lg font-semibold">
+            className="text-lg font-semibold bg-transparent">
             <Link
               to="/"
               className={`font-poppins hover:text-indigo-500 ${
@@ -168,7 +168,7 @@ export default function Header() {
           <Navbar.Link
             active={path === "/about"}
             as={"div"}
-            className="text-lg font-semibold">
+            className="text-lg font-semibold bg-transparent">
             <Link
               to="/about"
               className={`font-poppins hover:text-indigo-500 ${
@@ -182,7 +182,7 @@ export default function Header() {
           <Navbar.Link
             active={path === "/product"}
             as={"div"}
-            className="text-lg font-semibold ">
+            className="text-lg font-semibold bg-transparent">
             <Link
               to="/product"
               className={`font-poppins hover:text-indigo-500 ${

@@ -13,12 +13,14 @@ export default function Banner({ banner }) {
           Mahir membaca Al-Quran
         </Button>
       </div>
-      <div className="p-8 flex">
+      <div className="p-8 flex w-[500px] h-[350px]">
         <img
-          className="rounded-lg w-[500px] h-[350px] "
+          className="rounded-lg"
           src={banner.image}
           alt={banner.title}
           loading="lazy"
+          width={400}
+          height={250}
         />
       </div>
     </div>

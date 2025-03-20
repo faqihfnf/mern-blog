@@ -72,7 +72,9 @@ export default function DashboardOverview() {
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Users</h3>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">
+                Total Users
+              </h3>
               <p className="text-3xl font-bold mt-2">{totalUsers}</p>
             </div>
             <div className="bg-teal-600 rounded-full p-3">
@@ -81,7 +83,9 @@ export default function DashboardOverview() {
           </div>
           <div className="flex items-center text-sm">
             <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
-            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthUsers}</span>
+            <span className="text-green-600 dark:text-green-400 font-medium">
+              {lastMonthUsers}
+            </span>
             <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
@@ -90,7 +94,9 @@ export default function DashboardOverview() {
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Comments</h3>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">
+                Total Comments
+              </h3>
               <p className="text-3xl font-bold mt-2">{totalComments}</p>
             </div>
             <div className="bg-indigo-600 rounded-full p-3">
@@ -99,7 +105,9 @@ export default function DashboardOverview() {
           </div>
           <div className="flex items-center text-sm">
             <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
-            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthComments}</span>
+            <span className="text-green-600 dark:text-green-400 font-medium">
+              {lastMonthComments}
+            </span>
             <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
@@ -108,7 +116,9 @@ export default function DashboardOverview() {
         <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-4">
             <div>
-              <h3 className="text-gray-500 text-sm font-medium uppercase">Total Posts</h3>
+              <h3 className="text-gray-500 text-sm font-medium uppercase">
+                Total Posts
+              </h3>
               <p className="text-3xl font-bold mt-2">{totalPosts}</p>
             </div>
             <div className="bg-pink-600 rounded-full p-3">
@@ -117,7 +127,9 @@ export default function DashboardOverview() {
           </div>
           <div className="flex items-center text-sm">
             <HiArrowNarrowUp className="text-green-600 dark:text-green-400 mr-1" />
-            <span className="text-green-600 dark:text-green-400 font-medium">{lastMonthPosts}</span>
+            <span className="text-green-600 dark:text-green-400 font-medium">
+              {lastMonthPosts}
+            </span>
             <span className="text-gray-500 ml-2">Last Month</span>
           </div>
         </div>
@@ -140,11 +152,19 @@ export default function DashboardOverview() {
             </Table.Head>
             <Table.Body className="">
               {users.map((user) => (
-                <Table.Row key={user._id} className="bg-white dark:bg-slate-800">
+                <Table.Row
+                  key={user._id}
+                  className="bg-white dark:bg-slate-800">
                   <Table.Cell>
-                    <img className="w-10 h-10 rounded-full object-cover" src={user.profilePicture} alt={user.username} />
+                    <img
+                      className="w-10 h-10 rounded-full object-cover"
+                      src={user.profilePicture}
+                      alt={user.username}
+                    />
                   </Table.Cell>
-                  <Table.Cell className="font-medium">{user.username}</Table.Cell>
+                  <Table.Cell className="font-medium">
+                    {user.username}
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
@@ -166,7 +186,9 @@ export default function DashboardOverview() {
             </Table.Head>
             <Table.Body className="">
               {comments.map((comment) => (
-                <Table.Row key={comment._id} className="bg-white dark:bg-slate-800">
+                <Table.Row
+                  key={comment._id}
+                  className="bg-white dark:bg-slate-800">
                   <Table.Cell>
                     <p className="line-clamp-3">{comment.content}</p>
                   </Table.Cell>
@@ -191,13 +213,21 @@ export default function DashboardOverview() {
               <Table.HeadCell>Title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
             </Table.Head>
-            <Table.Body className="">
+            <Table.Body>
               {posts.map((post) => (
-                <Table.Row key={post._id} className="bg-white dark:bg-slate-800">
+                <Table.Row
+                  key={post._id}
+                  className="bg-white dark:bg-slate-800">
                   <Table.Cell>
-                    <img className="w-10 h-10 rounded-lg object-cover" src={post.image} alt={post.title} />
+                    <img
+                      className="w-10 h-10 rounded-lg object-cover"
+                      src={post.image}
+                      alt={post.title}
+                    />
                   </Table.Cell>
-                  <Table.Cell className="font-medium line-clamp-3">{post.title}</Table.Cell>
+                  <Table.Cell className="mt-2 font-medium line-clamp-3">
+                    {post.title}
+                  </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
                 </Table.Row>
               ))}
