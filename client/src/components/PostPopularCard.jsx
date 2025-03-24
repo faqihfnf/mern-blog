@@ -67,7 +67,7 @@ export default function PostPopularCard({ post }) {
         <div>
           <Link to={`/post/${post.slug}`}>
             <Button
-              gradientDuoTone="redToYellow"
+              gradientDuoTone="tealToLime"
               className="font-semibold w-full">
               <div className="flex items-center justify-center gap-2">
                 Baca Selengkapnya <FaArrowUpRightFromSquare />

@@ -80,7 +80,7 @@ export default function Header() {
         <TextInput
           className="w-72 hidden lg:inline"
           type="text"
-          placeholder="Search..."
+          placeholder="Cari Artikel..."
           rightIcon={AiOutlineSearch}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

@@ -143,7 +143,7 @@ export default function UpdatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
             value={formData.category}>
-            <option value="uncategorized">Select a category</option>
+            <option value="uncategorized">Pilih Kategori</option>
             <option value="aqidah">Aqidah</option>
             <option value="tafsir">Tafsir</option>
             <option value="hadits">Hadits</option>

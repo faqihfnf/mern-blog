@@ -130,7 +130,7 @@ export default function Search() {
           <div className="flex flex-col gap-2">
             <label className="whitespace-nowrap font-semibold">Search:</label>
             <TextInput
-              placeholder="Search..."
+              placeholder="Cari Artikel..."
               id="searchTerm"
               type="text"
               value={sidebarData.searchTerm}
@@ -151,7 +151,7 @@ export default function Search() {
               onChange={handleChange}
               value={sidebarData.category}
               id="category">
-              <option value="uncategorized">Select a category</option>
+              <option value="uncategorized">Pilih Kategori</option>
               {categories.map((category) => (
                 <option key={category._id} value={category.slug}>
                   {category.name}

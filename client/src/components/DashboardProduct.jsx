@@ -21,7 +21,9 @@ export default function DashboardProducts() {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/product/getproduct?startIndex=${currentPage}&limit=${productsPerPage}`);
+        const res = await fetch(
+          `/api/product/getproduct?startIndex=${currentPage}&limit=${productsPerPage}`
+        );
         const data = await res.json();
         if (res.ok) {
           setProducts(data.products);
@@ -55,11 +57,16 @@ export default function DashboardProducts() {
     setShowModal(false);
     setShowToast(false);
     try {
-      const res = await fetch(`/api/product/deleteproduct/${productIdToDelete}`, { method: "DELETE" });
+      const res = await fetch(
+        `/api/product/deleteproduct/${productIdToDelete}`,
+        { method: "DELETE" }
+      );
       const data = await res.json();
       if (res.ok) {
         // Refresh data setelah menghapus
-        const refreshRes = await fetch(`/api/product/getproduct?page=${currentPage}&limit=${productsPerPage}`);
+        const refreshRes = await fetch(
+          `/api/product/getproduct?page=${currentPage}&limit=${productsPerPage}`
+        );
         const refreshData = await refreshRes.json();
         setProducts(refreshData.products);
         setTotalPages(refreshData.totalPages);
@@ -85,7 +92,10 @@ export default function DashboardProducts() {
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
         <div className="mb-4 w-52">
           <Link to={"/create-product"}>
-            <Button type="button" gradientDuoTone="purpleToPink" className="w-full">
+            <Button
+              type="button"
+              gradientDuoTone="purpleToPink"
+              className="w-full">
               <FaPlus size={20} className="mr-2 mt-1" />
               <span className="font-poppins text-lg">Create Product</span>
             </Button>
@@ -108,13 +118,23 @@ export default function DashboardProducts() {
                 </Table.Head>
                 <Table.Body className="divide-y">
                   {products.map((product) => (
-                    <Table.Row key={product._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                      <Table.Cell>{new Date(product.updatedAt).toLocaleDateString()}</Table.Cell>
+                    <Table.Row
+                      key={product._id}
+                      className="bg-white dark:border-slate-700 dark:bg-slate-800">
                       <Table.Cell>
-                        <img src={product.image} alt={product.name} className="w-20 h-20 object-cover bg-gray-400" />
+                        {new Date(product.updatedAt).toLocaleDateString()}
                       </Table.Cell>
                       <Table.Cell>
-                        <span className="font-medium text-slate-900 dark:text-white">{product.name}</span>
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-20 h-20 rounded-md object-cover bg-gray-400"
+                        />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span className="font-medium text-slate-900 dark:text-white">
+                          {product.name}
+                        </span>
                       </Table.Cell>
                       <Table.Cell>
                         {product.price.toLocaleString("id-ID", {
@@ -123,7 +143,11 @@ export default function DashboardProducts() {
                         })}
                       </Table.Cell>
                       <Table.Cell>
-                        <Link to={product.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                        <Link
+                          to={product.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline">
                           View Product
                         </Link>
                       </Table.Cell>
@@ -133,14 +157,15 @@ export default function DashboardProducts() {
                           onClick={() => {
                             setShowModal(true);
                             setProductIdToDelete(product._id);
-                          }}
-                        >
+                          }}>
                           Delete
                         </span>
                       </Table.Cell>
                       <Table.Cell>
                         <Link to={`/update-product/${product._id}`}>
-                          <span className="text-teal-600 font-semibold hover:underline cursor-pointer">Edit</span>
+                          <span className="text-teal-600 font-semibold hover:underline cursor-pointer">
+                            Edit
+                          </span>
                         </Link>
                       </Table.Cell>
                     </Table.Row>
@@ -153,19 +178,30 @@ export default function DashboardProducts() {
                 Showing {startIndex} to {endIndex} of {totalProducts} entries
               </div>
               <div className="flex overflow-x-auto sm:justify-center mt-2">
-                <Pagination currentPage={currentPage} totalPages={Math.max(1, totalPages)} onPageChange={onPageChange} showIcons={true} />
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.max(1, totalPages)}
+                  onPageChange={onPageChange}
+                  showIcons={true}
+                />
               </div>
             </div>
           </div>
         ) : (
           <p>Tidak ada produk untuk saat ini</p>
         )}
-        <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
+        <Modal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          popup
+          size="md">
           <Modal.Header />
           <Modal.Body>
             <div className="text-center">
               <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-              <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus produk ini?</h3>
+              <h3 className="mb-5 text-xl font-normal text-gray-500">
+                Apakah anda yakin ingin menghapus produk ini?
+              </h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDeleteProduct}>
                   Hapus
@@ -181,7 +217,9 @@ export default function DashboardProducts() {
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-72">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-sm font-semibold text-white">Produk berhasil dihapus</div>
+              <div className="ml-3 text-sm font-semibold text-white">
+                Produk berhasil dihapus
+              </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>

@@ -30,7 +30,10 @@ const ButtonScrollToTop = () => {
   return (
     <div className="fixed bottom-4 right-4">
       {isVisible && (
-        <Button gradientDuoTone="purpleToPink" onClick={scrollToTop} className="w-16 h-16 flex items-center justify-center rounded-xl p-2">
+        <Button
+          gradientDuoTone="purpleToBlue"
+          onClick={scrollToTop}
+          className="w-16 h-16 flex items-center justify-center rounded-xl p-2">
           <TbArrowBadgeUpFilled className="text-6xl" />
         </Button>
       )}

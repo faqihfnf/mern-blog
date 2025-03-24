@@ -170,7 +170,7 @@ export default function DashboardBanner() {
                         <img
                           src={banner.image}
                           alt={banner.name}
-                          className="w-20 h-20 object-cover bg-gray-400"
+                          className="w-20 h-20 rounded-md object-cover bg-gray-400"
                         />
                       </Table.Cell>
                       <Table.Cell>

@@ -220,7 +220,7 @@ export default function DashboardOverview() {
                   className="bg-white dark:bg-slate-800">
                   <Table.Cell>
                     <img
-                      className="w-10 h-10 rounded-lg object-cover"
+                      className="w-10 h-10 rounded-md object-cover"
                       src={post.image}
                       alt={post.title}
                     />

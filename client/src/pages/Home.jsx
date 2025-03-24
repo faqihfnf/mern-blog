@@ -139,7 +139,7 @@ export default function Home() {
             <Link
               to={"/search"}
               className="text-xl font-semibold hover:transition-transform  text-indigo-600 hover:text-indigo-700 text-center self-center flex gap-2 items-center justify-center">
-              <Button outline gradientDuoTone="redToYellow">
+              <Button outline gradientDuoTone="purpleToPink">
                 <span className="text-lg">Lihat Semua Artikel</span>
                 <FaArrowRight className="mt-1.5 ml-2 text-lg" />
               </Button>

@@ -58,7 +58,7 @@ export default function PostList({ post }) {
           </div>
           <div className="flex justify-end">
             <Link to={`/post/${post.slug}`}>
-              <Button gradientDuoTone="purpleToPink" className="font-semibold">
+              <Button gradientDuoTone="purpleToBlue" className="font-semibold">
                 <div className="flex items-center gap-2">
                   Baca Selengkapnya <FaArrowUpRightFromSquare />
                 </div>
