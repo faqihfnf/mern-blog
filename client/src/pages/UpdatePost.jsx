@@ -6,6 +6,7 @@ import {
   TextInput,
   Toast,
 } from "flowbite-react";
+import EditorToolbar, { modules, formats } from "../components/EditorToolbar";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import {
@@ -145,7 +146,7 @@ export default function UpdatePost() {
     }
   };
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+    <div className="p-3 max-w-6xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">Update a Post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -202,9 +203,10 @@ export default function UpdatePost() {
           <img
             src={formData.image}
             alt="upload"
-            className="w-full h-72 object-cover"
+            className="w-full h-96 object-cover"
           />
         )}
+        <EditorToolbar />
         <ReactQuill
           theme="snow"
           placeholder="Write something..."
@@ -214,6 +216,8 @@ export default function UpdatePost() {
             setFormData({ ...formData, content: value });
           }}
           value={formData.content}
+          modules={modules}
+          formats={formats}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
           Update

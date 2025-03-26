@@ -6,6 +6,11 @@ body {
   height: 100vh;
 }
 
+.text-editor {
+  width: 1086px;
+  margin: 0 auto;
+}
+
 .ql-editor {
   font-size: 1.05rem;
 }
