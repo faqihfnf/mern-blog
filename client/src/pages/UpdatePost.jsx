@@ -26,7 +26,13 @@ export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    image: "",
+    content: "",
+    _id: "",
+  });
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();

@@ -4,6 +4,8 @@ import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaExclamationCircle, FaPlus } from "react-icons/fa";
 import { HiCheckBadge } from "react-icons/hi2";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { app } from "../firebase";
 
 export default function DashboardProducts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -56,12 +58,47 @@ export default function DashboardProducts() {
   const handleDeleteProduct = async () => {
     setShowModal(false);
     setShowToast(false);
+
+    // Inisialisasi Firebase Storage
+    const storage = getStorage(app);
+
     try {
+      // Temukan produk yang akan dihapus
+      const productToDelete = products.find(
+        (product) => product._id === productIdToDelete
+      );
+
+      if (productToDelete) {
+        try {
+          // Ekstrak nama file dari URL gambar
+          const imageUrl = productToDelete.image;
+          const fileNameWithParams = imageUrl.split("/o/")[1];
+          const fileName = fileNameWithParams.split("?")[0];
+          const decodedFileName = decodeURIComponent(fileName);
+
+          // Buat referensi ke file
+          const fileRef = ref(storage, decodedFileName);
+
+          // Hapus file dari storage
+          await deleteObject(fileRef);
+          console.log("Gambar produk berhasil dihapus dari storage");
+        } catch (storageError) {
+          console.error(
+            "Kesalahan menghapus gambar dari storage:",
+            storageError
+          );
+        }
+      }
+
+      // Lanjutkan proses penghapusan dari database
       const res = await fetch(
         `/api/product/deleteproduct/${productIdToDelete}`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+        }
       );
       const data = await res.json();
+
       if (res.ok) {
         // Refresh data setelah menghapus
         const refreshRes = await fetch(

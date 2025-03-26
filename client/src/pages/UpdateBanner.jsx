@@ -24,7 +24,14 @@ export default function UpdateBanner() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    link: "",
+    cta: "",
+    image: "",
+    _id: "",
+  });
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +50,14 @@ export default function UpdateBanner() {
         }
         if (res.ok) {
           setPublishError(null);
-          setFormData(data);
+          setFormData({
+            title: data.title,
+            description: data.description,
+            link: data.link,
+            cta: data.cta,
+            image: data.image,
+            _id: data._id,
+          });
           console.log(data);
         }
       };

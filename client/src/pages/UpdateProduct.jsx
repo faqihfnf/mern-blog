@@ -4,6 +4,7 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useEffect, useState } from "react";
@@ -16,7 +17,13 @@ export default function UpdateProduct() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    price: 0,
+    link: "",
+    image: "",
+    _id: "",
+  });
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
@@ -35,7 +42,13 @@ export default function UpdateProduct() {
         }
         if (res.ok) {
           setPublishError(null);
-          setFormData(data);
+          setFormData({
+            name: data.name,
+            price: data.price,
+            link: data.link,
+            image: data.image,
+            _id: data._id,
+          });
           console.log(data);
         }
       };
@@ -53,9 +66,31 @@ export default function UpdateProduct() {
       }
       setImageUploadError(null);
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + "-" + file.name;
+
+      // Hapus gambar lama jika ada
+      if (formData.image) {
+        try {
+          // Ekstrak nama file dari URL
+          const oldFileNameWithParams = formData.image.split("/o/")[1];
+          const oldFileName = oldFileNameWithParams.split("?")[0];
+          const decodedOldFileName = decodeURIComponent(oldFileName);
+
+          // Buat referensi ke file lama
+          const oldFileRef = ref(storage, decodedOldFileName);
+
+          // Hapus file lama
+          await deleteObject(oldFileRef);
+          console.log("Gambar lama berhasil dihapus");
+        } catch (deleteError) {
+          console.error("Gagal menghapus gambar lama:", deleteError);
+        }
+      }
+
+      // Proses upload gambar baru
+      const fileName = `product/${new Date().getTime()}-${file.name}`;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -71,7 +106,7 @@ export default function UpdateProduct() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImageUploadProgress(null);
             setImageUploadError(null);
-            setFormData({ ...formData, image: downloadURL }); // Changed from image to image
+            setFormData({ ...formData, image: downloadURL });
           });
         }
       );

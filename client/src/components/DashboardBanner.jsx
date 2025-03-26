@@ -1,4 +1,3 @@
-// Tambahkan import untuk Firebase Storage
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
