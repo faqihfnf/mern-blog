@@ -111,6 +111,7 @@ export default function CreatePost() {
     };
     fetchCategories();
   }, []);
+
   return (
     <div className="p-3 max-w-6xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a Post</h1>

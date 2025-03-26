@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GradientColor from "./GradientColor";
 import { Button } from "flowbite-react";
 import Typewriter from "typewriter-effect";
 
 export default function Hero() {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category/getcategory");
+        const data = await res.json();
+        if (res.ok) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  // Extract category names dan kapitalisasi huruf pertama
+  const categoryNames = categories.map((category) =>
+    capitalizeFirstLetter(category.name)
+  );
   return (
     <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 p-4 sm:p-8 md:p-12 lg:p-16 px-3 max-w-7xl mx-auto">
       <GradientColor />
@@ -18,15 +43,7 @@ export default function Hero() {
         <span className="bg-gradient-to-bl flex mx-1 sm:mx-2 text-sm sm:text-base md:text-xl lg:text-2xl from-sky-600 via-purple-600 to-pink-600 bg-clip-text font-extrabold text-transparent dark:from-purple-600 dark:via-sky-600 dark:to-green-300">
           <Typewriter
             options={{
-              strings: [
-                "Aqidah",
-                "Tafsir",
-                "Hadits",
-                "Akhlaq",
-                "Adab",
-                "Fiqih",
-                "Tazkiyatun Nufus",
-              ],
+              strings: [...categoryNames],
               autoStart: true,
               loop: true,
               delay: 150,
