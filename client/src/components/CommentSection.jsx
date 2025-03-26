@@ -20,7 +20,7 @@ export default function CommentSection({ postId }) {
   const handleSubmit = async (e) => {
     setShowToast(false);
     e.preventDefault();
-    if (comment > 250) {
+    if (comment > 500) {
       return;
     }
     try {
@@ -76,7 +76,17 @@ export default function CommentSection({ postId }) {
       });
       if (res.ok) {
         const data = await res.json();
-        setComments(comments.map((comment) => (comment._id === commentId ? { ...comment, likes: data.likes, numberOfLikes: data.likes.length } : comment)));
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
       }
     } catch (error) {
       console.log(error.message);
@@ -84,7 +94,11 @@ export default function CommentSection({ postId }) {
   };
 
   const handleEdit = async (comment, editedContent) => {
-    setComments(comments.map((cmt) => (cmt._id === comment._id ? { ...cmt, content: editedContent } : cmt)));
+    setComments(
+      comments.map((cmt) =>
+        cmt._id === comment._id ? { ...cmt, content: editedContent } : cmt
+      )
+    );
   };
 
   const handleDelete = async (commentId) => {
@@ -110,12 +124,18 @@ export default function CommentSection({ postId }) {
     }
   };
   return (
-    <div className=" mx-auto w-full p-3">
+    <div className=" mx-auto w-full py-5">
       {currentUser ? (
         <div className=" flex items-center gap-1 my-5 text-slate-500 text-sm">
           <p className="font-semibold text-slate-700">Login sebagai : </p>
-          <img className="w-5 h-5 object-cover rounded-full" src={currentUser.profilePicture} alt={currentUser.username} />
-          <Link to={`/dashboard?tab=profile`} className="text-indigo-600 hover:underline font-semibold">
+          <img
+            className="w-5 h-5 object-cover rounded-full"
+            src={currentUser.profilePicture}
+            alt={currentUser.username}
+          />
+          <Link
+            to={`/dashboard?tab=profile`}
+            className="text-indigo-600 hover:underline font-semibold">
             {" "}
             @{currentUser.username}
           </Link>
@@ -129,10 +149,22 @@ export default function CommentSection({ postId }) {
         </div>
       )}
       {currentUser && (
-        <form className="border-2 border-teal-600 p-3 rounded-md mt-5" onSubmit={handleSubmit}>
-          <Textarea type="text" placeholder="Tuliskan Komentar Anda....." rows="4" maxLength={250} className="w-full" onChange={(e) => setComment(e.target.value)} value={comment} />
+        <form
+          className="border-2 border-teal-600 p-5 rounded-md mt-5"
+          onSubmit={handleSubmit}>
+          <Textarea
+            type="text"
+            placeholder="Tuliskan Komentar Anda....."
+            rows="5"
+            maxLength={500}
+            className="w-full"
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+          />
           <div className="flex justify-between mt-4 ">
-            <p className="text-sm text-slate-500 p-1">{250 - comment.length} karakter tersisa</p>
+            <p className="text-sm text-slate-500 p-1">
+              {500 - comment.length} karakter tersisa
+            </p>
             <Button type="submit" gradientDuoTone="purpleToBlue" outline>
               Submit
             </Button>
@@ -147,9 +179,13 @@ export default function CommentSection({ postId }) {
       {/* Toast Create Comment */}
       {showToast && (
         <div className="fixed top-0 right-0 gap-4">
-          <Toast color="success" className="bg-green-500 gap-1 dark:bg-green-500 w-full p-5">
+          <Toast
+            color="success"
+            className="bg-green-500 gap-1 dark:bg-green-500 w-full p-5">
             <HiCheckBadge className="w-8 h-8 text-white" />
-            <div className="ml-1 text-sm font-semibold text-white">Komentar berhasil ditambahkan </div>
+            <div className="ml-1 text-sm font-semibold text-white">
+              Komentar berhasil ditambahkan{" "}
+            </div>
             <Toast.Toggle className="ml-1 bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
           </Toast>
         </div>
@@ -157,9 +193,13 @@ export default function CommentSection({ postId }) {
       {/* Toast Delete Comment */}
       {showToastDelete && (
         <div className="fixed top-0 right-0 gap-4">
-          <Toast color="success" className="bg-red-500 gap-1 dark:bg-red-500 w-full p-5">
+          <Toast
+            color="success"
+            className="bg-red-500 gap-1 dark:bg-red-500 w-full p-5">
             <HiCheckBadge className="w-8 h-8 text-white" />
-            <div className="ml-1 text-sm font-semibold text-white">Komentar berhasil dihapus </div>
+            <div className="ml-1 text-sm font-semibold text-white">
+              Komentar berhasil dihapus{" "}
+            </div>
             <Toast.Toggle className="ml-1 bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
           </Toast>
         </div>
@@ -188,14 +228,22 @@ export default function CommentSection({ postId }) {
           ))}
         </>
       )}
-      <Modal show={showModal} onClose={() => setShowModal(false)} popup size="md">
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md">
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
             <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-            <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus komentar ini?</h3>
+            <h3 className="mb-5 text-xl font-normal text-gray-500">
+              Apakah anda yakin ingin menghapus komentar ini?
+            </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={() => handleDelete(commentToDelete)}>
+              <Button
+                color="failure"
+                onClick={() => handleDelete(commentToDelete)}>
                 Hapus
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>

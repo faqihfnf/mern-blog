@@ -1,4 +1,11 @@
-import { Alert, Button, FileInput, TextInput, Toast } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  FileInput,
+  Textarea,
+  TextInput,
+  Toast,
+} from "flowbite-react";
 import {
   getDownloadURL,
   getStorage,
@@ -125,8 +132,10 @@ export default function UpdateBanner() {
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           value={formData.title}
         />
-        <TextInput
+        <Textarea
           type="text"
+          maxLength={250}
+          rows={4}
           placeholder="Description"
           required
           id="description"

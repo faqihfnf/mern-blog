@@ -14,7 +14,7 @@ import {
 } from "react-icons/fa6";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { HiLink } from "react-icons/hi2";
-import PostPopularCard from "./../components/PostPopularCard";
+import PostCard from "./../components/PostCard";
 import { FcShare } from "react-icons/fc";
 import { BsEyeFill } from "react-icons/bs";
 import Banner from "../components/Banner";
@@ -272,7 +272,7 @@ export default function PostPage() {
       <div
         className="p-3 max-auto post-content text-justify"
         dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
-      <div className="p-5 bg-amber-100 dark:bg-slate-700">
+      <div className="p-5 rounded-md bg-amber-100 dark:bg-slate-700">
         <Carousel slide={true} slideInterval={5000} className="h-full">
           {banners.map((banner) => (
             <Banner key={banner._id} banner={banner} />
@@ -288,9 +288,7 @@ export default function PostPage() {
         </h1>
         <div className="grid  md:grid-cols-3 sm:grid-cols-1 items-center justify-center gap-5 mt-5">
           {recentPosts &&
-            recentPosts.map((post) => (
-              <PostPopularCard key={post._id} post={post} />
-            ))}
+            recentPosts.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
         <ButtonScrollToTop />
       </div>

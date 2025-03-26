@@ -1,11 +1,10 @@
 import { Button, Select, TextInput, Pagination } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import PostCard from "../components/PostCard";
 import { AiOutlineSearch } from "react-icons/ai";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import GradientColor from "../components/GradientColor";
-import PostPopularCard from "../components/PostPopularCard";
+import PostCard from "../components/PostCard";
 
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
@@ -176,9 +175,7 @@ export default function Search() {
             {loading && <p className="text-xl text-gray-500">Loading...</p>}
             {!loading &&
               posts &&
-              posts.map((post) => (
-                <PostPopularCard key={post._id} post={post} />
-              ))}
+              posts.map((post) => <PostCard key={post._id} post={post} />)}
           </div>
         </div>
 

@@ -1,47 +1,80 @@
-import { Link } from "react-router-dom";
+import { Button } from "flowbite-react";
+import React from "react";
 import { BsEyeFill } from "react-icons/bs";
-import { FaComments } from "react-icons/fa";
+import { FaArrowUpRightFromSquare, FaComments } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export default function PostCard({ post }) {
   return (
-    <div className="group relative w-full border  h-[375px] overflow-hidden sm:w-[355px] transition-all bg-purple-200/10 rounded-xl shadow-indigo-500/20 shadow-xl hover:border-teal-500 hover:shadow-teal-500/20 dark:hover:border-pink-500 dark:hover:shadow-pink-500/20 dark:border-slate-700">
-      <Link to={`/post/${post.slug}`}>
-        <img
-          src={post.image}
-          alt="post cover"
-          className="h-[260px] w-full  object-cover group-hover:h-[200px] transition-all duration-300 z-20"
-        />
-      </Link>
-      <div className="p-3 flex flex-col gap-4">
-        <div className="flex justify-between">
-          <span className="text-md text-gray-500 ">
-            {post.createdAt &&
-              new Intl.DateTimeFormat("id-ID", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              }).format(new Date(post.createdAt))}
-          </span>
-          <div className="flex gap-2 items-center">
-            <span className="whitespace-nowrap rounded-md bg-indigo-100 px-2.5 py-0.5 text-xs text-indigo-600">
-              {post.category}
-            </span>
-            <span className="flex gap-1 items-center text-md">
-              <BsEyeFill />
-              {post.views}
-            </span>
-            <span className="flex gap-1 items-center text-md">
-              <FaComments />
-              {post.commentCount}
-            </span>
-          </div>
-        </div>
-        <h2 className="text-lg font-semibold line-clamp-2">{post.title}</h2>
-        <Link
-          to={`/post/${post.slug}`}
-          className="z-10 group-hover:bottom-0 absolute bottom-[-200px] left-0 right-0 border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white transition-all duration-300 text-center py-2 rounded-md m-2 font-semibold">
-          Baca Selengkapnya
+    <div className="w-full bg-slate-900 rounded-lg overflow-hidden shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30">
+      {/* Container Gambar dengan tinggi tetap */}
+      <div className="relative h-56">
+        <Link to={`/post/${post.slug}`}>
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover transition duration-300 hover:scale-105"
+            loading="lazy"
+          />
         </Link>
+        <div className="absolute top-2 left-2">
+          <span className="text-xs font-bold uppercase tracking-wider bg-white/90 text-slate-800 px-2 py-1 rounded">
+            {new Date(post.createdAt).getFullYear()}
+          </span>
+        </div>
+      </div>
+
+      {/* Bagian Metadata (Tanggal dan Kategori) */}
+      <div className="flex justify-between p-3">
+        <span className="text-md text-gray-400">
+          {post.createdAt &&
+            new Intl.DateTimeFormat("id-ID", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            }).format(new Date(post.createdAt))}
+        </span>
+        <div className="flex gap-2 items-center">
+          <span className="whitespace-nowrap font-medium rounded-md bg-indigo-200 px-2.5 py-0.5 mb-1 text-xs ">
+            {post.category}
+          </span>
+          <span className="flex gap-1 items-center text-md text-gray-200">
+            <BsEyeFill />
+            {post.views}
+          </span>
+          <span className="flex gap-1 items-center text-md text-gray-200">
+            <FaComments />
+            {post.commentCount}
+          </span>
+        </div>
+      </div>
+
+      {/* Container Konten dengan tinggi tetap */}
+      <div className="p-3 min-h-[200px] flex flex-col justify-between">
+        {/* Judul dan Konten */}
+        <div>
+          <div className="h-[60px] mb-1">
+            <h2 className="text-white text-xl font-medium mb-3 line-clamp-2">
+              {post.title}
+            </h2>
+          </div>
+          <p className="text-gray-400 line-clamp-2 mb-4">
+            {post.content.replace(/<[^>]*>/g, "")}
+          </p>
+        </div>
+
+        {/* Tombol di bagian bawah */}
+        <div>
+          <Link to={`/post/${post.slug}`}>
+            <Button
+              gradientDuoTone="tealToLime"
+              className="font-semibold w-full">
+              <div className="flex items-center justify-center gap-2">
+                Baca Selengkapnya <FaArrowUpRightFromSquare />
+              </div>
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

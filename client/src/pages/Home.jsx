@@ -5,10 +5,10 @@ import SEO from "../components/SEO";
 import { Button } from "flowbite-react";
 import ButtonScrollToTop from "../components/ButtonScrollToTop";
 import { Carousel } from "flowbite-react";
-import PostPopularCard from "../components/PostPopularCard";
 import { FaArrowRight } from "react-icons/fa6";
 import Hero from "../components/Hero";
 import Banner from "../components/Banner";
+import PostCard from "../components/PostCard";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -104,7 +104,7 @@ export default function Home() {
                     className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 h-full p-4">
                     {slide.map((post) => (
                       <div key={post._id} className="w-full">
-                        <PostPopularCard post={post} />
+                        <PostCard post={post} />
                       </div>
                     ))}
                   </div>
