@@ -179,8 +179,10 @@ export default function DashboardBanner() {
                           {banner.title}
                         </span>
                       </Table.Cell>
-                      <Table.Cell className="line-clamp-2">
-                        {banner.description}
+                      <Table.Cell>
+                        <span className="line-clamp-2">
+                          {banner.description}
+                        </span>
                       </Table.Cell>
                       <Table.Cell>
                         <Link
