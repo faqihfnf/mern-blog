@@ -38,7 +38,23 @@ export default function UpdatePost() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
+  const [categories, setCategories] = useState([]);
   console.log("Product ID from URL:", postId);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category/getcategory");
+        const data = await res.json();
+        if (res.ok) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     try {
@@ -147,13 +163,13 @@ export default function UpdatePost() {
           <Select
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
-            }
-            value={formData.category}>
+            }>
             <option value="uncategorized">Pilih Kategori</option>
-            <option value="aqidah">Aqidah</option>
-            <option value="tafsir">Tafsir</option>
-            <option value="hadits">Hadits</option>
-            <option value="adab">Adab</option>
+            {categories.map((category) => (
+              <option key={category._id} value={category.slug}>
+                {category.name}
+              </option>
+            ))}
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
