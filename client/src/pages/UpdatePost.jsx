@@ -14,6 +14,7 @@ import {
   getStorage,
   ref,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useEffect, useState } from "react";
@@ -87,9 +88,31 @@ export default function UpdatePost() {
       }
       setImageUploadError(null);
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + "-" + file.name;
+
+      // Hapus gambar lama jika ada
+      if (formData.image) {
+        try {
+          // Ekstrak nama file dari URL
+          const oldFileNameWithParams = formData.image.split("/o/")[1];
+          const oldFileName = oldFileNameWithParams.split("?")[0];
+          const decodedOldFileName = decodeURIComponent(oldFileName);
+
+          // Buat referensi ke file lama
+          const oldFileRef = ref(storage, decodedOldFileName);
+
+          // Hapus file lama
+          await deleteObject(oldFileRef);
+          console.log("Gambar lama berhasil dihapus");
+        } catch (deleteError) {
+          console.error("Gagal menghapus gambar lama:", deleteError);
+        }
+      }
+
+      // Proses upload gambar baru
+      const fileName = `post/${new Date().getTime()}-${file.name}`;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {

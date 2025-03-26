@@ -270,7 +270,7 @@ export default function PostPage() {
         </div>
       </div>
       <div
-        className="p-3 max-auto post-content text-justify"
+        className="p-3 mx-auto post-content text-justify prose dark:prose-invert prose-headings:font-poppins prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:text-base max-w-none"
         dangerouslySetInnerHTML={{ __html: post && post.content }}></div>
       <div className="p-5 rounded-md bg-amber-100 dark:bg-slate-700">
         <Carousel slide={true} slideInterval={5000} className="h-full">

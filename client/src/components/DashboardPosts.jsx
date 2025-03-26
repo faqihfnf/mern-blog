@@ -4,6 +4,8 @@ import { Table, Pagination, Modal, Button, Toast } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaExclamationCircle, FaPlus } from "react-icons/fa";
 import { HiCheckBadge } from "react-icons/hi2";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { app } from "../firebase";
 
 export default function DashboardPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -51,7 +53,39 @@ export default function DashboardPosts() {
   const handleDeletePost = async () => {
     setShowModal(false);
     setShowToast(false);
+
+    // Inisialisasi Firebase Storage
+    const storage = getStorage(app);
+
     try {
+      // Temukan post yang akan dihapus
+      const postToDelete = userPosts.find(
+        (post) => post._id === postIdToDelete
+      );
+
+      if (postToDelete) {
+        try {
+          // Ekstrak nama file dari URL gambar
+          const imageUrl = postToDelete.image;
+          const fileNameWithParams = imageUrl.split("/o/")[1];
+          const fileName = fileNameWithParams.split("?")[0];
+          const decodedFileName = decodeURIComponent(fileName);
+
+          // Buat referensi ke file
+          const fileRef = ref(storage, decodedFileName);
+
+          // Hapus file dari storage
+          await deleteObject(fileRef);
+          console.log("Gambar post berhasil dihapus dari storage");
+        } catch (storageError) {
+          console.error(
+            "Kesalahan menghapus gambar dari storage:",
+            storageError
+          );
+        }
+      }
+
+      // Lanjutkan proses penghapusan dari database
       const res = await fetch(
         `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
