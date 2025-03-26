@@ -134,7 +134,7 @@ export default function UpdateBanner() {
         />
         <Textarea
           type="text"
-          maxLength={250}
+          maxLength={500}
           rows={4}
           placeholder="Description"
           required
@@ -145,6 +145,9 @@ export default function UpdateBanner() {
           }
           value={formData.description}
         />
+        <p className="text-sm text-slate-500">
+          {500 - (formData.description?.length || 0)} karakter tersisa
+        </p>
         <TextInput
           type="text"
           placeholder="Banner Link"
@@ -153,6 +156,15 @@ export default function UpdateBanner() {
           className="flex-1"
           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
           value={formData.link}
+        />
+        <TextInput
+          type="text"
+          placeholder="Call to Action"
+          required
+          id="cta"
+          className="flex-1"
+          onChange={(e) => setFormData({ ...formData, cta: e.target.value })}
+          value={formData.cta}
         />
 
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">

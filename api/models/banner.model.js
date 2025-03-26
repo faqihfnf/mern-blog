@@ -18,6 +18,11 @@ const BannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    cta: {
+      type: String,
+      required: true,
+      default: "Hubungi Kami",
+    },
   },
   { timestamps: true }
 );

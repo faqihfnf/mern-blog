@@ -108,10 +108,10 @@ export default function CreateBanner() {
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
         <Textarea
-          maxLength={250}
+          maxLength={500}
           rows={4}
           type="text"
-          placeholder="Description"
+          placeholder="Description max 250 characters"
           required
           id="description"
           className="flex-1"
@@ -119,6 +119,9 @@ export default function CreateBanner() {
             setFormData({ ...formData, description: e.target.value })
           }
         />
+        <p className="text-sm text-slate-500">
+          {500 - (formData.description?.length || 0)} karakter tersisa
+        </p>
         <TextInput
           type="text"
           placeholder="Banner Link"
@@ -128,6 +131,14 @@ export default function CreateBanner() {
           onChange={(e) => setFormData({ ...formData, link: e.target.value })}
         />
 
+        <TextInput
+          type="text"
+          placeholder="Call to Action"
+          required
+          id="cta"
+          className="flex-1"
+          onChange={(e) => setFormData({ ...formData, cta: e.target.value })}
+        />
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
           <FileInput
             type="file"

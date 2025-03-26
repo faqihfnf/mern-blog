@@ -2,13 +2,13 @@ import { Button } from "flowbite-react";
 
 export default function Banner({ banner }) {
   return (
-    <div className="flex flex-col sm:flex-row p-4 border-teal-600 border-2 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center">
+    <div className="flex flex-col sm:flex-row p-10 border-teal-600 border-2 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center">
       <div className="flex-1 justify-center flex flex-col">
-        <h2 className="text-3xl font-bold">{banner.title}</h2>
-        <p className="text-gray-800 my-2">{banner.description}</p>
+        <h2 className="text-4xl font-bold m-5">{banner.title}</h2>
+        <p className="text-gray-800 my-2 text-justify">{banner.description}</p>
         <Button
           gradientDuoTone="purpleToPink"
-          className="rounded-tl-xl rounded-br-xl rounded-tr-none rounded-bl-none min-h-[44px] px-6 py-3"
+          className="mt-5 rounded-tl-xl rounded-br-xl rounded-tr-none rounded-bl-none min-h-[44px] px-6 py-3"
           onClick={() =>
             window.open(
               banner.link.startsWith("http")
@@ -17,7 +17,7 @@ export default function Banner({ banner }) {
               "_blank"
             )
           }>
-          Mahir membaca Al-Quran
+          {banner.cta}
         </Button>
       </div>
       <div className="p-8 flex w-[500px] h-[350px]">

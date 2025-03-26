@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/error.js";
 //# Create new banner
 export const createBanner = async (req, res, next) => {
   try {
-    const { image, title, description, link } = req.body;
+    const { image, title, description, link, cta } = req.body;
 
     if (!description || !title || !link) {
       return next(errorHandler(400, "All fields are required"));
@@ -15,7 +15,7 @@ export const createBanner = async (req, res, next) => {
       title,
       description,
       link,
-      //   userId: req.user.id, // dari verifyToken middleware
+      cta,
     });
 
     const savedBanner = await newBanner.save();
@@ -62,6 +62,7 @@ export const updateBanner = async (req, res, next) => {
           title: req.body.title,
           description: req.body.description,
           link: req.body.link,
+          cta: req.body.cta,
         },
       },
       { new: true } // Mengembalikan data setelah diperbarui

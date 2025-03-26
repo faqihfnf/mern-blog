@@ -153,6 +153,7 @@ export default function DashboardBanner() {
                   <Table.HeadCell>Title</Table.HeadCell>
                   <Table.HeadCell>Description</Table.HeadCell>
                   <Table.HeadCell>Link</Table.HeadCell>
+                  <Table.HeadCell>CTA</Table.HeadCell>
                   <Table.HeadCell>Delete</Table.HeadCell>
                   <Table.HeadCell>
                     <span>Edit</span>
@@ -190,6 +191,7 @@ export default function DashboardBanner() {
                           View Banner
                         </Link>
                       </Table.Cell>
+                      <Table.Cell>{banner.cta}</Table.Cell>
                       <Table.Cell>
                         <span
                           className="text-red-600 font-semibold hover:underline cursor-pointer"
