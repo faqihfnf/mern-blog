@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   ScrollRestoration,
+  useLocation,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
@@ -24,12 +25,18 @@ import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import CreateBanner from "./pages/CreateBanner";
 import UpdateBanner from "./pages/UpdateBanner";
+import UpdateDraft from "./pages/UpdateDraft";
 
-export default function App() {
+// Komponen wrapper untuk menambahkan Footer kondisional
+function Layout() {
+  const location = useLocation();
+  const showFooterPaths = ["/", "/about", "/product"];
+  const hideHeaderPaths = ["/sign-in", "/sign-up"];
+
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
-      <Header />
+      {!hideHeaderPaths.includes(location.pathname) && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -43,6 +50,7 @@ export default function App() {
         <Route element={<AdminPrivateRoute />}>
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
+          <Route path="/update-draft/:draftId" element={<UpdateDraft />} />
           <Route path="/create-product" element={<CreateProduct />} />
           <Route
             path="/update-product/:productId"
@@ -58,7 +66,15 @@ export default function App() {
         </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
-      <Footer />
+      {showFooterPaths.includes(location.pathname) && <Footer />}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   );
 }

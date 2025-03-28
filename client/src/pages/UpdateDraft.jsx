@@ -25,7 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
 import { useSelector } from "react-redux";
 
-export default function UpdatePost() {
+export default function UpdateDraft() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -39,10 +39,9 @@ export default function UpdatePost() {
   const [publishError, setPublishError] = useState(null);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const { draftId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const [categories, setCategories] = useState([]);
-  console.log("Product ID from URL:", postId);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -62,7 +61,9 @@ export default function UpdatePost() {
   useEffect(() => {
     try {
       const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+        const res = await fetch(
+          `/api/post/getposts?postId=${draftId}&draft=true`
+        );
         const data = await res.json();
         if (!res.ok) {
           console.log(data.message);
@@ -79,7 +80,7 @@ export default function UpdatePost() {
     } catch (error) {
       console.log(error.message);
     }
-  }, [postId]);
+  }, [draftId]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -245,6 +246,7 @@ export default function UpdatePost() {
           modules={modules}
           formats={formats}
         />
+
         <div className="flex items-center gap-4">
           <ToggleSwitch
             checked={formData.isDraft}

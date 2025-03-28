@@ -9,6 +9,7 @@ import DashboardOverview from "../components/DashboardOverview";
 import DashboardCategory from "../components/DashboardCategory";
 import DashboardProduct from "../components/DashboardProduct";
 import DashboardBanner from "../components/DashboardBanner";
+import DashboardDrafts from "../components/DashboardDraft";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -32,6 +33,8 @@ export default function Dashboard() {
       {tab === "profile" && <DashboardProfile />}
       {/* Posts */}
       {tab === "posts" && <DashboardPosts />}
+      {/* Draft */}
+      {tab === "draft" && <DashboardDrafts />}
       {/* Categories */}
       {tab === "category" && <DashboardCategory />}
       {/* Users */}

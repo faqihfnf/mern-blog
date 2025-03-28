@@ -12,6 +12,7 @@ import { IoStorefront } from "react-icons/io5";
 import { FaChartSimple } from "react-icons/fa6";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { MdCallToAction } from "react-icons/md";
+import { RiDraftFill } from "react-icons/ri";
 
 export default function DashboardSidebar() {
   const location = useLocation();
@@ -74,6 +75,7 @@ export default function DashboardSidebar() {
               Profile
             </Sidebar.Item>
           </Link>
+
           {/* posts */}
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
@@ -85,6 +87,21 @@ export default function DashboardSidebar() {
                 icon={HiDocumentText}
                 as="div">
                 Posts
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {/* draft */}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=draft">
+              <Sidebar.Item
+                className={`text-cyan-950 font-semibold ${
+                  tab === "draft" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                }`}
+                active={tab === "draft"}
+                icon={RiDraftFill}
+                as="div">
+                Draft
               </Sidebar.Item>
             </Link>
           )}

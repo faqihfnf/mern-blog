@@ -1,4 +1,11 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Navbar,
+  TextInput,
+  ToggleSwitch,
+} from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -7,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { FaPlus } from "react-icons/fa6";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -16,6 +24,7 @@ export default function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
@@ -87,18 +96,9 @@ export default function Header() {
         />
       </form>
       <div className="flex items-center gap-4 md:order-2">
-        <Button
-          className="w-12 h-10 items-center"
-          color="gray"
-          title="Themes"
-          pill
-          onClick={() => dispatch(toggleTheme())}>
-          {theme === "light" ? (
-            <FaSun className="text-yellow-300 text-xl" />
-          ) : (
-            <FaMoon className="text-blue-800 text-xl" />
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+        </div>{" "}
         {currentUser ? (
           <Dropdown
             arrowIcon={false}

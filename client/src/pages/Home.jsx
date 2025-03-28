@@ -116,8 +116,8 @@ export default function Home() {
       )}
 
       {/* Banner Section */}
-      <div className="p-5 bg-amber-100 dark:bg-slate-700">
-        <Carousel slide={true} slideInterval={5000} className="h-full">
+      <div className="p-5 bg-amber-100 dark:bg-slate-700 mx-7 rounded-xl ">
+        <Carousel slide={true} slideInterval={5000}>
           {banners.map((banner) => (
             <Banner key={banner._id} banner={banner} />
           ))}

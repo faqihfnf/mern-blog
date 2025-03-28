@@ -6,9 +6,9 @@ import { FaComments } from "react-icons/fa";
 
 export default function PostList({ post }) {
   return (
-    <div className="rounded-md shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30 flex justify-between p-3 w-5/6">
+    <div className="rounded-md shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30 flex justify-between p-4 w-3/4">
       <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
-        <div className="relative w-full sm:w-[300px] h-[250px] flex-shrink-0">
+        <div className="relative w-full sm:w-[250px] h-[200px] flex-shrink-0">
           <Link to={`/post/${post.slug}`}>
             <img
               src={post.image}
@@ -23,7 +23,7 @@ export default function PostList({ post }) {
             </span>
           </div>
         </div>
-        <div className="flex flex-col justify-between h-[250px] gap-4 w-full">
+        <div className="flex flex-col justify-between h-[200px] gap-4 w-full">
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-2 items-center">
