@@ -8,7 +8,7 @@ export default function PostCard({ post }) {
   return (
     <div className="w-full bg-slate-900 rounded-lg overflow-hidden shadow-indigo-500/10 border shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/30">
       {/* Container Gambar dengan tinggi tetap */}
-      <div className="relative h-56">
+      <div className="relative h-44">
         <Link to={`/post/${post.slug}`}>
           <img
             src={post.image}
@@ -25,7 +25,7 @@ export default function PostCard({ post }) {
       </div>
 
       {/* Bagian Metadata (Tanggal dan Kategori) */}
-      <div className="flex justify-between p-3">
+      <div className="flex justify-between p-2">
         <span className="text-md text-gray-400">
           {post.createdAt &&
             new Intl.DateTimeFormat("id-ID", {
@@ -50,7 +50,7 @@ export default function PostCard({ post }) {
       </div>
 
       {/* Container Konten dengan tinggi tetap */}
-      <div className="p-3 min-h-[200px] flex flex-col justify-between">
+      <div className="p-2 min-h-[180px] flex flex-col justify-between">
         {/* Judul dan Konten */}
         <div>
           <div className="h-[60px] mb-1">
@@ -58,7 +58,7 @@ export default function PostCard({ post }) {
               {post.title}
             </h2>
           </div>
-          <p className="text-gray-400 line-clamp-2 mb-4">
+          <p className="text-gray-400 line-clamp-1">
             {post.content.replace(/<[^>]*>/g, "")}
           </p>
         </div>

@@ -96,7 +96,7 @@ export default function Home() {
             <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
               Artikel Populer
             </h2>
-            <div className="h-[500px] sm:h-[550px]">
+            <div className="h-[400px] sm:h-[450px]">
               <Carousel slide={true} slideInterval={5000} className="h-full">
                 {createSlides().map((slide, slideIndex) => (
                   <div

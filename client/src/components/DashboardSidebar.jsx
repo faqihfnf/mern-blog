@@ -64,7 +64,7 @@ export default function DashboardSidebar() {
           {/* profile */}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
-              className={`text-cyan-950 font-semibold ${
+              className={`text-cyan-950 font-semibold mt-[-5px] ${
                 tab === "profile" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
               }`}
               active={tab === "profile"}
@@ -80,7 +80,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "posts" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "posts"}
@@ -95,7 +95,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=draft">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "draft" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "draft"}
@@ -110,7 +110,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=category">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "category" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "category"}
@@ -125,7 +125,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=users">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "users" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "users"}
@@ -140,7 +140,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=comments">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "comments" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "comments"}
@@ -155,7 +155,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=products">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "products" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "products"}
@@ -170,7 +170,7 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=banners">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
+                className={`text-cyan-950 font-semibold mt-[-5px] ${
                   tab === "banners" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
                 }`}
                 active={tab === "banners"}
@@ -183,7 +183,7 @@ export default function DashboardSidebar() {
 
           {/* sign out */}
           <Sidebar.Item
-            className="text-red-700 dark:text-red-700 font-semibold cursor-pointer"
+            className="text-red-700 dark:text-red-700 mt-[-5px] font-semibold cursor-pointer"
             icon={FaSignOutAlt}
             onClick={handleSignOut}>
             Sign Out
