@@ -28,6 +28,9 @@ const postSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    tags: {
+      type: String,
+    },
     views: {
       type: Number,
       default: 0,

@@ -18,13 +18,13 @@ const ThemeToggle = () => {
       className="relative w-16 h-8 bg-gray-300 dark:bg-gray-700 rounded-full shadow-inner flex items-center cursor-pointer">
       <div
         className={`
-          absolute w-7 h-7  bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out
-          ${theme === "dark" ? "translate-x-8" : "translate-x-1"}
+          absolute w-6 h-6   bg-white rounded-full shadow-md transform transition-transform duration-500 ease-in-out
+          ${theme === "dark" ? "translate-x-9" : "translate-x-1"}
         `}>
         {theme === "dark" ? (
           <FaMoon className="w-full h-full p-1 text-blue-800" />
         ) : (
-          <FaSun className="w-full h-full p-1 text-yellow-500" />
+          <FaSun className="w-full h-full p-1 text-yellow-300" />
         )}
       </div>
     </button>

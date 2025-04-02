@@ -17,7 +17,9 @@ export default function Product() {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/product/getproduct?startIndex=${currentPage}&limit=${productsPerPage}`);
+        const res = await fetch(
+          `/api/product/getproduct?startIndex=${currentPage}&limit=${productsPerPage}`
+        );
         const data = await res.json();
         if (res.ok) {
           setProducts(data.products);
@@ -42,19 +44,27 @@ export default function Product() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen m-8 p-4 flex justify-center items-center">Loading...</div>;
+    return (
+      <div className="min-h-screen m-8 p-4 flex justify-center items-center">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen p-2 mb-5">
+    <div className="min-h-screen flex flex-col items-center ">
       <SEO
         title="Produk Kami | Marifah Store"
         description="Temukan koleksi produk islami berkualitas dari Marifah. Kami menyediakan berbagai produk mulai dari buku, busana muslim, hingga perlengkapan ibadah."
         keywords="produk islami, buku islam, busana muslim, perlengkapan ibadah, marifah store"
-        image={products[0]?.image || "https://marifah.id/default-product-image.jpg"} // Gunakan gambar produk pertama atau default image
+        image={
+          products[0]?.image || "https://marifah.id/default-product-image.jpg"
+        } // Gunakan gambar produk pertama atau default image
       />
       <GradientColor />
-      <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text py-10 text-5xl font-extrabold text-transparent items-center justify-center flex">Produk Kami</h1>
+      <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text py-10 text-5xl font-extrabold text-transparent items-center justify-center flex">
+        Produk Kami
+      </h1>
       <div className="max-w-2xl mx-auto text-center mb-8 text-gray-600 dark:text-gray-400"></div>
       <div className="p-2 m-4 items-center justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -67,10 +77,22 @@ export default function Product() {
         {totalPages > 1 && (
           <div className="flex flex-col items-center mt-8">
             <div className="text-sm text-gray-700 dark:text-gray-400 mb-4">
-              Showing <span className="font-semibold">{(currentPage - 1) * productsPerPage + 1}</span> to <span className="font-semibold">{Math.min(currentPage * productsPerPage, totalProducts)}</span> of{" "}
-              <span className="font-semibold">{totalProducts}</span> products
+              Showing{" "}
+              <span className="font-semibold">
+                {(currentPage - 1) * productsPerPage + 1}
+              </span>{" "}
+              to{" "}
+              <span className="font-semibold">
+                {Math.min(currentPage * productsPerPage, totalProducts)}
+              </span>{" "}
+              of <span className="font-semibold">{totalProducts}</span> products
             </div>
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons={true} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              showIcons={true}
+            />
           </div>
         )}
       </div>

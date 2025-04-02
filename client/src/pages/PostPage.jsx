@@ -155,7 +155,7 @@ export default function PostPage() {
         <SEO
           title={` marifah.id | ${post.title}`}
           description={getExcerpt(post.content)}
-          keywords={`${post.category}, islam, artikel islami, ${post.title}`}
+          keywords={`${post.title}, ${post.tags}, ${post.category}, islam, artikel islami, kajian islam, kajian sunnah, al-quran, sunnah`}
           image={post.image}
         />
       )}

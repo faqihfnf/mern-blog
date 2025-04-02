@@ -30,14 +30,27 @@ import UpdateDraft from "./pages/UpdateDraft";
 // Komponen wrapper untuk menambahkan Footer kondisional
 function Layout() {
   const location = useLocation();
-  const showFooterPaths = ["/", "/about", "/product"];
   const hideHeaderPaths = ["/sign-in", "/sign-up"];
+
+  function shouldShowFooter(path) {
+    const staticPaths = ["/", "/about", "/product"];
+    if (staticPaths.includes(path)) return true;
+
+    // Cek apakah path dimulai dengan "/post/"
+    if (path.startsWith("/post/")) return true;
+
+    // Cek apakah path dimulai dengan "/search"
+    if (path.startsWith("/search")) return true;
+
+    return false;
+  }
 
   return (
     <>
       <ScrollToTop />
       {!hideHeaderPaths.includes(location.pathname) && <Header />}
       <Routes>
+        {/* Semua routes tetap sama */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
@@ -66,11 +79,10 @@ function Layout() {
         </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
       </Routes>
-      {showFooterPaths.includes(location.pathname) && <Footer />}
+      {shouldShowFooter(location.pathname) && <Footer />}
     </>
   );
 }
-
 export default function App() {
   return (
     <BrowserRouter>

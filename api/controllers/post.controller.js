@@ -35,6 +35,7 @@ export const create = async (req, res, next) => {
       content: req.body.content || "", // Boleh kosong untuk draft
       userId: req.user.id,
       slug,
+      tags: req.body.tags || "",
       category: req.body.category || "uncategorized",
       image: req.body.image || "/blog-post.png",
       isDraft: req.body.isDraft !== undefined ? req.body.isDraft : true,
@@ -142,6 +143,7 @@ export const updatepost = async (req, res, next) => {
           content: req.body.content,
           category: req.body.category,
           image: req.body.image,
+          tags: req.body.tags,
           isDraft: req.body.isDraft !== undefined ? req.body.isDraft : true,
         },
       },

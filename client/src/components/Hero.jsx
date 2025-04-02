@@ -31,8 +31,8 @@ export default function Hero() {
   );
   return (
     <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 p-4 sm:p-12  px-3 max-w-7xl mx-auto">
-      <GradientColor />
-      <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text font-extrabold text-transparent text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 text-4xl sm:text-4xl md:text-6xl lg:text-8xl">
+      {/* <GradientColor /> */}
+      <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text font-extrabold text-transparent text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 text-5xl sm:text-5xl md:text-6xl lg:text-8xl">
         Selamat Datang Para Penuntut Ilmu
       </h1>
       <h2 className="flex justify-center text-center items-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mt-2  italic">

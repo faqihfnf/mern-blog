@@ -91,7 +91,7 @@ export default function Home() {
 
       {/* Popular Posts Section */}
       {popularPosts && popularPosts.length > 0 && (
-        <div className="max-w-full p-3 flex flex-col gap-2 py-7">
+        <div className="max-w-full p-3 flex flex-col gap-2 py-7 mt-5">
           <div className="flex flex-col gap-8">
             <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
               Artikel Populer
@@ -101,7 +101,7 @@ export default function Home() {
                 {createSlides().map((slide, slideIndex) => (
                   <div
                     key={slideIndex}
-                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 h-full p-4">
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-2 h-full p-4">
                     {slide.map((post) => (
                       <div key={post._id} className="w-full">
                         <PostCard post={post} />
@@ -140,8 +140,8 @@ export default function Home() {
               to={"/search"}
               className="text-xl font-semibold hover:transition-transform  text-indigo-600 hover:text-indigo-700 text-center self-center flex gap-2 items-center justify-center">
               <Button outline gradientDuoTone="purpleToPink">
-                <span className="text-lg">Lihat Semua Artikel</span>
-                <FaArrowRight className="mt-1.5 ml-2 text-lg" />
+                <span className="">Lihat Semua Artikel</span>
+                <FaArrowRight className="mt-1 ml-2" />
               </Button>
             </Link>
           </div>

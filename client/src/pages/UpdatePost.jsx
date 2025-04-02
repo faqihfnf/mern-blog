@@ -245,6 +245,24 @@ export default function UpdatePost() {
           modules={modules}
           formats={formats}
         />
+
+        {/* Tags */}
+        <div className="flex flex-col gap-4 sm:flex-row justify-between">
+          <TextInput
+            type="text"
+            placeholder="Tags (pisahkan dengan koma)"
+            id="tags"
+            className="flex-1"
+            value={formData.tags}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                tags: e.target.value,
+              })
+            }
+          />
+        </div>
+
         <div className="flex items-center gap-4">
           <ToggleSwitch
             checked={formData.isDraft}

@@ -163,12 +163,12 @@ export default function Search() {
           </Button>
         </form>
       </div>
-      <div className="flex-1">
-        <h1 className="text-4xl items-center flex justify-center font-bold sm:border-b border-gray-500 p-3">
+      <div className="flex-1 flex flex-col items-center">
+        <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text text-4xl font-extrabold text-transparent items-center justify-center flex p-2">
           Semua Artikel
         </h1>
         <div className="w-full items-center justify-center">
-          <div className="p-7 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 items-center justify-center gap-4">
+          <div className="p-5 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 items-center justify-center gap-4">
             {!loading && posts.length === 0 && (
               <p className="text-xl text-gray-500">Artikel tidak ditemukan</p>
             )}
