@@ -36,7 +36,7 @@ export default function Hero() {
         Selamat Datang Para Penuntut Ilmu
       </h1>
       <h2 className="flex justify-center text-center items-center text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mt-2 italic">
-        Bersama Tinta dan Pena hingga Berpisah dengan Dunia yang Fana
+        Bersama Tinta dan Pena hingga Berpisah dengan Dunia
       </h2>
       <div className="flex flex-wrap justify-center text-center items-center text-lg sm:text-base md:text-xl lg:text-2xl font-medium mt-2 ">
         <span>Dapatkan artikel-artikel terkait</span>

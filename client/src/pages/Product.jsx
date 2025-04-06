@@ -56,7 +56,11 @@ export default function Product() {
       <SEO
         title="Produk Kami | Marifah Store"
         description="Temukan koleksi produk islami berkualitas dari Marifah. Kami menyediakan berbagai produk mulai dari buku, busana muslim, hingga perlengkapan ibadah."
-        keywords="produk islami, buku islam, busana muslim, perlengkapan ibadah, marifah store"
+        keywords={`${products
+          .map((product) => product.name)
+          .join(
+            ", "
+          )}, produk islami, buku islam, ebook islam, ebook sunnah, buku sunnah,marifah store`}
         image={
           products[0]?.image || "https://marifah.id/default-product-image.jpg"
         } // Gunakan gambar produk pertama atau default image

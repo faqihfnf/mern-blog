@@ -15,6 +15,7 @@ export default function Home() {
   const [banners, setBanners] = useState([]);
   const [popularPosts, setPopularPosts] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,6 +80,21 @@ export default function Home() {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/category/getcategory");
+        const data = await res.json();
+        if (res.ok) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   // Function to get number of cards per slide based on screen width
   const getCardsPerSlide = () => {
     if (windowWidth >= 1280) {
@@ -106,7 +122,12 @@ export default function Home() {
       <SEO
         title="Marifah.id | Al-Quran dan As-Sunnah"
         description="Selamat datang di marifah.id, portal ilmu pengetahuan Islam yang menyajikan artikel-artikel berkualitas tentang ajaran Islam, fiqih, hadits, dan berbagai kajian islami lainnya."
-        keywords="islam, ilmu islam, artikel islam, kajian islam, fiqih, hadits, quran"
+        keywords={`${categories
+          .map((category) => category.name)
+          .join(
+            ", "
+          )}, artikel islam, fiqih, hadits, kajian islami, kajian sunnah, marifah.id`}
+        author="marifah.id"
         image="/logo.png" // Ganti dengan URL gambar default Anda
       />
       <div className="">

@@ -42,8 +42,8 @@ export default function Footer() {
   );
 
   return (
-    <footer className="bg-cyan-950">
-      <div className="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-12">
+    <footer className="bg-sky-950">
+      <div className="mx-auto max-w-screen-2xl p-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:flex lg:justify-between lg:gap-8">
           <div>
             <Link to="/" className="dark:text-white">
@@ -212,7 +212,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-gray-100 pt-6">
+        <div className="mt-8 border-t border-gray-100 pt-2">
           <div className="text-center sm:flex sm:justify-between sm:text-left">
             <p className="text-sm text-gray-300">
               Created with ❤️ by{" "}

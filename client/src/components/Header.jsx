@@ -142,7 +142,7 @@ export default function Header() {
         </div>
 
         {/* Right side controls */}
-        <div className="flex items-center gap-1 md:gap-4">
+        <div className="flex items-center gap-1 md:gap-10">
           {/* Theme Toggle - only on large screens */}
 
           {/* Search Icon for mobile */}
@@ -307,20 +307,6 @@ export default function Header() {
                     Product
                   </Link>
                 </li>
-
-                {/* Search form for mobile */}
-                {/* <li className="mt-4 px-3">
-                  <form onSubmit={handleSearch}>
-                    <TextInput
-                      className="w-full"
-                      type="text"
-                      placeholder="Cari Artikel..."
-                      rightIcon={AiOutlineSearch}
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </form>
-                </li> */}
               </ul>
             </nav>
           </div>

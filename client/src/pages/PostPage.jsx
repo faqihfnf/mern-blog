@@ -29,23 +29,37 @@ export default function PostPage() {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchBanners = async () => {
       try {
         const res = await fetch("/api/banner/getbanner");
         const data = await res.json();
-        if (res.ok) {
+        if (res.ok && isMounted) {
           setBanners(data.banners);
         }
-      } catch (error) {}
+      } catch (error) {
+        if (isMounted) {
+          console.error("Error fetching banners:", error);
+        }
+      }
     };
+
     fetchBanners();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
+        const res = await fetch(`/api/post/getposts?slug=${postSlug}`, {
+          signal: controller.signal,
+        });
         const data = await res.json();
         if (!res.ok) {
           setError(true);
@@ -63,6 +77,7 @@ export default function PostPage() {
       }
     };
     fetchPost();
+    return () => controller.abort();
   }, [postSlug]);
 
   useEffect(() => {
