@@ -44,7 +44,7 @@ export default function Footer() {
   return (
     <footer className="bg-cyan-950">
       <div className="mx-auto max-w-screen-2xl px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-12">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:flex lg:justify-between lg:gap-8">
           <div>
             <Link to="/" className="dark:text-white">
               <div className="flex items-center justify-center md:justify-start">
@@ -80,17 +80,6 @@ export default function Footer() {
                   <FaInstagram className="size-6" />
                 </a>
               </li>
-
-              {/* <li>
-                <a
-                  href="https://github.com/faqihfnf"
-                  rel="noreferrer"
-                  target="_blank"
-                  className="text-white transition hover:text-indigo-600">
-                  <span className="sr-only">GitHub</span>
-                  <FaGithub className="size-6" />
-                </a>
-              </li> */}
 
               <li>
                 <a
@@ -128,8 +117,8 @@ export default function Footer() {
             {/* Social links End */}
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:col-span-2">
-            <div className="text-center sm:text-left">
+          <div className="">
+            {/* <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-white flex items-center justify-center">
                 Categories
               </p>
@@ -141,9 +130,9 @@ export default function Footer() {
                   {category}
                 </Link>
               ))}
-            </div>
+            </div> */}
 
-            <div className="text-center sm:text-left">
+            {/* <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-white">Helpful Links</p>
 
               <ul className="mt-8 space-y-4 text-sm">
@@ -183,7 +172,7 @@ export default function Footer() {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-white">Kontak Kami</p>

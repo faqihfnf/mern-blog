@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Button, TextInput, Alert, Modal, Toast, Table, Pagination } from "flowbite-react";
+import {
+  Button,
+  TextInput,
+  Alert,
+  Modal,
+  Toast,
+  Table,
+  Pagination,
+} from "flowbite-react";
 import { HiCheckBadge } from "react-icons/hi2";
 import { FaExclamationCircle, FaTrash, FaEdit, FaPlus } from "react-icons/fa";
 
@@ -30,7 +38,9 @@ export default function DashboardCategories() {
   const fetchCategories = async () => {
     try {
       const startIndex = (currentPage - 1) * categoryPerPage;
-      const res = await fetch(`/api/category/getcategory?startIndex=${startIndex}&limit=${categoryPerPage}`);
+      const res = await fetch(
+        `/api/category/getcategory?startIndex=${startIndex}&limit=${categoryPerPage}`
+      );
       if (!res.ok) {
         throw new Error(`Error: ${res.status} ${res.statusText}`);
       }
@@ -49,7 +59,9 @@ export default function DashboardCategories() {
     setLoading(true);
 
     try {
-      const url = editMode ? `/api/category/updatecategory/${selectedCategory._id}` : "/api/category/createcategory";
+      const url = editMode
+        ? `/api/category/updatecategory/${selectedCategory._id}`
+        : "/api/category/createcategory";
 
       const res = await fetch(url, {
         method: editMode ? "PUT" : "POST",
@@ -65,7 +77,9 @@ export default function DashboardCategories() {
         setError(data.message);
       } else {
         setShowToastSuccess(true);
-        setSuccess(editMode ? "Kategori berhasil diupdate" : "Kategori berhasil dibuat");
+        setSuccess(
+          editMode ? "Kategori berhasil diupdate" : "Kategori berhasil dibuat"
+        );
         setFormData({ name: "" });
         setEditMode(false);
         setSelectedCategory(null);
@@ -84,9 +98,12 @@ export default function DashboardCategories() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`/api/category/deletecategory/${selectedCategory._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `/api/category/deletecategory/${selectedCategory._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await res.json();
 
@@ -94,7 +111,9 @@ export default function DashboardCategories() {
         setError(data.message);
       } else {
         setShowToast(true);
-        setCategories(categories.filter((cat) => cat._id !== selectedCategory._id));
+        setCategories(
+          categories.filter((cat) => cat._id !== selectedCategory._id)
+        );
         setSelectedCategory(null);
         setTimeout(() => {
           setShowToast(false);
@@ -136,10 +155,9 @@ export default function DashboardCategories() {
               setFormData({ name: "" });
               setShowCreateModal(true);
             }}
-            className="w-full"
-          >
-            <FaPlus size={20} className="mr-2 mt-1" />
-            <span className="font-poppins text-lg">Create Category</span>
+            className="">
+            <FaPlus size={14} className="mr-2 mt-0.5" />
+            <span className="font-poppins text-md">Create Category</span>
           </Button>
           {error && (
             <Alert color="failure" className="mt-5">
@@ -162,8 +180,12 @@ export default function DashboardCategories() {
                 </Table.Head>
                 <Table.Body className="divide-y">
                   {paginatedCategories.map((category) => (
-                    <Table.Row key={category._id} className="bg-white dark:border-slate-700 dark:bg-slate-800">
-                      <Table.Cell>{new Date(category.updatedAt).toLocaleDateString()}</Table.Cell>
+                    <Table.Row
+                      key={category._id}
+                      className="bg-white dark:border-slate-700 dark:bg-slate-800">
+                      <Table.Cell>
+                        {new Date(category.updatedAt).toLocaleDateString()}
+                      </Table.Cell>
                       <Table.Cell>{category.name}</Table.Cell>
                       <Table.Cell>{category.postCount}</Table.Cell>
                       <Table.Cell>
@@ -172,13 +194,14 @@ export default function DashboardCategories() {
                           onClick={() => {
                             setSelectedCategory(category);
                             setShowDeleteModal(true);
-                          }}
-                        >
+                          }}>
                           Delete
                         </span>
                       </Table.Cell>
                       <Table.Cell>
-                        <span className="text-teal-600 font-semibold hover:underline cursor-pointer" onClick={() => handleEdit(category)}>
+                        <span
+                          className="text-teal-600 font-semibold hover:underline cursor-pointer"
+                          onClick={() => handleEdit(category)}>
                           Edit
                         </span>
                       </Table.Cell>
@@ -192,7 +215,12 @@ export default function DashboardCategories() {
                 Showing {startIndex} to {endIndex} of {totalCategory} entries
               </div>
               <div className="flex overflow-x-auto sm:justify-center mt-2">
-                <Pagination currentPage={currentPage} totalPages={Math.max(1, totalPages)} onPageChange={onPageChange} showIcons={true} />
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={Math.max(1, totalPages)}
+                  onPageChange={onPageChange}
+                  showIcons={true}
+                />
               </div>
             </div>
           </div>
@@ -200,15 +228,30 @@ export default function DashboardCategories() {
           <p>Tidak ada post untuk saat ini</p>
         )}
         {/* Create/Edit Modal */}
-        <Modal show={showCreateModal} onClose={() => setShowCreateModal(false)} popup size="md">
-          <Modal.Header>{editMode ? "Edit Category" : "Create New Category"}</Modal.Header>
+        <Modal
+          show={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          popup
+          size="md">
+          <Modal.Header>
+            {editMode ? "Edit Category" : "Create New Category"}
+          </Modal.Header>
           <Modal.Body>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <TextInput type="text" placeholder="Category Name" value={formData.name} onChange={(e) => setFormData({ name: e.target.value })} required />
+                <TextInput
+                  type="text"
+                  placeholder="Category Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ name: e.target.value })}
+                  required
+                />
               </div>
               <div className="flex justify-end gap-4">
-                <Button type="submit" gradientDuoTone="purpleToBlue" disabled={loading}>
+                <Button
+                  type="submit"
+                  gradientDuoTone="purpleToBlue"
+                  disabled={loading}>
                   {loading ? "Loading..." : editMode ? "Update" : "Create"}
                 </Button>
                 <Button color="gray" onClick={() => setShowCreateModal(false)}>
@@ -220,12 +263,18 @@ export default function DashboardCategories() {
         </Modal>
 
         {/* Delete Modal */}
-        <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)} popup size="md">
+        <Modal
+          show={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          popup
+          size="md">
           <Modal.Header />
           <Modal.Body>
             <div className="text-center">
               <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-              <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus kategori ini?</h3>
+              <h3 className="mb-5 text-xl font-normal text-gray-500">
+                Apakah anda yakin ingin menghapus kategori ini?
+              </h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDelete}>
                   Hapus
@@ -243,7 +292,9 @@ export default function DashboardCategories() {
           <div className="fixed top-0 right-0 gap-4">
             <Toast color="success" className="bg-red-600 dark:bg-red-600 w-80">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-sm font-semibold text-white">Kategori berhasil dihapus</div>
+              <div className="ml-3 text-sm font-semibold text-white">
+                Kategori berhasil dihapus
+              </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>
@@ -252,116 +303,18 @@ export default function DashboardCategories() {
         {/* Success Toast */}
         {showToastSuccess && (
           <div className="fixed top-0 right-0 gap-4">
-            <Toast color="success" className="bg-green-600 dark:bg-green-600 w-80">
+            <Toast
+              color="success"
+              className="bg-green-600 dark:bg-green-600 w-80">
               <HiCheckBadge className="w-8 h-8 text-white" />
-              <div className="ml-3 text-sm font-semibold text-white">Kategori berhasil dibuat</div>
+              <div className="ml-3 text-sm font-semibold text-white">
+                Kategori berhasil dibuat
+              </div>
               <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
             </Toast>
           </div>
         )}
       </div>
     </div>
-
-    // <div className="mx-auto p-3 w-full">
-    //   <div className="flex justify-between items-center mb-5">
-    //     {/* <h1 className="text-2xl font-bold">Categories</h1> */}
-    //     <div className="mb-4 w-48">
-    //       <Button
-    //         gradientDuoTone="purpleToPink"
-    //         onClick={() => {
-    //           setEditMode(false);
-    //           setFormData({ name: "" });
-    //           setShowCreateModal(true);
-    //         }}
-    //         className="w-full"
-    //       >
-    //         <FaPlus size={20} className="mr-2" />
-    //         <span className="font-poppins text-md">Create Category</span>
-    //       </Button>
-    //     </div>
-    //   </div>
-
-    //   {error && (
-    //     <Alert color="failure" className="mt-5">
-    //       {error}
-    //     </Alert>
-    //   )}
-    //   {success && (
-    //     <Alert color="success" className="mt-5">
-    //       {success}
-    //     </Alert>
-    //   )}
-
-    //   <div className="mt-5">
-    //     {categories.map((category) => (
-    //       <div key={category._id} className="flex items-center justify-between p-3 border rounded mb-3">
-    //         <div>
-    //           <span className="font-semibold">{category.name}</span>
-    //           <span className="ml-2 text-gray-500">({category.postCount} posts)</span>
-    //         </div>
-    //         <div className="flex gap-2">
-    //           <FaEdit className="text-blue-500 cursor-pointer" onClick={() => handleEdit(category)} />
-    //           <FaTrash
-    //             className="text-red-500 cursor-pointer"
-    //             onClick={() => {
-    //               setSelectedCategory(category);
-    //               setShowDeleteModal(true);
-    //             }}
-    //           />
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </div>
-
-    //   {/* Create/Edit Modal */}
-    //   <Modal show={showCreateModal} onClose={() => setShowCreateModal(false)} popup size="md">
-    //     <Modal.Header>{editMode ? "Edit Category" : "Create New Category"}</Modal.Header>
-    //     <Modal.Body>
-    //       <form onSubmit={handleSubmit} className="space-y-4">
-    //         <div>
-    //           <TextInput type="text" placeholder="Category Name" value={formData.name} onChange={(e) => setFormData({ name: e.target.value })} required />
-    //         </div>
-    //         <div className="flex justify-end gap-4">
-    //           <Button type="submit" gradientDuoTone="purpleToBlue" disabled={loading}>
-    //             {loading ? "Loading..." : editMode ? "Update" : "Create"}
-    //           </Button>
-    //           <Button color="gray" onClick={() => setShowCreateModal(false)}>
-    //             Cancel
-    //           </Button>
-    //         </div>
-    //       </form>
-    //     </Modal.Body>
-    //   </Modal>
-
-    //   {/* Delete Modal */}
-    //   <Modal show={showDeleteModal} onClose={() => setShowDeleteModal(false)} popup size="md">
-    //     <Modal.Header />
-    //     <Modal.Body>
-    //       <div className="text-center">
-    //         <FaExclamationCircle className="text-6xl text-gray-500 mb-4 mx-auto" />
-    //         <h3 className="mb-5 text-xl font-normal text-gray-500">Apakah anda yakin ingin menghapus kategori ini?</h3>
-    //         <div className="flex justify-center gap-4">
-    //           <Button color="failure" onClick={handleDelete}>
-    //             Hapus
-    //           </Button>
-    //           <Button color="gray" onClick={() => setShowDeleteModal(false)}>
-    //             Batal
-    //           </Button>
-    //         </div>
-    //       </div>
-    //     </Modal.Body>
-    //   </Modal>
-
-    //   {/* Success Toast */}
-    //   {showToast && (
-    //     <div className="fixed top-0 right-0 gap-4">
-    //       <Toast color="success" className="bg-red-600 dark:bg-red-600 w-80">
-    //         <HiCheckBadge className="w-8 h-8 text-white" />
-    //         <div className="ml-3 text-sm font-semibold text-white">Kategori berhasil dihapus</div>
-    //         <Toast.Toggle className="bg-opacity-15 dark:bg-opacity-15 dark:text-white hover:bg-opacity-30 text-white" />
-    //       </Toast>
-    //     </div>
-    //   )}
-    // </div>
   );
 }

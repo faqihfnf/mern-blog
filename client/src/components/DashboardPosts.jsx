@@ -114,14 +114,11 @@ export default function DashboardPosts() {
   return (
     <div className="flex w-full p-8 min-h-screen">
       <div className="flex-1 lg:w-3/4 table-auto overflow-x-scroll mx-auto scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <div className="mb-4 w-48">
+        <div className="mb-4">
           <Link to={"/create-post"}>
-            <Button
-              type="button"
-              gradientDuoTone="purpleToPink"
-              className="w-full">
-              <FaPlus size={20} className="mr-2 mt-1" />
-              <span className="font-poppins text-lg">Create Post</span>
+            <Button type="button" gradientDuoTone="purpleToPink" className="">
+              <FaPlus size={14} className="mr-2 mt-0.5" />
+              <span className="font-poppins text-md">Create Post</span>
             </Button>
           </Link>
         </div>
