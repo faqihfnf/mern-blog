@@ -1,11 +1,12 @@
 import { Alert, Button, Modal, TextInput, Toast } from "flowbite-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
+  deleteObject,
 } from "firebase/storage";
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -20,7 +21,6 @@ import {
   signOutSuccess,
 } from "../redux/user/userSlice";
 import { FaExclamationCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import { HiCheckBadge } from "react-icons/hi2";
 
 export default function DashboardProfile() {
@@ -41,80 +41,135 @@ export default function DashboardProfile() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        setImageFileUploadError("Tidak bisa upload gambar (File Max 2MB)");
+        return;
+      }
       setImageFile(file);
       setImageFileUrl(URL.createObjectURL(file));
+      setImageFileUploadError(null);
     }
   };
-  useEffect(() => {
-    if (imageFile) {
-      uploadImage();
-    }
-  }, [imageFile]);
 
   const uploadImage = async () => {
+    if (!imageFile) return null;
+
     if (imageFile.size > 2 * 1024 * 1024) {
       setImageFileUploadError("Tidak bisa upload gambar (File Max 2MB)");
-      setImageFileUploadProgress(null);
-      setImageFileUrl(null);
-      return; // Hentikan proses upload
+      return null;
     }
 
     setImageFileUploading(true);
     setImageFileUploadError(null);
     setImageFileUploadProgress(null);
 
-    setImageFileUploadError(null);
-    const storage = getStorage(app);
-    const fileName = `profile/${new Date().getTime()}-${imageFile.name}`;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImageFileUploadProgress(progress.toFixed(0));
-      },
-      (error) => {
-        setImageFileUploadProgress(null);
-        setImageFileUploadError("Tidak bisa upload gambar (File Max 2MB)");
-        setImageFileUrl(null);
-        setImageFileUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageFileUrl(downloadURL);
-          setFormData({ ...formData, profilePicture: downloadURL });
-        });
-        setImageFileUploading(false);
+    try {
+      const storage = getStorage(app);
+
+      // Hapus gambar lama jika ada dan berbeda dari default
+      if (
+        currentUser.profilePicture &&
+        !currentUser.profilePicture.includes("default-profile") &&
+        currentUser.profilePicture !== imageFileUrl
+      ) {
+        try {
+          // Ekstrak nama file dari URL
+          const oldFileNameWithParams =
+            currentUser.profilePicture.split("/o/")[1];
+          if (oldFileNameWithParams) {
+            const oldFileName = oldFileNameWithParams.split("?")[0];
+            const decodedOldFileName = decodeURIComponent(oldFileName);
+
+            // Buat referensi ke file lama
+            const oldFileRef = ref(storage, decodedOldFileName);
+
+            // Hapus file lama
+            await deleteObject(oldFileRef);
+            console.log("Gambar profil lama berhasil dihapus");
+          }
+        } catch (deleteError) {
+          console.error("Gagal menghapus gambar profil lama:", deleteError);
+        }
       }
-    );
+
+      // Upload gambar baru
+      const fileName = `profile/${new Date().getTime()}-${imageFile.name}`;
+      const storageRef = ref(storage, fileName);
+
+      return new Promise((resolve, reject) => {
+        const uploadTask = uploadBytesResumable(storageRef, imageFile);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setImageFileUploadProgress(progress.toFixed(0));
+          },
+          (error) => {
+            setImageFileUploadProgress(null);
+            setImageFileUploadError("Tidak bisa upload gambar (File Max 2MB)");
+            setImageFileUploading(false);
+            reject(error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            setImageFileUploadProgress(null);
+            setImageFileUploading(false);
+            resolve(downloadURL);
+          }
+        );
+      });
+    } catch (error) {
+      setImageFileUploadError("Gagal upload gambar");
+      setImageFileUploading(false);
+      return null;
+    }
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
-    if (Object.keys(formData).length === 0) {
+
+    // Validasi jika tidak ada perubahan
+    if (Object.keys(formData).length === 0 && !imageFile) {
       setUpdateUserError("Tidak ada perubahan profile");
       return;
     }
-    if (imageFileUploading) {
-      setUpdateUserError("Tunggu sampai gambar selesai diupload");
-      return;
-    }
+
     try {
       dispatch(updateStart());
+
+      // Jika ada file gambar baru, upload dulu
+      let updatedFormData = { ...formData };
+
+      if (imageFile) {
+        setImageFileUploading(true);
+        const imageUrl = await uploadImage();
+        if (imageUrl) {
+          updatedFormData.profilePicture = imageUrl;
+        } else if (imageFileUploadError) {
+          dispatch(updateFailure(imageFileUploadError));
+          return;
+        }
+      }
+
+      // Update user data
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
+
       const data = await res.json();
+
       if (!res.ok) {
         dispatch(updateFailure(data.message));
         setUpdateUserError(data.message);
@@ -122,14 +177,19 @@ export default function DashboardProfile() {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("Profile berhasil diperbarui");
         setFormData({});
-        // Menambahkan setTimeout agar user bisa melihat pesan sukses sebentar
+        setImageFile(null);
+        setImageFileUrl(null);
+
+        // Refresh setelah 1.5 detik
         setTimeout(() => {
           window.location.reload();
-        }, 1500); // Refresh setelah 1.5 detik
+        }, 1500);
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
+    } finally {
+      setImageFileUploading(false);
     }
   };
 
@@ -210,7 +270,11 @@ export default function DashboardProfile() {
           <img
             src={imageFileUrl || currentUser.profilePicture}
             alt="User"
-            className={`w-full h-full rounded-full object-cover border-8 border-gray-300 {imageFileUploadProgress < 100 && "opacity-50" : ''}`}
+            className={`w-full h-full rounded-full object-cover border-8 border-gray-300 ${
+              imageFileUploadProgress && imageFileUploadProgress < 100
+                ? "opacity-50"
+                : ""
+            }`}
           />
         </div>
         {imageFileUploadError && (
@@ -242,7 +306,7 @@ export default function DashboardProfile() {
           outline
           gradientDuoTone="purpleToBlue"
           disabled={loading || imageFileUploading}>
-          {loading ? "Loading..." : "Update Profile"}
+          {loading || imageFileUploading ? "Loading..." : "Update Profile"}
         </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-3 my-3 font-semibold ">
@@ -259,7 +323,6 @@ export default function DashboardProfile() {
       </div>
       {updateUserSuccess && <Alert color="success">{updateUserSuccess}</Alert>}
       {updateUserError && <Alert color="failure">{updateUserError}</Alert>}
-      {error && <Alert color="failure">{error}</Alert>}
       {/* Toast */}
       {showToast && (
         <div className="fixed top-0 right-0 gap-4">

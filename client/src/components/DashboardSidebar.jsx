@@ -50,8 +50,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=overview">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold ${
-                  tab === "overview" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 ${
+                  tab === "overview" ? "bg-indigo-200 dark:bg-indigo-700" : ""
                 }`}
                 active={tab === "overview"}
                 icon={FaChartSimple}
@@ -64,8 +64,8 @@ export default function DashboardSidebar() {
           {/* profile */}
           <Link to="/dashboard?tab=profile">
             <Sidebar.Item
-              className={`text-cyan-950 font-semibold mt-[-5px] ${
-                tab === "profile" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+              className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                tab === "profile" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
               }`}
               active={tab === "profile"}
               icon={FaUser}
@@ -80,8 +80,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "posts" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "posts" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "posts"}
                 icon={HiDocumentText}
@@ -95,8 +95,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=draft">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "draft" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "draft" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "draft"}
                 icon={RiDraftFill}
@@ -110,8 +110,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=category">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "category" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "category" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "category"}
                 icon={BiSolidCategoryAlt}
@@ -125,8 +125,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=users">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "users" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "users" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "users"}
                 icon={HiUserGroup}
@@ -140,8 +140,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=comments">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "comments" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "comments" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "comments"}
                 icon={IoMdChatbubbles}
@@ -155,8 +155,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=products">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "products" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "products" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "products"}
                 icon={IoStorefront}
@@ -170,8 +170,8 @@ export default function DashboardSidebar() {
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=banners">
               <Sidebar.Item
-                className={`text-cyan-950 font-semibold mt-[-5px] ${
-                  tab === "banners" ? "bg-indigo-200 hover:bg-indigo-200 " : ""
+                className={`text-cyan-950 font-semibold hover:bg-indigo-200 dark:hover:bg-indigo-700 mt-[-5px] ${
+                  tab === "banners" ? "bg-indigo-200 dark:bg-indigo-700 " : ""
                 }`}
                 active={tab === "banners"}
                 icon={MdCallToAction}

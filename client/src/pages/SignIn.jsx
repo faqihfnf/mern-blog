@@ -59,7 +59,9 @@ export default function SignIn() {
       dispatch(signInFailure(error.message));
     } finally {
       //# fallback untuk mengatasi error selain di try
-      if (!res.ok) dispatch(signInFailure(error.message));
+      setTimeout(() => {
+        dispatch(signInFailure(null));
+      }, 3000);
     }
   };
 

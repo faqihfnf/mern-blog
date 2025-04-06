@@ -61,7 +61,7 @@ export default function Header() {
   return (
     <div className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-md">
       {/* Fixed Header Bar */}
-      <div className="flex justify-between items-center px-1 lg:px-4 py-2">
+      <div className="flex justify-between items-center lg:px-4 py-2">
         {/* Logo - changed from NavbarBrand to Link */}
         <Link to="/" className="dark:text-white font-poppins">
           <div className="flex items-center">
@@ -228,7 +228,11 @@ export default function Header() {
               </Dropdown>
             ) : (
               <Link to="/sign-in">
-                <Button size="sm" outline gradientDuoTone="tealToLime">
+                <Button
+                  size="sm"
+                  className="hidden lg:block"
+                  outline
+                  gradientDuoTone="tealToLime">
                   Masuk
                 </Button>
               </Link>

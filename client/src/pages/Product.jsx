@@ -66,7 +66,7 @@ export default function Product() {
         Produk Kami
       </h1>
       <div className="max-w-2xl mx-auto text-center text-gray-600 dark:text-gray-400"></div>
-      <div className="p-2 m-4 items-center justify-center">
+      <div className="p-2 m-4 w-full max-w-7xl items-center justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />

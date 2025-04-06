@@ -32,7 +32,7 @@ export default function Hero() {
   return (
     <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 lg:gap-6 p-4 sm:p-12 px-3 max-w-7xl mx-auto mt-12 min-[400px]:mt-20 lg:mt-0 md:mt-0 sm:mt-0 min-[400px]:mb-44 lg:mb-0 md:mb-0 sm:mb-0">
       <GradientColor />
-      <h1 className="bg-gradient-to-l from-teal-600 via-indigo-600 to-pink-600 bg-clip-text font-extrabold text-transparent text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 text-5xl sm:text-5xl md:text-6xl lg:text-8xl">
+      <h1 className="bg-gradient-to-l from-sky-600 via-purple-600 to-pink-600 bg-clip-text font-extrabold text-transparent text-center dark:from-purple-600 dark:via-sky-600 dark:to-green-300 text-5xl sm:text-5xl md:text-6xl lg:text-8xl">
         Selamat Datang Para Penuntut Ilmu
       </h1>
       <h2 className="flex justify-center text-center items-center text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mt-2 italic">

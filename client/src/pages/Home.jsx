@@ -26,35 +26,57 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchBanners = async () => {
       try {
         const res = await fetch("/api/banner/getbanner");
         const data = await res.json();
-        if (res.ok) {
+        if (res.ok && isMounted) {
           setBanners(data.banners);
         }
-      } catch (error) {}
+      } catch (error) {
+        if (isMounted) {
+          console.error("Error fetching banners:", error);
+        }
+      }
     };
+
     fetchBanners();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchPosts = async () => {
       try {
         // Fetch artikel terbaru
-        const recentRes = await fetch("/api/post/getposts?limit=5");
+        const recentRes = await fetch("/api/post/getposts?limit=5", {
+          signal: controller.signal,
+        });
         const recentData = await recentRes.json();
         setPosts(recentData.posts);
 
         // Fetch artikel populer
-        const popularRes = await fetch("/api/post/getpopularposts?limit=12");
+        const popularRes = await fetch("/api/post/getpopularposts?limit=12", {
+          signal: controller.signal,
+        });
         const popularData = await popularRes.json();
         setPopularPosts(popularData.posts);
       } catch (error) {
-        console.log(error);
+        if (error.name !== "AbortError") {
+          console.error("Error fetching posts:", error);
+        }
       }
     };
+
     fetchPosts();
+
+    return () => controller.abort();
   }, []);
 
   // Function to get number of cards per slide based on screen width
