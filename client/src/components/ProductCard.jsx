@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
   return (
     <Card className="max-w-sm h-full flex flex-col group bg-purple-200/10 rounded-xl border shadow-indigo-500/20  shadow-xl transition hover:border-teal-500 hover:shadow-teal-500/20 dark:hover:border-pink-500 dark:hover:shadow-pink-500/20">
       <Link
-        href={
+        to={
           product.link.startsWith("http")
             ? product.link
             : `https://${product.link}`

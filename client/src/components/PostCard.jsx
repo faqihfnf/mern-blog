@@ -58,7 +58,7 @@ export default function PostCard({ post }) {
               {post.title}
             </h2>
           </div>
-          <p className="text-gray-400 line-clamp-1">
+          <p className="text-gray-400 line-clamp-2">
             {post.content.replace(/<[^>]*>/g, "")}
           </p>
         </div>

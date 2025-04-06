@@ -87,16 +87,18 @@ export default function Home() {
         keywords="islam, ilmu islam, artikel islam, kajian islam, fiqih, hadits, quran"
         image="/logo.png" // Ganti dengan URL gambar default Anda
       />
-      <Hero />
+      <div className="">
+        <Hero />
+      </div>
 
       {/* Popular Posts Section */}
       {popularPosts && popularPosts.length > 0 && (
-        <div className="max-w-full p-3 flex flex-col gap-2 py-7 mt-5">
+        <div className="max-w-full p-3 flex flex-col gap-2 py-7">
           <div className="flex flex-col gap-8">
             <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
               Artikel Populer
             </h2>
-            <div className="h-[400px] sm:h-[450px]">
+            <div className="h-[450px] ">
               <Carousel slide={true} slideInterval={5000} className="h-full">
                 {createSlides().map((slide, slideIndex) => (
                   <div
@@ -125,13 +127,13 @@ export default function Home() {
       </div>
 
       {/* Latest Posts Section */}
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-2 py-7">
+      <div className="max-w-6xl mx-auto mt-6 p-3 flex flex-col gap-2 py-7">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-8">
             <h2 className="text-center bg-gradient-to-r from-green-400 via-cyan-500 to-indigo-800 bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
               Artikel Terbaru
             </h2>
-            <div className="flex flex-col gap-4 items-center">
+            <div className="flex flex-col gap-4 items-center p-5">
               {posts.map((post) => (
                 <PostList key={post._id} post={post} />
               ))}

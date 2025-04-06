@@ -8,6 +8,7 @@ import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { FaPlus } from "react-icons/fa6";
 import ThemeToggle from "./ThemeToggle";
+import { CgMenu } from "react-icons/cg";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -60,7 +61,7 @@ export default function Header() {
   return (
     <div className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-md">
       {/* Fixed Header Bar */}
-      <div className="flex justify-between items-center px-4 py-2">
+      <div className="flex justify-between items-center px-1 lg:px-4 py-2">
         {/* Logo - changed from NavbarBrand to Link */}
         <Link to="/" className="dark:text-white font-poppins">
           <div className="flex items-center">
@@ -91,7 +92,7 @@ export default function Header() {
           </form>
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <div className="container mx-auto px-4">
             <nav className="flex">
               {currentUser?.isAdmin && (
@@ -136,41 +137,52 @@ export default function Header() {
           </div>
         </div>
 
+        <div className="items-center hidden lg:flex">
+          <ThemeToggle />
+        </div>
+
         {/* Right side controls */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 md:gap-4">
           {/* Theme Toggle - only on large screens */}
-          <div className="items-center hidden lg:flex">
-            <ThemeToggle />
+
+          {/* Search Icon for mobile */}
+          <div className="lg:hidden flex items-center">
+            <Link
+              to="/search"
+              className="border-none bg-transparent"
+              onClick={() => setIsMenuOpen(false)}>
+              <AiOutlineSearch className="text-gray-500 w-8 h-8" />
+            </Link>
           </div>
 
           {/* Theme Toggle for mobile */}
-          <div className="lg:hidden flex items-center gap-2">
-            <Button
+          <div className="lg:hidden flex items-center">
+            <Link
               className="border-none bg-transparent"
               color=""
-              pill
               onClick={() => dispatch(toggleTheme())}>
               {theme === "light" ? (
-                <FaSun className="text-yellow-300 text-3xl" />
+                <FaSun className="text-yellow-300 w-8 h-8" />
               ) : (
-                <FaMoon className="text-blue-800 text-3xl" />
+                <FaMoon className="text-blue-800 w-8 h-8" />
               )}
-            </Button>
+            </Link>
           </div>
 
           {/* Create Post button for all screens */}
           {currentUser?.isAdmin && (
             <div className="">
-              <Link to={"/create-post"}>
-                <Button
-                  gradientDuoTone="purpleToPink"
-                  className="w-10 h-10 rounded-full"
-                  title="Create Post">
-                  <span className="text-xl">
-                    <FaPlus className="font-bold" />
-                  </span>
-                </Button>
-              </Link>
+              {/* <Link to={"/create-post"}> */}
+              <Button
+                onClick={() => navigate("/create-post")}
+                gradientDuoTone="purpleToPink"
+                className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+                title="Create Post">
+                {/* <span className="text-md lg:text-xl"> */}
+                <FaPlus className="font-bold flex items-center justify-center -mt-[2px] w-4 h-4 lg:w-6 lg:h-6" />
+                {/* </span> */}
+              </Button>
+              {/* </Link> */}
             </div>
           )}
 
@@ -181,12 +193,26 @@ export default function Header() {
                 arrowIcon={false}
                 inline
                 label={
-                  <Avatar
-                    alt="user"
-                    img={currentUser.profilePicture}
-                    rounded
-                    size="md"
-                  />
+                  <>
+                    {/* Avatar ukuran kecil untuk mobile */}
+                    <div className="block md:hidden">
+                      <Avatar
+                        alt="user"
+                        img={currentUser.profilePicture}
+                        rounded
+                        size="sm"
+                      />
+                    </div>
+                    {/* Avatar ukuran medium untuk layar lebih besar */}
+                    <div className="hidden md:block">
+                      <Avatar
+                        alt="user"
+                        img={currentUser.profilePicture}
+                        rounded
+                        size="md"
+                      />
+                    </div>
+                  </>
                 }>
                 <Dropdown.Header>
                   <span className="block text-sm">@{currentUser.username}</span>
@@ -212,24 +238,11 @@ export default function Header() {
           {/* Toggle Button for medium and small screens */}
           <button
             onClick={handleToggleClick}
-            className="lg:hidden ml-2 inline-flex items-center p-2 w-10 h-10 justify-center text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="md:hidden inline-flex items-center w-10 h-10 justify-center text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-menu"
             aria-expanded={isMenuOpen}>
             <span className="sr-only">Toggle menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14">
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
+            <CgMenu className="w-8 h-8" />
           </button>
         </div>
       </div>
@@ -292,7 +305,7 @@ export default function Header() {
                 </li>
 
                 {/* Search form for mobile */}
-                <li className="mt-4 px-3">
+                {/* <li className="mt-4 px-3">
                   <form onSubmit={handleSearch}>
                     <TextInput
                       className="w-full"
@@ -303,7 +316,7 @@ export default function Header() {
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
                   </form>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>

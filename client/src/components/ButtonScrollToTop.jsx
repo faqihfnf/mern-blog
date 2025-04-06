@@ -33,7 +33,7 @@ const ButtonScrollToTop = () => {
         <Button
           gradientDuoTone="purpleToBlue"
           onClick={scrollToTop}
-          className="w-16 h-16 flex items-center justify-center rounded-xl p-2">
+          className="w-12 h-12 lg:w-16 lg:h-16 flex items-center justify-center rounded-xl p-2">
           <TbArrowBadgeUpFilled className="text-6xl" />
         </Button>
       )}
